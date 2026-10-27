@@ -66,7 +66,7 @@ Sistema G: `PF = (EP + EF + PP)/3`.
 | 16 | **Examen Final** | Semanas 9 a 15 |
 | 17 | **Examen Sustitutorio** | Todo el curso |
 
-**Supuestos a confirmar.** (1) Dirigida = práctica en equipo, formativa; Calificada = práctica individual. (2) El sílabo indica ``cinco (04)'' prácticas y ``cuatro (03)'' mejores notas para PP, mientras el dosificado muestra cuatro calificadas; hay que fijar cuántas se promedian. (3) El portafolio es evidencia formativa y no modifica PF. (4) Faltan los `.tex` de S01-1, S01-2, S02-1, S02-2 y S03-1 (solo están los PDF), por lo que esas sesiones no se actualizaron.
+**Supuestos a confirmar.** (1) Dirigida = práctica en equipo, formativa; Calificada = práctica individual. (2) Son **4 prácticas calificadas** (Calificada 1 a 4), confirmado por el docente; el sílabo indica además ``tres (03) mejores notas'' para el PP, cifra que conviene confirmar. (3) El portafolio es evidencia formativa y no modifica PF. (4) Falta el `.tex` de S01-1 (solo está el PDF), por lo que esa sesión no se actualizó.
 
 **Rúbrica común:** corrección y rigor matemático; justificación y notación; modelamiento e interpretación; comunicación y trazabilidad (incluye la declaración de uso de IA).
 

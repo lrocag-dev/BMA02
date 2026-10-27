@@ -17,14 +17,34 @@
     \item Probar que las funciones \resaltar{monótonas} y las \resaltar{continuas} son integrables.
     \item Enunciar y aplicar el \resaltar{Teorema del Valor Medio para integrales}.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 1 del sílabo:} Evalúa interpretaciones y propiedades del cálculo integral y su utilidad en problemas de la vida real.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:10 & Repaso: sumas de Darboux e integrabilidad\\
       0:10 -- 0:50 & Propiedades: linealidad, aditividad, orden, acotación\\
       0:50 -- 1:30 & Clases de funciones integrables: monótonas, continuas, continuas a trozos\\
       1:30 -- 1:45 & Valor medio de una función\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea las propiedades de la integral definida y el teorema del valor medio para integrales.
+      \item Calcule $\int_{-\pi}^{\pi}\sen x\,dx$ sin primitiva, usando simetría.
+      \item Pregunta guía: ¿por qué toda función continua en $[a,b]$ es integrable?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Cuánto vale $\int_a^af$?
+      \item Si $f\le g$ en $[a,b]$, ¿qué relación hay entre sus integrales?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -288,6 +308,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Estimar sin calcular}
+  \small
+  \begin{activa}[Estudio de casos]
+    \textbf{(a)} Acote $\int_0^1e^{-x^2}dx$ usando solo las propiedades de orden. \textbf{(b)} La temperatura en un día es $T(t)=20+8\sen\frac{\pi(t-9)}{12}$ $(0\le t\le24)$: halle la temperatura media y diga qué propiedad usó. \textbf{(c)} Indique, para cada paso, \textbf{qué propiedad} se emplea.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Cotas, temperatura media y lista de propiedades justificadas.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -308,6 +340,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cuál propiedad suelo olvidar? ¿Cómo la recordaré en la práctica?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA una cota para $\int_0^2\sqrt{1+x^4}\,dx$. Verifique que la desigualdad usada sea cierta en todo el intervalo.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item La integral es \resaltar{lineal}, \resaltar{aditiva} respecto del intervalo y \resaltar{monótona}.
@@ -317,6 +369,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} el Primer Teorema Fundamental del Cálculo y la función logaritmo.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 2: Dirigida 1]
+    \textbf{Cobertura:} semana 1. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

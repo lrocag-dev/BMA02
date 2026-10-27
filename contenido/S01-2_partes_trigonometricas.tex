@@ -17,13 +17,33 @@
     \item Obtener \resaltar{fórmulas de reducción}.
     \item Calcular primitivas de productos de potencias de funciones trigonométricas.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Desarrolla el pensamiento deductivo, inductivo, crítico y creativo mediante cambios de variable en los métodos de integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:10 & Repaso: sustitución\\
       0:10 -- 0:55 & Integración por partes: fórmula, interpretación, ejemplos\\
       0:55 -- 1:40 & Integrales trigonométricas $\int\sen^m\cos^n$, $\int\tan^m\sec^n$, productos\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la fórmula de integración por partes y las identidades trigonométricas básicas.
+      \item Calcule $\int xe^x\,dx$ por partes y verifíquelo derivando.
+      \item Pregunta guía: ¿qué criterio usa para elegir $u$ y $dv$?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba la fórmula de integración por partes.
+      \item Calcule $\int\sen^2x\,dx$ con una identidad.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -254,6 +274,26 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué pista me indica la técnica correcta? ¿Qué error de signo o de elección cometo con más frecuencia?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA $\int e^x\sen x\,dx$. Verifique el resultado derivando y detecte si usó correctamente la integral cíclica.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen de estrategias}
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{p{4.6cm}|p{9.4cm}}
@@ -265,6 +305,18 @@
     $\tan^mx\sec^nx$ & $n$ par: $u=\tan x$; $m$ impar: $u=\sec x$\\
     $\sen mx\cos nx$, etc. & Fórmulas producto--suma
   \end{tabular}
+\end{frame}
+
+\begin{frame}{Actividad colaborativa: Tarjeta de estrategia}
+  \small
+  \begin{activa}[Trabajo colaborativo (clasificador)]
+    Cada grupo recibe cuatro integrales, por ejemplo $\int x\ln x\,dx$, $\int e^x\sen x\,dx$, $\int\sen^3x\cos^2x\,dx$ y $\int\sec^4x\tan x\,dx$. \textbf{Decide} la técnica (partes, identidad, sustitución), resuelve y el \textbf{verificador} deriva el resultado. Además, en corriente alterna calcule $\frac1T\int_0^T\sen^2(\omega t)\,dt$ con $T=\frac{2\pi}{\omega}$ e interprételo como valor eficaz.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tarjeta con la técnica elegida por tipo de integrando y el cálculo del valor medio de $\sen^2$.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
 \end{frame}
 
 \section{Ejercicios}
@@ -327,6 +379,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} la integral definida -- particiones y sumas de Riemann.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 1: Prueba de entrada]
+    \textbf{Cobertura:} conocimientos previos de Cálculo Diferencial (BMA01). \textbf{Naturaleza:} diagnóstica, individual, sin nota para el promedio; orienta la nivelación y la formación de grupos.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}
