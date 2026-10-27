@@ -17,13 +17,33 @@
     \item Distinguir entre \resaltar{desplazamiento} y \resaltar{distancia recorrida} por una partícula.
     \item Calcular la distancia recorrida a partir de la rapidez $\sqrt{x'(t)^2+y'(t)^2}$.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Describe procesos naturales y físicos con modelos matemáticos que usan la integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:15 & Repaso: curvas paramétricas\\
       0:15 -- 1:05 & Área bajo una curva paramétrica; curvas cerradas; lazos\\
       1:05 -- 1:40 & Movimiento rectilíneo y en el plano: distancia recorrida\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Repase curvas paramétricas y lea el área bajo una curva paramétrica.
+      \item Calcule $\frac{dy}{dt}$ y $\frac{dx}{dt}$ de $x=t^2$, $y=t^3$.
+      \item Pregunta guía: ¿cómo cambia $\int y\,dx$ cuando $x$ depende de $t$?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba $\int_a^b y\,dx$ en términos de $t$.
+      \item ¿Qué significa $\int\sqrt{x'^2+y'^2}\,dt$ para una partícula?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -289,6 +309,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Áreas y recorridos}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    \textbf{(a)} Halle el área bajo un arco de la cicloide $x=a(t-\sen t)$, $y=a(1-\cos t)$ y verifique con GeoGebra para $a=1$. \textbf{(b)} Una partícula sigue $x=t^2$, $y=t^3$ para $0\le t\le2$: calcule la distancia recorrida y compárela con la distancia en línea recta entre extremos.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Cálculos, verificación y comentario sobre el resultado.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -307,6 +339,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué diferencia hay entre desplazamiento y distancia recorrida? Dé un ejemplo propio.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el área bajo un arco de cicloide. Compare con su cálculo y revise los límites de $t$.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item Área bajo curva paramétrica: $A=\displaystyle\int_\alpha^\beta y(t)\,x'(t)\dt$ (cuidar la orientación).
@@ -317,6 +369,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} longitud de arco de curvas paramétricas y polares.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 5: Dirigida 3]
+    \textbf{Cobertura:} semanas 3 y 4. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

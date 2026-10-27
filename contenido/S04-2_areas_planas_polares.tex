@@ -16,13 +16,33 @@
     \item Distinguir regiones de \resaltar{tipo I} (integrar en $x$) y \resaltar{tipo II} (integrar en $y$) y elegir la más conveniente.
     \item Deducir la fórmula del área en \resaltar{coordenadas polares} y aplicarla.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Describe procesos naturales y físicos con modelos matemáticos que usan la integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:35 & Regiones del tipo I: entre dos gráficas, curvas que se cruzan\\
       0:35 -- 1:00 & Regiones del tipo II. ¿Cuál conviene?\\
       1:00 -- 1:40 & Coordenadas polares y área de regiones polares\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea cómo se calcula el área entre dos curvas (regiones tipo I y II) y en polares.
+      \item Grafique la región acotada por $y=x^2$ y $y=2x$ y plantee su área.
+      \item Pregunta guía: ¿cuándo conviene integrar respecto de $y$ en vez de $x$?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Plantee el área entre $y=x$ y $y=x^2$ en $[0,1]$.
+      \item Escriba la fórmula del área en polares.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -349,6 +369,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: ¿Tipo I o tipo II?}
+  \small
+  \begin{activa}[Trabajo colaborativo con GeoGebra]
+    \textbf{(a)} Calcule el área acotada por $y^2=2x$ y $y=x-4$ de dos formas (respecto de $x$ y de $y$) y compare el esfuerzo. \textbf{(b)} Halle el área dentro de $r=2\cos\theta$ y fuera de $r=1$. Verifique ambos resultados con la integración numérica de GeoGebra.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Planteamientos, resultados y verificación numérica.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos (I): regiones tipo I y II}
@@ -382,6 +414,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué criterio uso para elegir el sistema o la variable de integración? Escríbalo en dos líneas.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA los puntos de intersección de $y^2=2x$ e $y=x-4$. Verifíquelos sustituyendo y comente si omitió alguno.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item Tipo I: $A=\int_a^b[f(x)-g(x)]\dx$ \ (arriba $-$ abajo).
@@ -392,6 +444,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} áreas de regiones limitadas por curvas paramétricas y longitud recorrida por una partícula.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 4: Calificada 1]
+    \textbf{Cobertura:} semanas 1 y 2. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

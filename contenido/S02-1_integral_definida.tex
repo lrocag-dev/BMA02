@@ -17,14 +17,34 @@
     \item Definir integral inferior, integral superior y \resaltar{función integrable}.
     \item Calcular, desde la definición, el área bajo la parábola $y=x^2$.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 1 del sílabo:} Evalúa interpretaciones y propiedades del cálculo integral y su utilidad en problemas de la vida real.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:15 & El problema del área: idea de aproximar con rectángulos\\
       0:15 -- 0:55 & Particiones, sumas inferior/superior, refinamiento\\
       0:55 -- 1:15 & Integral inferior y superior. Integrabilidad. Un contraejemplo\\
       1:15 -- 1:45 & Área debajo de una parábola\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea las definiciones de partición, sumas inferior y superior e integrabilidad.
+      \item Para $f(x)=x^2$ en $[0,1]$ calcule $L$ y $U$ con $n=2$.
+      \item Pregunta guía: ¿cuándo coinciden las integrales inferior y superior?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Qué es un refinamiento de una partición?
+      \item ¿Cómo se relacionan $L(f,P)$ y $U(f,P)$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -344,6 +364,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Sumas de Riemann en una hoja de cálculo}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    Para $f(x)=x^2$ en $[0,1]$ calcule las sumas inferior y superior con $n=4,8,16,32$. \textbf{Conjeture} el valor común y la fórmula de las sumas en $n$; demuéstrela con $\sum k^2=\frac{n(n+1)(2n+1)}6$. Discuta por qué la función de Dirichlet no es integrable.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla de sumas, fórmula demostrada y argumento para Dirichlet.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -364,6 +396,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Puedo explicar en palabras por qué el refinamiento acerca las sumas inferior y superior?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA la suma superior de $x^2$ con $n$ subintervalos. Verifique la fórmula con $n=1$ y $n=2$.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item Partición $P$, norma $\|P\|$; refinamiento $P\subset P^*$.
@@ -375,6 +427,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} propiedades de la integral definida y funciones integrables.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 2: Dirigida 1]
+    \textbf{Cobertura:} semana 1. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

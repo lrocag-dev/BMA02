@@ -17,14 +17,34 @@
     \item Derivar funciones definidas por integrales con límites variables.
     \item Definir rigurosamente $\ln x=\int_1^x\frac{dt}{t}$ y deducir sus propiedades; definir $e^x$ como su inversa.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 1 del sílabo:} Evalúa interpretaciones y propiedades del cálculo integral y su utilidad en problemas de la vida real.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:15 & La función de acumulación\\
       0:15 -- 0:50 & TFC1: enunciado, prueba, ejemplos, regla de Leibniz\\
       0:50 -- 1:25 & La función logaritmo natural\\
       1:25 -- 1:45 & La función exponencial natural\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el Primer Teorema Fundamental del Cálculo y la definición de $\ln x$ como integral.
+      \item Calcule $F'(x)$ si $F(x)=\int_0^x\sqrt{1+t^4}\,dt$.
+      \item Pregunta guía: ¿qué dice el TFC1 sobre la derivada de una función de acumulación?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Derive $\int_1^xe^{t^2}dt$.
+      \item ¿Cuánto vale $\ln1$ con la definición integral?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -307,6 +327,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Funciones definidas por integrales}
+  \small
+  \begin{activa}[Aprendizaje basado en investigación]
+    Sea $F(x)=\int_0^xe^{-t^2}dt$, sin primitiva elemental. \textbf{(a)} Estudie $F'$ y $F''$, deduzca monotonía y concavidad y esboce $F$. \textbf{(b)} Aproxime $F(1)$ con una suma de rectángulos o con trapecio. \textbf{(c)} Calcule $\lim_{x\to0}\frac{F(x)}x$ con el TFC1.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Esbozo de $F$, aproximación numérica y límite justificado.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos (I)}
@@ -339,6 +371,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué idea del TFC1 aplico sin pensarla? ¿Cuál todavía me resulta oscura?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el esbozo de $F$. Verifique el signo de $F'$ y $F''$ por su cuenta.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $F(x)=\int_a^xf(t)\dt$ es continua y acumula el área con signo.
@@ -349,6 +401,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} logaritmos y exponenciales en bases positivas distintas de $1$.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 3: Dirigida 2]
+    \textbf{Cobertura:} semana 2. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

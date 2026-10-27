@@ -17,13 +17,33 @@
     \item Aplicar el \resaltar{teorema de cambio de variable} y aprovechar simetrías.
     \item Aplicar \resaltar{integración por partes} en integrales definidas (fórmulas de Wallis).
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Desarrolla el pensamiento deductivo, inductivo, crítico y creativo mediante cambios de variable en los métodos de integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:35 & TFC2: enunciado, dos demostraciones, ejemplos, advertencias\\
       0:35 -- 1:10 & Cambio de variable. Funciones pares, impares y periódicas\\
       1:10 -- 1:40 & Integración por partes en la integral definida. Wallis\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el Segundo Teorema Fundamental del Cálculo y el cambio de variable en la integral definida.
+      \item Calcule $\int_0^\pi\sen x\,dx$ por el TFC2 y verifique geométricamente.
+      \item Pregunta guía: ¿qué sale mal al aplicar el TFC2 si el integrando no es continuo en el intervalo?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Calcule $\int_0^1 2x\,dx$ con el TFC2.
+      \item En $\int_0^1 2x\sqrt{1+x^2}\,dx$ con $u=1+x^2$, ¿cuáles son los nuevos límites?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -237,6 +257,18 @@
     $\displaystyle\frac\pi2=\lim_{k\to\infty}\frac{2\cdot2\cdot4\cdot4\cdots(2k)(2k)}{1\cdot3\cdot3\cdot5\cdots(2k-1)(2k+1)}$.
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Detector de errores en integrales definidas}
+  \small
+  \begin{activa}[Estudio de casos]
+    Se entregan cuatro resoluciones con falla: \textbf{(1)} $\int_{-1}^1\frac{dx}{x^2}=\left[-\frac1x\right]_{-1}^1=-2$; \textbf{(2)} $\int_0^{2\pi}\sqrt{1-\cos^2x}\,dx=\int_0^{2\pi}\sen x\,dx=0$; \textbf{(3)} un cambio de variable en el que no se transforman los límites; \textbf{(4)} integración por partes omitiendo el término evaluado. Cada grupo \textbf{diagnostica} el error, lo corrige y enuncia la regla que se violó.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Cuatro diagnósticos con la solución correcta y la hipótesis incumplida.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos (I)}
@@ -277,6 +309,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Verifico las hipótesis del TFC2 antes de integrar? ¿Qué señal me avisa de un problema?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA calcular $\int_{-1}^1\frac{dx}{x^2}$. Evalúe si menciona la discontinuidad y justifique su conclusión.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item \resaltar{TFC2}: $\int_a^bf=F(b)-F(a)$ si $F'=f$ en $[a,b]$. Verificar hipótesis (acotación, continuidad).
@@ -286,6 +338,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} áreas de regiones planas (tipo I, tipo II y polares).
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 4: Calificada 1]
+    \textbf{Cobertura:} semanas 1 y 2. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

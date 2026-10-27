@@ -17,13 +17,33 @@
     \item Conocer las \resaltar{funciones hiperbólicas}, sus identidades, derivadas e integrales.
     \item Usar las funciones hiperbólicas inversas y la \resaltar{sustitución hiperbólica}.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Desarrolla el pensamiento deductivo, inductivo, crítico y creativo mediante cambios de variable en los métodos de integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:55 & Sustitución trigonométrica: tres casos, ejemplos, completar cuadrados\\
       0:55 -- 1:15 & Funciones hiperbólicas: definición, gráficas, identidades\\
       1:15 -- 1:40 & Derivadas, primitivas, inversas, sustitución hiperbólica\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la sustitución trigonométrica (tres casos) y las funciones hiperbólicas.
+      \item Identifique la sustitución para $\sqrt{4-x^2}$, $\sqrt{x^2+4}$ y $\sqrt{x^2-4}$.
+      \item Pregunta guía: ¿qué identidad trigonométrica elimina el radical en cada caso?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Qué sustitución elimina $\sqrt{9-x^2}$?
+      \item Calcule $\cosh^2x-\senh^2x$.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -250,6 +270,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Expertos por caso}
+  \small
+  \begin{activa}[Enseñanza entre pares (rompecabezas)]
+    Tres grupos de expertos resuelven $\int\sqrt{4-x^2}\,dx$, $\int\frac{dx}{\sqrt{x^2+4}}$ y $\int\frac{\sqrt{x^2-9}}{x}\,dx$. Regresan a grupos mixtos, enseñan su caso y resuelven juntos el área de la elipse $\frac{x^2}{9}+\frac{y^2}{4}=1$.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tres resoluciones comentadas y el área de la elipse.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -278,6 +310,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Pude explicar el cambio de variable a un compañero? ¿Qué parte me costó más?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA $\int\frac{dx}{\sqrt{x^2+4}}$ por sustitución trigonométrica y por hiperbólica. Compare ambas respuestas y explique por qué son equivalentes.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $\sqrt{a^2-x^2}$: $x=a\sen\theta$; \ $\sqrt{a^2+x^2}$: $x=a\tan\theta$; \ $\sqrt{x^2-a^2}$: $x=a\sec\theta$.
@@ -287,6 +339,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} integración de funciones racionales por fracciones parciales.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 6: Calificada 2]
+    \textbf{Cobertura:} semanas 3 y 4. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

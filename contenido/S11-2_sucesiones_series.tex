@@ -17,14 +17,34 @@
     \item Aplicar el \resaltar{teorema de la sucesión monótona y acotada} (incluidas sucesiones recursivas).
     \item Definir \resaltar{serie numérica}, sus sumas parciales y su convergencia; conocer sus propiedades básicas.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 4 del sílabo:} Demuestra análisis y síntesis ejecutando cálculos en problemas aplicados a su carrera.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:30 & Sucesiones: definición, límite, gráficas\\
       0:30 -- 0:55 & Propiedades de límites. Sándwich. Límites notables\\
       0:55 -- 1:20 & Monotonía y acotación. Sucesiones recursivas\\
       1:20 -- 1:45 & Series: sumas parciales, convergencia, propiedades, criterio del término $n$-ésimo\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea sucesiones, monotonía, acotación y series.
+      \item Calcule los cinco primeros términos de $a_{n+1}=\frac12\left(a_n+\frac2{a_n}\right)$ con $a_1=1$.
+      \item Pregunta guía: ¿una sucesión acotada siempre converge?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Converge una sucesión monótona y acotada?
+      \item ¿Qué dice el criterio del término $n$-ésimo?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -282,6 +302,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Una sucesión recursiva}
+  \small
+  \begin{activa}[Aprendizaje basado en investigación]
+    Para $a_{n+1}=\frac12\left(a_n+\frac2{a_n}\right)$, $a_1=1$: \textbf{(a)} calcule términos en una hoja de cálculo y \textbf{conjeture} monotonía y cota; \textbf{(b)} demuestre que converge; \textbf{(c)} halle el límite; \textbf{(d)} relacione con el método de Newton para $x^2-2=0$.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Conjetura, demostración de convergencia, límite y conexión con Newton.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -300,6 +332,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué parte de la demostración me costó más: monotonía, acotación o el límite?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA demostrar la convergencia. Marque cada paso que no pueda verificar y complételo usted.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $a_n\to L$: para todo $\varepsilon$, los términos terminan en la franja $(L-\varepsilon,L+\varepsilon)$.
@@ -310,6 +362,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} series notables y criterios de convergencia para series de términos no negativos.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 11: Dirigida 6]
+    \textbf{Cobertura:} semanas 9 y 10. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

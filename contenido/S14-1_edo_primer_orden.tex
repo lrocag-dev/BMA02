@@ -16,14 +16,34 @@
     \item Plantear y resolver \resaltar{problemas de valor inicial} (PVI); interpretar \resaltar{campos de direcciones}.
     \item Resolver ecuaciones de \resaltar{variables separables}, \resaltar{homogéneas} y \resaltar{exactas}.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Describe procesos naturales y físicos con modelos matemáticos que usan la integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:25 & Conceptos básicos. Campos de direcciones. PVI. Existencia y unicidad\\
       0:25 -- 0:55 & Variables separables\\
       0:55 -- 1:20 & Ecuaciones homogéneas\\
       1:20 -- 1:45 & Ecuaciones exactas\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el concepto de EDO, orden, PVI y los métodos de variables separables, homogéneas y exactas.
+      \item Resuelva $y'=xy$ con $y(0)=1$.
+      \item Pregunta guía: ¿cómo se verifica que una función es solución de una EDO?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Resuelva $y'=2x$ con $y(0)=1$.
+      \item ¿Cuál es la condición para que $M\,dx+N\,dy=0$ sea exacta?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -231,6 +251,18 @@
   que no lo es (\emph{factor integrante}).
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Clasificar, resolver y visualizar}
+  \small
+  \begin{activa}[Aprendizaje basado en la experiencia]
+    Cada grupo recibe cuatro EDO (una separable, una homogénea, una exacta y una de otro tipo). \textbf{Clasifica}, resuelve, \textbf{verifica por sustitución} y dibuja el campo de direcciones con GeoGebra o Python para superponer la solución del PVI.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Clasificación, solución verificada y gráfica del campo con la solución.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -251,6 +283,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cómo reconocí el tipo de ecuación? ¿Qué señales me ayudan?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA resolver una EDO exacta. Verifique que la solución satisface la ecuación y la condición inicial.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item EDO: relación entre $y$ y sus derivadas; PVI $=$ EDO $+$ condición inicial. Picard garantiza solución única.
@@ -260,6 +312,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} factor integrante; ecuaciones lineales, Bernoulli, Riccati, Lagrange y Clairaut.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 14: Dirigida 8]
+    \textbf{Cobertura:} semanas 12, 13 y 14 (sesión 1). \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

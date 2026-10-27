@@ -17,13 +17,33 @@
     \item Transformar cualquier integral racional en $\sen x$ y $\cos x$ en una integral racional mediante $t=\tan\frac x2$.
     \item Elegir la sustitución más eficiente según la estructura del integrando.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Desarrolla el pensamiento deductivo, inductivo, crítico y creativo mediante cambios de variable en los métodos de integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:15 & Repaso de técnicas; integrales con radicales $\sqrt[q]{ax+b}$\\
       0:15 -- 1:00 & Binomios diferenciales: teorema de Chebyshev y ejemplos\\
       1:00 -- 1:40 & Sustitución universal $t=\tan(x/2)$ y sustituciones particulares\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el binomio diferencial $x^m(a+bx^n)^p$ y la sustitución $t=\tan\frac x2$.
+      \item Exprese $\sen x$ y $\cos x$ en términos de $t=\tan\frac x2$.
+      \item Pregunta guía: ¿en qué casos el binomio diferencial es integrable en términos elementales?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba $\cos x$ en términos de $t=\tan\frac x2$.
+      \item ¿Cuánto es $dx$ en términos de $t$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -237,6 +257,18 @@
   \small Con $t=\tan\frac x2$ habríamos obtenido una racional de grado 4 en el denominador.
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: ¿Qué técnica elijo?}
+  \small
+  \begin{activa}[Trabajo colaborativo (clasificador)]
+    Seis tarjetas: $\int\frac{dx}{2+\cos x}$, $\int x^3(1+x^2)^{-1/2}dx$, $\int\frac{dx}{\sqrt[3]{x}\,(1+\sqrt[3]{x})}$, entre otras. Cada grupo \textbf{clasifica} la integral (binomio, universal, otra), \textbf{justifica} la elección con las condiciones de Chebyshev y resuelve dos; verifica con un CAS.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla: integral, técnica, justificación y resultado verificado.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -264,6 +296,26 @@
 
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Qué pista me ayuda a elegir técnica? ¿Puedo organizar un diagrama de decisión propio?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA un diagrama de decisión de técnicas de integración. Complételo y corríjalo con lo que aprendió en el curso.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item \resaltar{Racionalizar}: $ax+b=t^q$ elimina radicales de un mismo binomio lineal.
@@ -275,6 +327,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Siguiente:} Rebalance y Examen Parcial (semanas 1 a 7).
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 7: Dirigida 4]
+    \textbf{Cobertura:} semanas 5 y 6. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata. La semana 8 es el \textbf{Examen Parcial} (semanas 1 a 7): use las prácticas calificadas y dirigidas como guía de repaso.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

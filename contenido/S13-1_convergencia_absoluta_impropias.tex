@@ -18,14 +18,34 @@
     \item Calcular integrales impropias mediante límites y reconocer cuándo divergen.
     \item Aplicar a problemas de física y probabilidad.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 4 del sílabo:} Demuestra análisis y síntesis ejecutando cálculos en problemas aplicados a su carrera.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:25 & Convergencia absoluta y condicional. Reordenamientos\\
       0:25 -- 1:00 & Integrales impropias de primera especie. La integral $p$\\
       1:00 -- 1:30 & Segunda especie: singularidades en extremos o interiores\\
       1:30 -- 1:45 & Tercera especie. Aplicaciones (función Gamma, velocidad de escape)\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea convergencia absoluta e integrales impropias de las tres especies.
+      \item Decida si converge $\int_1^\infty\frac{dx}{x^2}$ y $\int_0^1\frac{dx}{\sqrt x}$.
+      \item Pregunta guía: ¿qué significa ``valor principal'' en una integral de tercera especie?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Para qué $p$ converge $\int_1^\infty\frac{dx}{x^p}$?
+      \item ¿Qué especie es $\int_{-1}^1\frac{dx}{x}$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -252,6 +272,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Clasificar y decidir}
+  \small
+  \begin{activa}[Estudio de casos]
+    Cada grupo clasifica la especie y decide la convergencia de $\int_1^\infty\frac{dx}{x^p}$, $\int_0^1\frac{dx}{x^p}$ y $\int_{-1}^1\frac{dx}{x}$ (con su valor principal). Luego interpreta $\int_R^\infty\frac{GMm}{r^2}dr$ como \textbf{trabajo para escapar} del campo gravitatorio y discute por qué es finito.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla de especie y convergencia, y la interpretación física.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -283,6 +315,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Distingo bien cada especie? ¿Qué error cometo con más frecuencia?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el valor principal de $\int_{-1}^1\frac{dx}{x}$. Compruebe que lo defina como límite simétrico.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item Absoluta $\Rightarrow$ convergente. Las condicionales dependen del orden de los términos.
@@ -293,6 +345,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} criterios de convergencia para integrales impropias.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 13: Calificada 4]
+    \textbf{Cobertura:} semanas 9, 10 y 11. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

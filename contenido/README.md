@@ -27,3 +27,47 @@ ejercicios propuestos y resumen.
 | 15 | `S15-1_aplicaciones_edo` | (Rebalance) |
 
 Requisitos: TeX Live con `beamer`, `pgfplots`, `tcolorbox`, `babel-spanish`.
+
+## Estructura didáctica de cada sesión (README raíz)
+
+Cada presentación editable (`.tex`) incorpora, además del contenido, cuatro frames y ajustes de plan que aplican el modelo de aprendizaje activo:
+
+| Elemento | Dónde aparece | Estrategia del modelo |
+|---|---|---|
+| Competencia del sílabo | Frame de objetivos | Coherencia con el sílabo |
+| Aula invertida: lectura y tarea previa + verificación de 5 min en pares | 2.º frame | Aula invertida, trabajo colaborativo |
+| Actividad colaborativa (ABP, casos, investigación, experiencia con GeoGebra/Python/CAS, enseñanza entre pares, mini proyecto) con roles, producto y retroalimentación | Antes de los ejercicios propuestos | ABP, casos, investigación, experiencia, colaborativo, proyectos |
+| Metacognición (2 preguntas comunes + 1 específica) y uso responsable de la IA | Antes del resumen | Metacognición, IA con responsabilidad intelectual |
+| Evaluación: práctica del miércoles, cobertura, rúbrica común, declaración de IA y portafolio | Último frame | Evaluación sumativa, rúbricas, portafolio |
+
+El plan de 2 horas reserva 5 minutos iniciales para la verificación de la lectura previa y el tramo final para la actividad colaborativa y el cierre metacognitivo.
+
+## Calendario de evaluación (dosificado 2026-2)
+
+Sistema G: `PF = (EP + EF + PP)/3`; `PP` es el promedio de las 3 mejores de las 4 prácticas calificadas.
+
+| Semana | Práctica (miércoles) | Cobertura |
+|---|---|---|
+| 1 | Prueba de entrada (diagnóstica) | Conocimientos previos |
+| 2 | Dirigida 1 | Semana 1 |
+| 3 | Dirigida 2 | Semana 2 |
+| 4 | Calificada 1 | Semanas 1 y 2 |
+| 5 | Dirigida 3 | Semanas 3 y 4 |
+| 6 | Calificada 2 | Semanas 3 y 4 |
+| 7 | Dirigida 4 | Semanas 5 y 6 |
+| 8 | **Examen Parcial** | Semanas 1 a 7 |
+| 9 | Dirigida 5 | Semana 7 |
+| 10 | Calificada 3 | Semanas 5, 6 y 7 |
+| 11 | Dirigida 6 | Semanas 9 y 10 |
+| 12 | Dirigida 7 | Semana 11 |
+| 13 | Calificada 4 | Semanas 9, 10 y 11 |
+| 14 | Dirigida 8 | Semanas 12, 13 y 14 (sesión 1) |
+| 15 | Feriado (mi 9/12) | |
+| 16 | **Examen Final** | Semanas 9 a 15 |
+| 17 | **Examen Sustitutorio** | Todo el curso |
+
+**Supuestos.** (1) Dirigida = práctica en equipo, formativa; Calificada = práctica individual. (2) Hay 4 prácticas calificadas (Calificada 1 a 4) y el PP es el promedio de las **3 mejores** (confirmado por el docente). (3) El portafolio es evidencia formativa y no modifica PF.
+
+**Rúbrica común:** corrección y rigor matemático; justificación y notación; modelamiento e interpretación; comunicación y trazabilidad (incluye la declaración de uso de IA).
+
+Los entornos (`previa`, `activa`, `metacog`, `iabox`, `evalbox`) y macros (`\metacomun`, `\criterios`, `\declaracionia`) están en `bma02.sty`.

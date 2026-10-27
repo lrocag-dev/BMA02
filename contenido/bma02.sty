@@ -120,4 +120,34 @@
 \institute[FC-UNI]{Facultad de Ciencias\\Universidad Nacional de Ingeniería}
 \date{Periodo académico 2026-2}
 
+% ---------- Aprendizaje activo, metacognición, IA y evaluación ----------
+\newtcolorbox{previa}[1][]{enhanced,colback=teal!6,colframe=teal!60!black,
+  fonttitle=\bfseries,title={Aula invertida\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{activa}[1][]{enhanced,colback=uniNaranja!8,colframe=uniNaranja!90!black,
+  fonttitle=\bfseries,title={Actividad en clase\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{metacog}[1][]{enhanced,colback=uniMorado!6,colframe=uniMorado,
+  fonttitle=\bfseries,title={Metacognición\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{iabox}[1][]{enhanced,colback=black!5,colframe=uniGris,
+  fonttitle=\bfseries,title={Uso responsable de la IA\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{evalbox}[1][]{enhanced,colback=uniGranate!5,colframe=uniGranate,
+  fonttitle=\bfseries,title={Evaluación\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+
+% Preguntas metacognitivas comunes a todas las sesiones
+\newcommand{\metacomun}{%
+  \item ¿Qué idea de hoy puedo explicar con mis palabras sin mirar mis notas? ¿Cuál no?
+  \item ¿Cómo cambió mi forma de resolver respecto de lo que hice en la tarea previa?}
+% Criterios comunes de las prácticas
+\newcommand{\criterios}{%
+  \textbf{Criterios (rúbrica común):} (1) corrección y rigor matemático; (2) justificación y notación;
+  (3) modelamiento e interpretación del resultado; (4) comunicación y trazabilidad, incluida la declaración de uso de IA.}
+% Declaración de uso de IA
+\newcommand{\declaracionia}{%
+  \textbf{Declaración de uso de IA:} indique qué herramienta usó, para qué, qué verificó por su cuenta y qué corrigió.
+  El estudiante responde por la calidad y sustentación de lo que entrega.}
+
 \endinput
