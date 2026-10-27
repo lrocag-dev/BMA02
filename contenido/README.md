@@ -66,7 +66,7 @@ Sistema G: `PF = (EP + EF + PP)/3`; `PP` es el promedio de las 3 mejores de las 
 | 16 | **Examen Final** | Semanas 9 a 15 |
 | 17 | **Examen Sustitutorio** | Todo el curso |
 
-**Supuestos.** (1) Dirigida = práctica en equipo, formativa; Calificada = práctica individual. (2) Hay 4 prácticas calificadas (Calificada 1 a 4) y el PP es el promedio de las **3 mejores** (confirmado por el docente). (3) El portafolio es evidencia formativa y no modifica PF. (4) Falta el `.tex` de S01-1 (solo está el PDF), por lo que esa sesión no se actualizó.
+**Supuestos.** (1) Dirigida = práctica en equipo, formativa; Calificada = práctica individual. (2) Hay 4 prácticas calificadas (Calificada 1 a 4) y el PP es el promedio de las **3 mejores** (confirmado por el docente). (3) El portafolio es evidencia formativa y no modifica PF.
 
 **Rúbrica común:** corrección y rigor matemático; justificación y notación; modelamiento e interpretación; comunicación y trazabilidad (incluye la declaración de uso de IA).
 
