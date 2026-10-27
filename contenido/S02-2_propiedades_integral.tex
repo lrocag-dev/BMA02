@@ -1,0 +1,322 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Propiedades de la integral]{Propiedades de la integral definida}
+\subtitle{Funciones continuas como ejemplos de funciones integrables\\[2pt]\small Semana 2 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar y usar las propiedades algebraicas y de orden de la integral definida.
+    \item Interpretar la integral como \resaltar{área con signo}.
+    \item Probar que las funciones \resaltar{monótonas} y las \resaltar{continuas} son integrables.
+    \item Enunciar y aplicar el \resaltar{Teorema del Valor Medio para integrales}.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & Repaso: sumas de Darboux e integrabilidad\\
+      0:10 -- 0:50 & Propiedades: linealidad, aditividad, orden, acotación\\
+      0:50 -- 1:30 & Clases de funciones integrables: monótonas, continuas, continuas a trozos\\
+      1:30 -- 1:45 & Valor medio de una función\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Propiedades de la integral}
+
+\begin{frame}{Área con signo}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Si $f$ cambia de signo, los rectángulos con $f(c_i)<0$ contribuyen \emph{negativamente}:
+      \[ \int_a^bf(x)\dx=A_1-A_2+A_3. \]
+      \begin{ejemplo}
+        $\displaystyle\int_0^{2\pi}\sen x\dx=0$: el área sobre el eje se cancela con la de abajo.
+      \end{ejemplo}
+      \begin{observacion}
+        El área \emph{geométrica} total es $\displaystyle\int_a^b|f(x)|\dx=A_1+A_2+A_3$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.2, xmax=3.8, ymin=-1, ymax=3.2, width=7cm, height=5.5cm,
+            xtick={0.2,3.5}, xticklabels={$a$,$b$}, ytick=\empty, domain=0.2:3.5]
+          \addplot[name path=f, curva] {0.5*(x+0.5)*(x-1.4)*(x-2.8)};
+          \path[name path=ax] (axis cs:0.2,0) -- (axis cs:3.5,0);
+          \addplot[fill=uniAzul!30] fill between[of=f and ax, split, every segment no 0/.style={fill=uniAzul!30},
+            every segment no 1/.style={fill=uniGranate!30}, every segment no 2/.style={fill=uniAzul!30}];
+          \node at (axis cs:0.7,0.45) {$A_1$};
+          \node at (axis cs:2.1,-0.35) {$A_2$};
+          \node at (axis cs:3.25,0.5) {$A_3$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Convenciones y linealidad}
+  \begin{definicion}[convenciones]
+    \[ \int_a^af(x)\dx=0,\qquad \int_b^af(x)\dx=-\int_a^bf(x)\dx\quad(a<b). \]
+  \end{definicion}
+  \begin{teorema}[Linealidad]
+    Si $f,g$ son integrables en $[a,b]$ y $\alpha,\beta\in\R$, entonces $\alpha f+\beta g$ es integrable y
+    \[ \int_a^b\big(\alpha f+\beta g\big)\dx=\alpha\int_a^bf\dx+\beta\int_a^bg\dx. \]
+  \end{teorema}
+  \textbf{Idea de la prueba.} Para sumas de Riemann es inmediato:
+  $\sum(\alpha f+\beta g)(c_i)\Delta x_i=\alpha\sum f(c_i)\Delta x_i+\beta\sum g(c_i)\Delta x_i$; luego se pasa al límite.
+  \begin{ejemplo}
+    $\displaystyle\int_0^2(3x^2-4)\dx=3\int_0^2x^2\dx-4\int_0^2 1\dx=3\cdot\frac83-4\cdot2=0.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Aditividad respecto del intervalo}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[Aditividad]
+        Si $a<c<b$, $f$ es integrable en $[a,b]$ si y solo si lo es en $[a,c]$ y en $[c,b]$, y
+        \[ \int_a^bf\dx=\int_a^cf\dx+\int_c^bf\dx. \]
+      \end{teorema}
+      Con las convenciones, la fórmula vale para \emph{cualquier} orden de $a,b,c$.
+      \begin{ejemplo}
+        $\displaystyle\int_{-1}^2|x|\dx=\int_{-1}^0(-x)\dx+\int_0^2x\dx=\frac12+2=\frac52.$
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.2, xmax=4.4, ymin=0, ymax=3, width=6.5cm, height=5cm,
+            xtick={0.4,2.2,4}, xticklabels={$a$,$c$,$b$}, ytick=\empty, domain=0.4:4]
+          \addplot[fill=uniAzul!30, draw=none, domain=0.4:2.2] {1+0.5*sin(deg(1.5*x))+0.2*x} \closedcycle;
+          \addplot[fill=uniVerde!30, draw=none, domain=2.2:4] {1+0.5*sin(deg(1.5*x))+0.2*x} \closedcycle;
+          \addplot[curva] {1+0.5*sin(deg(1.5*x))+0.2*x};
+          \draw[dashed] (axis cs:2.2,0) -- (axis cs:2.2,1.39);
+          \node at (axis cs:1.3,0.5) {$\int_a^c$};
+          \node at (axis cs:3.1,0.5) {$\int_c^b$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Propiedades de orden}
+  \begin{teorema}[Monotonía]
+    Si $f,g$ son integrables en $[a,b]$ y $f(x)\le g(x)$ para todo $x$, entonces
+    \[ \int_a^bf\dx\le\int_a^bg\dx. \]
+    En particular, si $f\ge0$ entonces $\int_a^bf\ge0$.
+  \end{teorema}
+  \begin{teorema}[Acotación]
+    Si $m\le f(x)\le M$ en $[a,b]$:\qquad
+    $\displaystyle m(b-a)\le\int_a^bf(x)\dx\le M(b-a).$
+  \end{teorema}
+  \begin{teorema}[Desigualdad triangular]
+    Si $f$ es integrable, $|f|$ también lo es y\qquad
+    $\displaystyle\left|\int_a^bf(x)\dx\right|\le\int_a^b|f(x)|\dx.$
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Estimando integrales sin calcularlas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[1]
+        Estimar $\displaystyle I=\int_0^1e^{-x^2}\dx$.
+
+        En $[0,1]$: \ $e^{-1}\le e^{-x^2}\le 1$, luego
+        \[ 0.367\approx e^{-1}\le I\le 1. \]
+        Mejor: como $e^{t}\ge1+t$, \ $e^{-x^2}\ge1-x^2$:
+        \[ I\ge\int_0^1(1-x^2)\dx=\frac23\approx0.667. \]
+        (Valor real: $I\approx0.7468$.)
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.25, ymin=0, ymax=1.2, width=6.5cm, height=5.3cm,
+            xtick={1}, ytick={0.3679,1}, yticklabels={$e^{-1}$,$1$}, domain=0:1]
+          \addplot[fill=uniAzul!25, draw=none] {exp(-x^2)} \closedcycle;
+          \addplot[curva] {exp(-x^2)} node[pos=0.7,above right] {\scriptsize $e^{-x^2}$};
+          \addplot[curva2, dashed] {1-x^2} node[pos=0.8,left] {\scriptsize $1-x^2$};
+          \addplot[uniVerde, thick] {0.3679};
+          \addplot[uniVerde, thick] {1};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Más ejemplos de estimación}
+  \begin{ejemplo}[2]
+    Pruebe que $\displaystyle\frac12\le\int_0^{1/2}\frac{dx}{\sqrt{1-x^4}}\le\frac{\pi}{6}$.
+
+    En $[0,\tfrac12]$: \ $1-x^2\le 1-x^4\le 1$, luego
+    $\displaystyle 1\le\frac{1}{\sqrt{1-x^4}}\le\frac{1}{\sqrt{1-x^2}}$ y
+    \[ \frac12\le\int_0^{1/2}\frac{dx}{\sqrt{1-x^4}}\le\int_0^{1/2}\frac{dx}{\sqrt{1-x^2}}=\arcsen\tfrac12=\frac{\pi}{6}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[3: usando geometría]
+    $\displaystyle\int_{-2}^{2}\sqrt{4-x^2}\dx$ es el área de un semicírculo de radio $2$: \ $=2\pi$.\\
+    $\displaystyle\int_{-1}^{1}x^3\cos x\dx=0$, pues el integrando es impar (áreas simétricas con signos opuestos).
+  \end{ejemplo}
+\end{frame}
+
+\section{Funciones integrables}
+
+\begin{frame}{Las funciones monótonas son integrables}
+  \begin{teorema}
+    Si $f$ es monótona en $[a,b]$, entonces $f$ es integrable en $[a,b]$.
+  \end{teorema}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{Prueba} ($f$ creciente, partición regular). $m_i=f(x_{i-1})$, $M_i=f(x_i)$:
+      \[ U-L=\frac{b-a}{n}\sum_{i=1}^n\big[f(x_i)-f(x_{i-1})\big] \]
+      \[ =\frac{b-a}{n}\big[f(b)-f(a)\big]\xrightarrow[n\to\infty]{}0. \]
+      La suma es \resaltar{telescópica}. Por el criterio de Riemann, $f$ es integrable. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=2.3, ymin=0, ymax=4, width=6cm, height=5cm, xtick=\empty, ytick=\empty]
+          \addplot[fill=uniGranate!40, draw=uniGranate, ybar interval, samples=7, domain=0:2] {1+0.5*(x+1/3)+0.4*(x+1/3)^2};
+          \addplot[fill=white, draw=uniGranate, ybar interval, samples=7, domain=0:2] {1+0.5*x+0.4*x^2};
+          \addplot[curva, domain=0:2] {1+0.5*x+0.4*x^2};
+          \draw[uniVerde, very thick] (axis cs:2.15,1) -- (axis cs:2.15,3.6) ;
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Los rectángulos granates, apilados, forman una columna de ancho $\frac{b-a}{n}$ y
+      altura $f(b)-f(a)$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Las funciones continuas son integrables}
+  \begin{teorema}
+    Si $f$ es continua en $[a,b]$, entonces $f$ es integrable en $[a,b]$.
+  \end{teorema}
+  \textbf{Ingrediente clave: continuidad uniforme (Heine--Cantor).} Una función continua en un intervalo
+  \emph{cerrado y acotado} es uniformemente continua:
+  \[ \forall\varepsilon>0\ \exists\delta>0:\ |x-y|<\delta\ \Rightarrow\ |f(x)-f(y)|<\varepsilon. \]
+  \textbf{Prueba.} Dado $\varepsilon>0$, tome $\delta$ para $\frac{\varepsilon}{b-a}$ y una partición con $\|P\|<\delta$.
+  Por el teorema de Weierstrass, $f$ alcanza $m_i$ y $M_i$ en puntos de $I_i$, cuya distancia es $<\delta$, así que
+  $M_i-m_i<\frac{\varepsilon}{b-a}$ y
+  \[ U(f,P)-L(f,P)=\sum(M_i-m_i)\Delta x_i<\frac{\varepsilon}{b-a}\sum\Delta x_i=\varepsilon.\qquad\blacksquare \]
+\end{frame}
+
+\begin{frame}{Funciones continuas a trozos}
+  \begin{teorema}
+    Si $f$ es acotada en $[a,b]$ y tiene un número finito de discontinuidades, entonces $f$ es integrable.
+    Además, cambiar el valor de $f$ en un número finito de puntos no altera la integral.
+  \end{teorema}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[función parte entera]
+        \[ \int_0^3\lfloor x\rfloor\dx=0\cdot1+1\cdot1+2\cdot1=3. \]
+      \end{ejemplo}
+      \begin{observacion}
+        \textbf{Integrable $\not\Rightarrow$ continua} (parte entera), y
+        \textbf{acotada $\not\Rightarrow$ integrable} (Dirichlet).
+        Además, $f(x)=1/x$ en $(0,1]$ no es acotada: \alert{no} es integrable en el sentido de Riemann
+        (se estudiará como integral impropia).
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3.4, ymin=0, ymax=2.7, width=6.5cm, height=4.6cm, xtick={1,2,3}, ytick={1,2}]
+          \addplot[fill=uniAzul!30, draw=none] coordinates {(1,0) (1,1) (2,1) (2,0)} \closedcycle;
+          \addplot[fill=uniAzul!30, draw=none] coordinates {(2,0) (2,2) (3,2) (3,0)} \closedcycle;
+          \addplot[curva, mark=none] coordinates {(0,0) (1,0)};
+          \addplot[curva] coordinates {(1,1) (2,1)};
+          \addplot[curva] coordinates {(2,2) (3,2)};
+          \addplot[only marks, mark=*, uniAzul] coordinates {(0,0) (1,1) (2,2)};
+          \addplot[only marks, mark=o, uniAzul, fill=white] coordinates {(1,0) (2,1) (3,2)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Valor medio de una función}
+
+\begin{frame}{Teorema del Valor Medio para integrales}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{definicion}[valor medio]
+        El \resaltar{valor medio} (promedio) de $f$ en $[a,b]$ es
+        \[ \bar f=\frac{1}{b-a}\int_a^bf(x)\dx. \]
+      \end{definicion}
+      \begin{teorema}[TVM para integrales]
+        Si $f$ es continua en $[a,b]$, existe $c\in[a,b]$ tal que
+        \[ \int_a^bf(x)\dx=f(c)\,(b-a). \]
+      \end{teorema}
+      \textbf{Prueba.} Por acotación $m\le\bar f\le M$; como $f$ es continua, por el teorema del valor intermedio
+      alcanza el valor $\bar f$. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3.4, ymin=0, ymax=2.8, width=6.5cm, height=5.5cm,
+            xtick={0.3,1.72,3}, xticklabels={$a$,$c$,$b$}, ytick={1.537}, yticklabels={$\bar f$}, domain=0.3:3]
+          \addplot[fill=uniAzul!25, draw=none] {1.5+0.8*sin(deg(1.8*x))} \closedcycle;
+          \addplot[draw=uniGranate, thick, fill=uniGranate, fill opacity=0.15] coordinates {(0.3,0) (0.3,1.537) (3,1.537) (3,0)};
+          \addplot[curva] {1.5+0.8*sin(deg(1.8*x))};
+          \draw[dashed] (axis cs:1.72,0) -- (axis cs:1.72,1.537);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small El rectángulo de altura $\bar f$ tiene la misma área que la región bajo la curva.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Valor medio: ejemplos}
+  \begin{ejemplo}[1]
+    Valor medio de $f(x)=x^2$ en $[0,3]$: \ $\bar f=\dfrac13\displaystyle\int_0^3x^2\dx=\frac13\cdot9=3$.
+    Se alcanza en $c=\sqrt3\in[0,3]$.
+  \end{ejemplo}
+  \begin{ejemplo}[2: aplicación física]
+    La temperatura (en $^\circ$C) durante un día se modela por $T(t)=18+6\sen\!\big(\frac{\pi(t-9)}{12}\big)$,
+    $0\le t\le24$. Como el seno completa un periodo en $[0,24]$, su integral es cero y la temperatura media es
+    \[ \bar T=\frac1{24}\int_0^{24}T(t)\dt=18\,^\circ\text{C}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[3: velocidad media]
+    Si $v(t)$ es la velocidad, $\displaystyle\bar v=\frac{1}{t_2-t_1}\int_{t_1}^{t_2}v(t)\dt$ = desplazamiento / tiempo.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Sabiendo que $\int_0^bx\dx=\frac{b^2}{2}$ y $\int_0^bx^2\dx=\frac{b^3}{3}$, calcule
+        $\displaystyle\int_1^4(2x^2-3x+1)\dx$.
+      \item Si $\int_0^5f=7$, $\int_0^2f=3$ y $\int_2^5g=-1$, calcule $\int_2^5(2f-3g)$ y $\int_5^2f$.
+      \item Calcule usando geometría: \ $\displaystyle\int_{0}^{3}|x-1|\dx$, \ $\displaystyle\int_{-3}^{3}\left(2+\sqrt{9-x^2}\right)dx$,
+        \ $\displaystyle\int_0^4\lfloor x\rfloor^2\dx$.
+      \item Pruebe que $\displaystyle\frac{2}{5}\le\int_1^2\frac{x}{x^2+1}\dx\le\frac12$.
+      \item Pruebe que $\displaystyle 0\le\int_0^{\pi/2}\sen^{n+1}x\dx\le\int_0^{\pi/2}\sen^nx\dx$.
+      \item Pruebe que si $f$ es continua, $f\ge0$ en $[a,b]$ y $\int_a^bf=0$, entonces $f\equiv0$.
+        ¿Es cierto sin continuidad?
+      \item Halle el valor medio de $f(x)=\sqrt{4-x^2}$ en $[-2,2]$ y el punto $c$ donde se alcanza.
+      \item Dé un ejemplo de $f$ no integrable tal que $|f|$ sí sea integrable.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item La integral es \resaltar{lineal}, \resaltar{aditiva} respecto del intervalo y \resaltar{monótona}.
+    \item Acotación: $m(b-a)\le\int_a^bf\le M(b-a)$; \ $\left|\int f\right|\le\int|f|$.
+    \item Son integrables: funciones monótonas, continuas, y acotadas con finitas discontinuidades.
+    \item Valor medio: $\bar f=\frac{1}{b-a}\int_a^bf$; si $f$ es continua, $\bar f=f(c)$ para algún $c$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} el Primer Teorema Fundamental del Cálculo y la función logaritmo.
+\end{frame}
+
+\end{document}
