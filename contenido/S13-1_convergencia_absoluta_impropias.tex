@@ -1,0 +1,298 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Convergencia absoluta e impropias]{Convergencia absoluta}
+\subtitle{Integrales impropias de primera, segunda y tercera especie\\[2pt]\small Semana 13 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Distinguir convergencia \resaltar{absoluta} y \resaltar{condicional} de series; probar que la absoluta implica la convergencia.
+    \item Definir las \resaltar{integrales impropias} de primera especie (intervalo infinito), segunda especie (integrando no acotado)
+      y tercera especie (ambas).
+    \item Calcular integrales impropias mediante límites y reconocer cuándo divergen.
+    \item Aplicar a problemas de física y probabilidad.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Convergencia absoluta y condicional. Reordenamientos\\
+      0:25 -- 1:00 & Integrales impropias de primera especie. La integral $p$\\
+      1:00 -- 1:30 & Segunda especie: singularidades en extremos o interiores\\
+      1:30 -- 1:45 & Tercera especie. Aplicaciones (función Gamma, velocidad de escape)\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Convergencia absoluta}
+
+\begin{frame}{Convergencia absoluta y condicional}
+  \begin{definicion}
+    $\sum a_n$ es \resaltar{absolutamente convergente} si $\sum|a_n|$ converge; \resaltar{condicionalmente convergente}
+    si $\sum a_n$ converge pero $\sum|a_n|$ diverge.
+  \end{definicion}
+  \begin{teorema}
+    Si $\sum|a_n|$ converge, entonces $\sum a_n$ converge y $\left|\sum a_n\right|\le\sum|a_n|$.
+  \end{teorema}
+  \textbf{Prueba.} $0\le a_n+|a_n|\le2|a_n|$. Por comparación, $\sum(a_n+|a_n|)$ converge, y
+  $\sum a_n=\sum(a_n+|a_n|)-\sum|a_n|$ es diferencia de convergentes. $\blacksquare$
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $\displaystyle\sum\frac{\sen n}{n^2}$: \ $\left|\frac{\sen n}{n^2}\right|\le\frac1{n^2}$ $\Rightarrow$ absolutamente convergente.
+      \item $\displaystyle\sum\frac{(-1)^n}{\sqrt n}$: converge (Leibniz) pero $\sum\frac1{\sqrt n}$ diverge $\Rightarrow$ condicional.
+      \item $\displaystyle\sum\frac{(-3)^n}{n!}$: \ $\frac{|a_{n+1}|}{|a_n|}=\frac{3}{n+1}\to0$ $\Rightarrow$ absolutamente convergente (cociente).
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{¿Por qué importa? Reordenamientos}
+  \begin{teorema}[Dirichlet / Riemann]
+    \begin{itemize}
+      \item Si $\sum a_n$ converge \textbf{absolutamente}, cualquier reordenamiento converge a la \emph{misma} suma.
+      \item Si converge \textbf{condicionalmente}, para cualquier $L\in\R$ existe un reordenamiento que suma $L$ (¡o diverge!).
+    \end{itemize}
+  \end{teorema}
+  \begin{ejemplo}
+    $\ln2=1-\frac12+\frac13-\frac14+\frac15-\frac16+\cdots$. \ Reordenando (un positivo, dos negativos):
+    \[ \left(1-\tfrac12\right)-\tfrac14+\left(\tfrac13-\tfrac16\right)-\tfrac18+\left(\tfrac15-\tfrac1{10}\right)-\tfrac1{12}+\cdots
+       =\tfrac12\left(1-\tfrac12+\tfrac13-\tfrac14+\cdots\right)=\tfrac12\ln2. \]
+    ¡Los mismos términos, otra suma!
+  \end{ejemplo}
+  \begin{idea}
+    Las series absolutamente convergentes se comportan como sumas finitas; las condicionales, no.
+  \end{idea}
+\end{frame}
+
+\section{Integrales impropias de primera especie}
+
+\begin{frame}{Primera especie: intervalos no acotados}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{definicion}
+        Si $f$ es integrable en $[a,t]$ para todo $t>a$:
+        \[ \int_a^\infty f(x)\dx=\lim_{t\to\infty}\int_a^tf(x)\dx. \]
+        Si el límite existe (finito), la integral \resaltar{converge}; si no, \resaltar{diverge}. Análogo para $\int_{-\infty}^b$.
+      \end{definicion}
+      \begin{ejemplo}[1]
+        $\displaystyle\int_1^\infty\frac{dx}{x^2}=\lim_{t\to\infty}\left[-\frac1x\right]_1^t=\lim_{t\to\infty}\left(1-\frac1t\right)=1.$
+      \end{ejemplo}
+      \begin{ejemplo}[2]
+        $\displaystyle\int_1^\infty\frac{dx}{x}=\lim_{t\to\infty}\ln t=\infty$: \ diverge.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=8.5, ymin=0, ymax=1.3, width=6.3cm, height=4.5cm, xtick={1}, ytick={1}, domain=1:8.3, samples=100]
+          \addplot[fill=uniAzul!25, draw=none] {1/x^2} \closedcycle;
+          \addplot[curva] {1/x^2};
+          \addplot[curva2, dashed] {1/x};
+          \node[uniAzul] at (axis cs:4,0.15) {\scriptsize $\frac1{x^2}$: área $1$};
+          \node[uniGranate] at (axis cs:5,0.5) {\scriptsize $\frac1x$: área $\infty$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small ¡Las dos curvas se parecen, pero $\frac1x$ decrece demasiado lento!
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La integral $p$ y otros ejemplos}
+  \begin{teorema}[integral $p$]
+    \[ \int_1^\infty\frac{dx}{x^p}\ \text{converge}\iff p>1,\quad\text{y en ese caso vale }\frac1{p-1}. \]
+  \end{teorema}
+  \begin{ejemplo}[3]
+    $\displaystyle\int_0^\infty e^{-ax}\dx=\lim_{t\to\infty}\frac{1-e^{-at}}{a}=\frac1a$ \ ($a>0$). \qquad
+    $\displaystyle\int_0^\infty xe^{-x}\dx=\lim_{t\to\infty}\Big[-(x+1)e^{-x}\Big]_0^t=1.$
+  \end{ejemplo}
+  \begin{ejemplo}[4: ambos extremos infinitos]
+    Se separa en un punto $c$: $\displaystyle\int_{-\infty}^\infty f=\int_{-\infty}^cf+\int_c^\infty f$ (deben converger \textbf{ambas}).
+    \[ \int_{-\infty}^\infty\frac{dx}{1+x^2}=\lim_{s\to-\infty}(-\arctan s)+\lim_{t\to\infty}\arctan t=\frac\pi2+\frac\pi2=\pi. \]
+  \end{ejemplo}
+  \small \alert{Ojo:} $\int_{-\infty}^\infty x\dx$ diverge, aunque $\lim_{t\to\infty}\int_{-t}^tx\dx=0$ (``valor principal'', otro concepto).
+\end{frame}
+
+\begin{frame}{Aplicación: velocidad de escape}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}[5]
+        El trabajo para llevar un cohete de masa $m$ desde la superficie terrestre (radio $R$) hasta el ``infinito'' contra
+        $F(r)=\dfrac{GMm}{r^2}$ es
+        \[ W=\int_R^\infty\frac{GMm}{r^2}\,dr=\frac{GMm}{R}. \]
+        Igualando a la energía cinética $\tfrac12mv^2$:
+        \[ v_e=\sqrt{\frac{2GM}{R}}\approx11.2\ \text{km/s}. \]
+      \end{ejemplo}
+      \small ¡Un trabajo \emph{finito} sobre una distancia \emph{infinita}!
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$r$}, ylabel={$F$}, xmin=0, xmax=6.5, ymin=0, ymax=1.3, width=6cm, height=4.6cm, xtick={1}, xticklabels={$R$}, ytick=\empty, domain=1:6.3]
+          \addplot[fill=uniAzul!25, draw=none] {1/x^2} \closedcycle;
+          \addplot[curva] {1/x^2};
+          \node at (axis cs:3,0.5) {\scriptsize $W=\int_R^\infty F\,dr$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Segunda especie}
+
+\begin{frame}{Segunda especie: integrandos no acotados}
+  \begin{definicion}
+    Si $f$ es continua en $(a,b]$ y no acotada cerca de $a$:\qquad
+    $\displaystyle\int_a^bf(x)\dx=\lim_{s\to a^+}\int_s^bf(x)\dx$.\\
+    Análogo si la singularidad está en $b$. Si está en un punto interior $c$, se separa: $\int_a^c+\int_c^b$.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[6]
+        $\displaystyle\int_0^1\frac{dx}{\sqrt x}=\lim_{s\to0^+}\Big[2\sqrt x\Big]_s^1=\lim_{s\to0^+}\big(2-2\sqrt s\big)=2.$
+      \end{ejemplo}
+      \small ¡Una región no acotada con área finita!
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.3, ymin=0, ymax=6, width=6cm, height=4.6cm, xtick={1}, ytick={1}, samples=200]
+          \addplot[fill=uniAzul!25, draw=none, domain=0.03:1] {1/sqrt(x)} \closedcycle;
+          \addplot[curva, domain=0.028:1.2] {1/sqrt(x)};
+          \addplot[curva2, dashed, domain=0.17:1.2] {1/x};
+          \node[uniAzul] at (axis cs:0.6,2.3) {\scriptsize $\frac{1}{\sqrt x}$: área $2$};
+          \node[uniGranate] at (axis cs:0.45,5) {\scriptsize $\frac1x$: área $\infty$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La integral $p$ de segunda especie}
+  \begin{teorema}[integral $p$, segunda especie]
+    $\displaystyle\int_0^1\frac{dx}{x^p}$ converge $\iff p<1$, \ y vale $\dfrac1{1-p}$.
+  \end{teorema}
+  \textbf{Prueba.} Para $p\ne1$: $\displaystyle\int_s^1x^{-p}\dx=\frac{1-s^{1-p}}{1-p}$, y $s^{1-p}\to0$ si y solo si $p<1$.
+  Para $p=1$: $-\ln s\to\infty$. $\blacksquare$
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{c|c|c}
+      & $\int_0^1x^{-p}\dx$ & $\int_1^\infty x^{-p}\dx$\\ \hline
+      $p<1$ & converge & diverge\\
+      $p=1$ & diverge & diverge\\
+      $p>1$ & diverge & converge
+    \end{tabular}
+  \end{center}
+  \begin{ejemplo}[7]
+    $\displaystyle\int_0^1\ln x\dx=\lim_{s\to0^+}\Big[x\ln x-x\Big]_s^1=-1$ \ (pues $s\ln s\to0$).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Singularidades interiores}
+  \begin{ejemplo}[8: recordando un error de la Semana 4]
+    $\displaystyle\int_{-1}^1\frac{dx}{x^2}=\int_{-1}^0\frac{dx}{x^2}+\int_0^1\frac{dx}{x^2}$. \
+    Pero $\displaystyle\int_0^1\frac{dx}{x^2}=\lim_{s\to0^+}\left(\frac1s-1\right)=\infty$. \ \textbf{Diverge}.
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $\displaystyle\int_0^3\frac{dx}{(x-1)^{2/3}}$ (singularidad en $x=1$):
+    \[ \int_0^1\frac{dx}{(x-1)^{2/3}}=\lim_{t\to1^-}\Big[3(x-1)^{1/3}\Big]_0^t=3,\qquad
+       \int_1^3\frac{dx}{(x-1)^{2/3}}=\lim_{s\to1^+}\Big[3(x-1)^{1/3}\Big]_s^3=3\sqrt[3]2. \]
+    Converge y vale $3\big(1+\sqrt[3]2\big)$.
+  \end{ejemplo}
+  \begin{block}{Antes de aplicar el TFC2, verifique}
+    ¿Es $f$ continua (o al menos acotada) en todo $[a,b]$? \ Si no, la integral es impropia.
+  \end{block}
+\end{frame}
+
+\section{Tercera especie}
+
+\begin{frame}{Tercera especie: ambos fenómenos}
+  Intervalo no acotado \textbf{y} integrando no acotado. Se separa en integrales de una sola especie; la integral converge si
+  \textbf{todas} las partes convergen.
+  \begin{ejemplo}[10]
+    $\displaystyle\int_0^\infty\frac{dx}{\sqrt x\,(1+x)}$. \ Con $u=\sqrt x$, $dx=2u\du$:
+    \[ \int_0^\infty\frac{2u\du}{u(1+u^2)}=2\lim_{t\to\infty}\arctan t=\pi. \]
+  \end{ejemplo}
+  \begin{ejemplo}[11]
+    $\displaystyle\int_0^\infty\frac{dx}{x^2}=\int_0^1\frac{dx}{x^2}+\int_1^\infty\frac{dx}{x^2}$: la primera diverge $\Rightarrow$ diverge.
+  \end{ejemplo}
+  \begin{observacion}
+    $\displaystyle\int_0^\infty\frac{dx}{x^p}$ diverge para \textbf{todo} $p$: cerca de $0$ necesita $p<1$, cerca de $\infty$ necesita $p>1$.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{La función Gamma}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{definicion}
+        Para $x>0$: \quad $\displaystyle\Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\dt$.
+      \end{definicion}
+      Es de tercera especie si $0<x<1$ (singularidad en $t=0$). Converge para todo $x>0$ (lo probaremos con los criterios de la
+      próxima sesión).
+      \begin{proposicion}
+        $\Gamma(1)=1$, \quad $\Gamma(x+1)=x\,\Gamma(x)$ (partes), \quad $\Gamma(n+1)=n!$.
+      \end{proposicion}
+      \small Generaliza el factorial: $\Gamma\left(\frac12\right)=\sqrt\pi$, así ``$\left(-\frac12\right)!=\sqrt\pi$''. Aparece en
+      física estadística, mecánica cuántica y probabilidad.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.6, ymin=0, ymax=7, width=6cm, height=5.3cm, xtick={1,2,3,4}, ytick={1,2,6}]
+          \addplot[curva, smooth] coordinates {(0.15,6.2203) (0.2,4.5908) (0.3,2.9916) (0.4,2.2182) (0.5,1.7725) (0.7,1.2981) (1,1) (1.2,0.9182) (1.46,0.8856) (1.7,0.9086) (2,1) (2.5,1.3293) (3,2) (3.5,3.3234) (4,6) (4.1,6.8126)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,1) (2,1) (3,2) (4,6)};
+          \node[uniGranate] at (axis cs:3.2,5.5) {\scriptsize $n!=\Gamma(n+1)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Clasifique (absoluta, condicional, divergente): $\sum\frac{(-1)^n n}{n^2+1}$, \ $\sum\frac{\cos(n\pi/3)}{n\sqrt n}$, \ $\sum(-1)^n\frac{n!}{2^n}$.
+      \item Calcule o pruebe que diverge:
+        \begin{multicols}{3}
+        \begin{enumerate}
+          \item[(a)] $\int_0^\infty\frac{x}{(1+x^2)^2}\dx$
+          \item[(b)] $\int_2^\infty\frac{dx}{x\ln^2x}$
+          \item[(c)] $\int_0^\infty e^{-x}\sen x\dx$
+          \item[(d)] $\int_{-\infty}^\infty xe^{-x^2}\dx$
+          \item[(e)] $\int_0^2\frac{dx}{\sqrt{4-x^2}}$
+          \item[(f)] $\int_0^{\pi/2}\tan x\dx$
+          \item[(g)] $\int_1^2\frac{dx}{x\sqrt{x^2-1}}$
+          \item[(h)] $\int_{-1}^8\frac{dx}{\sqrt[3]x}$
+          \item[(i)] $\int_0^\infty\frac{dx}{x^2+3x+2}$
+        \end{enumerate}
+        \end{multicols}
+      \item Halle los valores de $p$ para los que converge $\int_e^\infty\frac{dx}{x(\ln x)^p}$.
+      \item Pruebe que $\Gamma(x+1)=x\Gamma(x)$ y que $\Gamma(n+1)=n!$.
+      \item \textbf{Cuerno de Gabriel}: al rotar $y=\frac1x$, $x\ge1$, alrededor del eje $x$, pruebe que el volumen es finito ($\pi$) y el área
+        de la superficie $2\pi\int_1^\infty\frac1x\sqrt{1+\frac1{x^4}}\dx$ es infinita.
+      \item La vida media de una partícula tiene densidad $f(t)=\lambda e^{-\lambda t}$, $t\ge0$. Pruebe que $\int_0^\infty f=1$ y halle la
+        vida media $\int_0^\infty t\,f(t)\dt$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Absoluta $\Rightarrow$ convergente. Las condicionales dependen del orden de los términos.
+    \item 1.ª especie: $\int_a^\infty f=\lim_{t\to\infty}\int_a^tf$. \ $\int_1^\infty x^{-p}$ converge $\iff p>1$.
+    \item 2.ª especie: $\int_a^bf=\lim_{s\to a^+}\int_s^bf$. \ $\int_0^1x^{-p}$ converge $\iff p<1$.
+    \item 3.ª especie: separar; converge si todas las partes convergen.
+    \item Con dos extremos problemáticos, \textbf{nunca} tomar un único límite simétrico.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} criterios de convergencia para integrales impropias.
+\end{frame}
+
+\end{document}

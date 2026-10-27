@@ -1,0 +1,241 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Factor integrante y lineales]{Ecuaciones reducibles a exactas y lineales}
+\subtitle{Factor integrante. Lineales, Bernoulli y Riccati. Ecuaciones de Lagrange y de Clairaut\\[2pt]\small Semana 14 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Convertir una ecuación no exacta en exacta mediante un \resaltar{factor integrante}.
+    \item Resolver la \resaltar{ecuación lineal de primer orden} y aplicarla a circuitos y mezclas.
+    \item Reducir las ecuaciones de \resaltar{Bernoulli} y \resaltar{Riccati} a lineales.
+    \item Resolver ecuaciones de \resaltar{Lagrange} y \resaltar{Clairaut}; reconocer soluciones singulares.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Factor integrante $\mu(x)$ ó $\mu(y)$\\
+      0:20 -- 0:55 & Ecuación lineal. Aplicaciones\\
+      0:55 -- 1:20 & Bernoulli y Riccati\\
+      1:20 -- 1:45 & Lagrange y Clairaut. Soluciones singulares y envolventes\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Factor integrante}
+
+\begin{frame}{Factor integrante}
+  Si $M\dx+N\dy=0$ no es exacta, buscamos $\mu(x,y)\neq0$ tal que $\mu M\dx+\mu N\dy=0$ sí lo sea:
+  \[ (\mu M)_y=(\mu N)_x. \]
+  En general es difícil, pero hay dos casos sencillos:
+  \begin{teorema}
+    \begin{itemize}
+      \item Si $\dfrac{M_y-N_x}{N}=p(x)$ depende solo de $x$: \quad $\mu(x)=e^{\int p(x)\dx}$.
+      \item Si $\dfrac{N_x-M_y}{M}=q(y)$ depende solo de $y$: \quad $\mu(y)=e^{\int q(y)\dy}$.
+    \end{itemize}
+  \end{teorema}
+  \textbf{Prueba (primer caso).} Con $\mu=\mu(x)$: $(\mu M)_y=\mu M_y$ y $(\mu N)_x=\mu'N+\mu N_x$. Igualando:
+  $\mu'=\mu\,\dfrac{M_y-N_x}{N}=\mu\,p(x)$, que es separable. $\blacksquare$
+\end{frame}
+
+\begin{frame}{Ejemplo de factor integrante}
+  \begin{ejemplo}[1]
+    $(3xy+y^2)\dx+(x^2+xy)\dy=0$.
+    \begin{itemize}
+      \item $M_y=3x+2y$, \ $N_x=2x+y$: \ no es exacta.
+      \item $\dfrac{M_y-N_x}{N}=\dfrac{x+y}{x(x+y)}=\dfrac1x$ \ $\Rightarrow$ \ $\mu=e^{\int dx/x}=x$.
+      \item $(3x^2y+xy^2)\dx+(x^3+x^2y)\dy=0$ es exacta: $M_y=3x^2+2xy=N_x$. \checkmark
+      \item $F=\int(3x^2y+xy^2)\dx=x^3y+\dfrac{x^2y^2}{2}+g(y)$; \ $F_y=x^3+x^2y+g'(y)\Rightarrow g'=0$.
+    \end{itemize}
+    Solución: \ $\boxed{x^3y+\tfrac12x^2y^2=C}$.
+  \end{ejemplo}
+  \begin{observacion}
+    Al multiplicar por $\mu$ pueden ganarse o perderse soluciones donde $\mu=0$ o no esté definido (aquí $x=0$).
+  \end{observacion}
+\end{frame}
+
+\section{Ecuación lineal}
+
+\begin{frame}{La ecuación lineal de primer orden}
+  \begin{definicion}
+    $\dfrac{dy}{dx}+P(x)\,y=Q(x)$, \ con $P,Q$ continuas en un intervalo $I$.
+  \end{definicion}
+  \begin{teorema}
+    Con el factor integrante $\mu(x)=e^{\int P(x)\dx}$ se tiene $\big(\mu y\big)'=\mu Q$, y por tanto
+    \[ y=\frac{1}{\mu(x)}\left[\int\mu(x)Q(x)\dx+C\right]. \]
+  \end{teorema}
+  \textbf{Por qué funciona:} $(\mu y)'=\mu y'+\mu'y=\mu y'+\mu Py=\mu(y'+Py)=\mu Q$, pues $\mu'=P\mu$.
+  \begin{block}{Pasos}
+    \begin{enumerate}
+      \item Escribir en forma estándar (coeficiente de $y'$ igual a $1$).
+      \item Calcular $\mu=e^{\int P}$ (sin constante).
+      \item Multiplicar, reconocer $(\mu y)'$ e integrar.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos de ecuaciones lineales}
+  \begin{ejemplo}[2]
+    $y'+2xy=x$: \ $\mu=e^{x^2}$; \ $\big(e^{x^2}y\big)'=xe^{x^2}$ \ $\Rightarrow$ \ $e^{x^2}y=\tfrac12e^{x^2}+C$ \ $\Rightarrow$ \ $y=\tfrac12+Ce^{-x^2}$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: PVI]
+    $xy'+2y=x^2$, \ $y(1)=0$, \ $x>0$. \ Forma estándar: $y'+\frac2xy=x$; \ $\mu=e^{2\ln x}=x^2$:
+    \[ (x^2y)'=x^3\ \Rightarrow\ x^2y=\frac{x^4}4+C\ \Rightarrow\ y=\frac{x^2}4+\frac C{x^2};\qquad y(1)=0\Rightarrow C=-\frac14. \]
+  \end{ejemplo}
+  \begin{ejemplo}[4: circuito RL]
+    $L\dfrac{dI}{dt}+RI=E$ (constante), $I(0)=0$. \ $\mu=e^{Rt/L}$:
+    \[ I(t)=\frac ER\left(1-e^{-Rt/L}\right). \]
+    La corriente tiende a $E/R$ (ley de Ohm) con \emph{constante de tiempo} $\tau=L/R$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Aplicación: problema de mezclas}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}[5]
+        Un tanque contiene $100$ L de agua con $10$ g de sal. Entra salmuera con $2$ g/L a $5$ L/min y sale la mezcla (bien agitada) a
+        $5$ L/min. Sea $x(t)$ la sal en gramos.
+        \[ \frac{dx}{dt}=\underbrace{2\cdot5}_{\text{entra}}-\underbrace{\frac{x}{100}\cdot5}_{\text{sale}}\ \Rightarrow\ x'+\frac{x}{20}=10. \]
+        $\mu=e^{t/20}$: \ $x(t)=200+Ce^{-t/20}$, \ $x(0)=10\Rightarrow C=-190$.
+        \[ x(t)=200-190e^{-t/20}\ \xrightarrow[t\to\infty]{}\ 200\ \text{g}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$x$}, xmin=0, xmax=130, ymin=0, ymax=230, width=6cm, height=5cm, xtick={20,60,100}, ytick={10,200}]
+          \addplot[curva, domain=0:125] {200-190*exp(-x/20)};
+          \addplot[gray, dashed, domain=0:125] {200};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La concentración tiende a la de entrada ($2$ g/L).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Bernoulli y Riccati}
+
+\begin{frame}{Ecuación de Bernoulli}
+  \begin{definicion}
+    $y'+P(x)\,y=Q(x)\,y^n$, \ $n\ne0,1$.
+  \end{definicion}
+  \begin{block}{Método}
+    Con $v=y^{1-n}$: \ $v'=(1-n)y^{-n}y'$. Dividiendo la ecuación por $y^n$ y multiplicando por $(1-n)$:
+    \[ v'+(1-n)P(x)\,v=(1-n)Q(x)\qquad(\text{¡lineal en }v!). \]
+  \end{block}
+  \begin{ejemplo}[6]
+    $y'+\dfrac yx=xy^2$ ($n=2$). \ $v=y^{-1}$: \ $v'-\dfrac vx=-x$. \ $\mu=\dfrac1x$:
+    \[ \left(\frac vx\right)'=-1\ \Rightarrow\ v=-x^2+Cx\ \Rightarrow\ y=\frac{1}{Cx-x^2}. \]
+    Además $y\equiv0$ es solución.
+  \end{ejemplo}
+  \small Aplicación: la ecuación logística $P'=rP-\frac rKP^2$ es de Bernoulli con $n=2$.
+\end{frame}
+
+\begin{frame}{Ecuación de Riccati}
+  \begin{definicion}
+    $y'=P(x)+Q(x)\,y+R(x)\,y^2$.
+  \end{definicion}
+  En general no se resuelve con fórmulas elementales. Pero si se conoce \textbf{una solución particular} $y_1$:
+  \begin{block}{Método}
+    Con $y=y_1+\dfrac1v$ se obtiene una ecuación \textbf{lineal} en $v$: \quad $v'+\big(Q+2Ry_1\big)v=-R$.
+  \end{block}
+  \begin{ejemplo}[7]
+    $y'=1+x^2-2xy+y^2$, \ con $y_1=x$ (verifique: $1=1+x^2-2x^2+x^2$ \checkmark).
+
+    $y=x+\frac1v$: \ $y'=1-\frac{v'}{v^2}$. \ Lado derecho: $1+\frac1{v^2}$. \ Luego $-v'=1$, \ $v=C-x$:
+    \[ y=x+\frac{1}{C-x}. \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Lagrange y Clairaut}
+
+\begin{frame}{Ecuación de Lagrange}
+  \begin{definicion}
+    $y=x\,\varphi(y')+\psi(y')$, \ con $\varphi(p)\neq p$.
+  \end{definicion}
+  \begin{block}{Método: parámetro $p=y'$}
+    Derivando $y=x\varphi(p)+\psi(p)$ respecto de $x$:
+    \[ p=\varphi(p)+\big[x\varphi'(p)+\psi'(p)\big]\frac{dp}{dx}\ \Rightarrow\
+       \frac{dx}{dp}-\frac{\varphi'(p)}{p-\varphi(p)}\,x=\frac{\psi'(p)}{p-\varphi(p)}, \]
+    \textbf{lineal en $x(p)$}. La solución queda en forma paramétrica $x=x(p,C)$, $y=x\varphi(p)+\psi(p)$.
+    Las raíces de $p=\varphi(p)$ pueden dar \resaltar{soluciones singulares} (rectas).
+  \end{block}
+  \begin{ejemplo}[8]
+    $y=2xy'+(y')^2$: \ $\frac{dx}{dp}+\frac2px=-2$, \ $\mu=p^2$: \ $x=-\frac{2p}3+\frac C{p^2}$, \
+    $y=-\frac{p^2}{3}+\frac{2C}{p}$. \ Singular: $p=0\Rightarrow y=0$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ecuación de Clairaut}
+  \begin{columns}
+    \begin{column}{0.56\textwidth}
+      \begin{definicion}
+        $y=x\,y'+\psi(y')$ \ (Lagrange con $\varphi(p)=p$).
+      \end{definicion}
+      Derivando: \ $p=p+\big[x+\psi'(p)\big]p'$, \ es decir \ $\big[x+\psi'(p)\big]p'=0$.
+      \begin{itemize}
+        \item $p'=0$: $p=C$ $\Rightarrow$ \resaltar{solución general}: la familia de rectas $y=Cx+\psi(C)$.
+        \item $x=-\psi'(p)$: \resaltar{solución singular} $x=-\psi'(p)$, $y=-p\psi'(p)+\psi(p)$: la \textbf{envolvente} de las rectas.
+      \end{itemize}
+      \begin{ejemplo}[9]
+        $y=xy'+(y')^2$: \ rectas $y=Cx+C^2$; singular: $x=-2p$, $y=-p^2$, es decir $y=-\dfrac{x^2}4$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-4, xmax=4, ymin=-4, ymax=2.5, width=6.6cm, height=6cm, xtick={-2,2}, ytick={-2,2}, domain=-4:4]
+          \foreach \c in {-1.5,-1,-0.5,0,0.5,1,1.5} {
+            \addplot[uniAzul!60, thick] {\c*x+\c^2};
+          }
+          \addplot[curva2] {-x^2/4};
+          \node[uniGranate] at (axis cs:2.5,-3.4) {\scriptsize $y=-\frac{x^2}4$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La parábola es tangente a todas las rectas: no se obtiene de la familia para ningún $C$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle un factor integrante y resuelva: (a) $(x^2+y^2+x)\dx+xy\dy=0$, \ (b) $y\dx+(2x-ye^y)\dy=0$.
+      \item Resuelva: (a) $y'-y=e^{2x}$, \ (b) $y'+y\tan x=\sec x$, \ (c) $(1+x^2)y'+2xy=\cos x$, \ (d) $y'=\dfrac{1}{x+y^2}$ (lineal en $x(y)$).
+      \item Un circuito RC: $R\,q'+\frac{q}{C}=E\sen\omega t$. Halle $q(t)$ con $q(0)=0$.
+      \item Resuelva las de Bernoulli: (a) $y'+y=xy^3$, \ (b) $x y'+y=x^2y^2$, \ (c) la logística $P'=0.2P(1-P/500)$, $P(0)=50$.
+      \item Resuelva la de Riccati $y'=-\dfrac{4}{x^2}-\dfrac yx+y^2$ sabiendo que $y_1=\dfrac2x$ es solución.
+      \item Resuelva la ecuación de Lagrange $y=x(y')^2+(y')^2$ y la de Clairaut $y=xy'-\ln y'$; halle sus soluciones singulares.
+      \item \textbf{Ley de Torricelli / desagüe.} Un tanque cilíndrico de agua se vacía por un orificio: $\frac{dh}{dt}=-k\sqrt h$. ¿Cuánto tarda en vaciarse?
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{l|l|l}
+    \textbf{Tipo} & \textbf{Forma} & \textbf{Método}\\ \hline
+    Factor integrante & $M\dx+N\dy=0$ & $\mu(x)$ si $\frac{M_y-N_x}N=p(x)$; \ $\mu(y)$ si $\frac{N_x-M_y}M=q(y)$\\
+    Lineal & $y'+Py=Q$ & $\mu=e^{\int P}$, \ $(\mu y)'=\mu Q$\\
+    Bernoulli & $y'+Py=Qy^n$ & $v=y^{1-n}$ $\to$ lineal\\
+    Riccati & $y'=P+Qy+Ry^2$ & $y=y_1+\frac1v$ $\to$ lineal\\
+    Lagrange & $y=x\varphi(p)+\psi(p)$ & derivar, lineal en $x(p)$\\
+    Clairaut & $y=xp+\psi(p)$ & rectas $y=Cx+\psi(C)$ y envolvente
+  \end{tabular}
+  \vspace{3mm}
+
+  \textbf{Próxima sesión:} aplicaciones: temperatura (Newton), decaimiento y crecimiento.
+\end{frame}
+
+\end{document}

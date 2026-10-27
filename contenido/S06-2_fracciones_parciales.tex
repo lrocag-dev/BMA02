@@ -1,0 +1,251 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Fracciones parciales]{Integración de funciones racionales}
+\subtitle{Método de fracciones parciales\\[2pt]\small Semana 6 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Reducir una función racional impropia a un polinomio más una fracción propia.
+    \item Descomponer una fracción propia en \resaltar{fracciones parciales} (los cuatro casos).
+    \item Integrar las fracciones simples: logaritmos, potencias, arcotangentes y fórmulas de reducción.
+    \item Aplicar el método a un modelo de cinética química.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Funciones racionales, división, teorema de descomposición\\
+      0:15 -- 0:45 & Factores lineales (distintos y repetidos)\\
+      0:45 -- 1:20 & Factores cuadráticos irreducibles (distintos y repetidos)\\
+      1:20 -- 1:40 & Integrales definidas y aplicación en química\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Preliminares}
+
+\begin{frame}{Funciones racionales}
+  \begin{definicion}
+    $R(x)=\dfrac{P(x)}{Q(x)}$ con $P,Q$ polinomios. Es \resaltar{propia} si $\operatorname{gr}P<\operatorname{gr}Q$; si no, es \resaltar{impropia}.
+  \end{definicion}
+  \textbf{Paso 0: si es impropia, dividir.} \ $P=QS+T$ con $\operatorname{gr}T<\operatorname{gr}Q$:
+  \[ \frac{P(x)}{Q(x)}=S(x)+\frac{T(x)}{Q(x)}. \]
+  \begin{ejemplo}[1]
+    $\displaystyle\int\frac{x^3+x}{x-1}\dx=\int\left(x^2+x+2+\frac{2}{x-1}\right)dx=\frac{x^3}{3}+\frac{x^2}{2}+2x+2\ln|x-1|+C.$
+  \end{ejemplo}
+  \begin{teorema}[factorización en $\R$]
+    Todo polinomio real se factoriza como producto de factores \textbf{lineales} $(ax+b)$ y factores \textbf{cuadráticos
+    irreducibles} $(ax^2+bx+c)$, con $b^2-4ac<0$.
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Teorema de descomposición}
+  \begin{teorema}
+    Toda fracción propia $T/Q$ es suma de fracciones simples, una por cada factor de $Q$:
+    \begin{itemize}
+      \item Por cada factor $(x-a)^k$:
+        \[ \frac{A_1}{x-a}+\frac{A_2}{(x-a)^2}+\dots+\frac{A_k}{(x-a)^k}. \]
+      \item Por cada factor $(x^2+px+q)^m$ irreducible:
+        \[ \frac{B_1x+C_1}{x^2+px+q}+\frac{B_2x+C_2}{(x^2+px+q)^2}+\dots+\frac{B_mx+C_m}{(x^2+px+q)^m}. \]
+    \end{itemize}
+  \end{teorema}
+  \begin{ejemplo}[forma de la descomposición]
+    \[ \frac{x^3+1}{x^2(x-3)(x^2+1)^2}=\frac Ax+\frac B{x^2}+\frac C{x-3}+\frac{Dx+E}{x^2+1}+\frac{Fx+G}{(x^2+1)^2}. \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Factores lineales}
+
+\begin{frame}{Caso 1: factores lineales distintos}
+  \begin{ejemplo}[2]
+    $\displaystyle\int\frac{x^2+2x-1}{2x^3+3x^2-2x}\dx$. \quad $Q(x)=x(2x-1)(x+2)$.
+    \[ \frac{x^2+2x-1}{x(2x-1)(x+2)}=\frac Ax+\frac B{2x-1}+\frac C{x+2} \]
+    \[ x^2+2x-1=A(2x-1)(x+2)+Bx(x+2)+Cx(2x-1). \]
+    \textbf{Evaluando en las raíces:}
+    \begin{itemize}
+      \item $x=0$: \ $-1=-2A\Rightarrow A=\tfrac12$.
+      \item $x=\tfrac12$: \ $\tfrac14=\tfrac54B\Rightarrow B=\tfrac15$.
+      \item $x=-2$: \ $-1=10C\Rightarrow C=-\tfrac1{10}$.
+    \end{itemize}
+    \[ \int=\frac12\ln|x|+\frac1{10}\ln|2x-1|-\frac1{10}\ln|x+2|+K. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Visualizando la descomposición}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=3, ymin=-4, ymax=4, width=7.5cm, height=6cm, xtick={-1,1}, ytick={-2,2}, samples=200, restrict y to domain=-6:6, unbounded coords=jump]
+          \addplot[uniGranate!60, thick, dashed, domain=-3:3] {0.5/(x-1)};
+          \addplot[uniVerde!70, thick, dashed, domain=-3:3] {-0.5/(x+1)};
+          \addplot[curva, domain=-3:3] {1/(x^2-1)};
+          \draw[gray, dotted] (axis cs:1,-4) -- (axis cs:1,4);
+          \draw[gray, dotted] (axis cs:-1,-4) -- (axis cs:-1,4);
+          \node[uniAzul] at (axis cs:2.3,1.3) {\scriptsize $\frac{1}{x^2-1}$};
+          \node[uniGranate] at (axis cs:2.2,-0.8) {\scriptsize $\frac{1/2}{x-1}$};
+          \node[uniVerde] at (axis cs:-2.2,-1.1) {\scriptsize $\frac{-1/2}{x+1}$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \[ \frac{1}{x^2-1}=\frac{1/2}{x-1}-\frac{1/2}{x+1}. \]
+      \begin{itemize}
+        \item Cerca de $x=1$ domina $\frac{1/2}{x-1}$; cerca de $x=-1$ domina $\frac{-1/2}{x+1}$.
+        \item Cada fracción simple ``explica'' una asíntota vertical.
+        \item El coeficiente $A$ es el ``residuo'' en esa asíntota: $A=\lim\limits_{x\to a}(x-a)R(x)$.
+      \end{itemize}
+      \begin{ejemplo}[3]
+        $\displaystyle\int_2^3\frac{dx}{x^2-1}=\frac12\left[\ln\left|\frac{x-1}{x+1}\right|\right]_2^3=\frac12\ln\frac32.$
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Método de Heaviside (``tapar'')}
+  Si $Q(x)=(x-a_1)(x-a_2)\cdots(x-a_n)$ con raíces distintas, entonces
+  \[ A_i=\left.\frac{T(x)}{\prod_{j\ne i}(x-a_j)}\right|_{x=a_i}\qquad(\text{``tapar'' el factor }(x-a_i)). \]
+  \begin{ejemplo}[4]
+    $\dfrac{5x-1}{(x-1)(x+2)(x-3)}$:
+    \begin{itemize}
+      \item $A_1$: tapar $(x-1)$, evaluar en $x=1$: \ $\dfrac{4}{(3)(-2)}=-\dfrac23$.
+      \item $A_2$: tapar $(x+2)$, evaluar en $x=-2$: \ $\dfrac{-11}{(-3)(-5)}=-\dfrac{11}{15}$.
+      \item $A_3$: tapar $(x-3)$, evaluar en $x=3$: \ $\dfrac{14}{(2)(5)}=\dfrac75$.
+    \end{itemize}
+    \[ \int\frac{5x-1}{(x-1)(x+2)(x-3)}\dx=-\frac23\ln|x-1|-\frac{11}{15}\ln|x+2|+\frac75\ln|x-3|+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Caso 2: factores lineales repetidos}
+  \begin{ejemplo}[5]
+    $\displaystyle\int\frac{4x}{(x-1)^2(x+1)}\dx$. \qquad
+    $\displaystyle\frac{4x}{(x-1)^2(x+1)}=\frac A{x-1}+\frac B{(x-1)^2}+\frac C{x+1}$.
+    \[ 4x=A(x-1)(x+1)+B(x+1)+C(x-1)^2. \]
+    \begin{itemize}
+      \item $x=1$: $4=2B\Rightarrow B=2$. \quad $x=-1$: $-4=4C\Rightarrow C=-1$.
+      \item Coeficiente de $x^2$: $0=A+C\Rightarrow A=1$.
+    \end{itemize}
+    \[ \int\frac{4x\dx}{(x-1)^2(x+1)}=\ln|x-1|-\frac{2}{x-1}-\ln|x+1|+K=\ln\left|\frac{x-1}{x+1}\right|-\frac2{x-1}+K. \]
+  \end{ejemplo}
+  \begin{observacion}
+    Con factores repetidos, evaluar en las raíces no basta: se completa comparando coeficientes o evaluando en otros puntos
+    (p.\,ej.\ $x=0$).
+  \end{observacion}
+\end{frame}
+
+\section{Factores cuadráticos}
+
+\begin{frame}{Integración de $\dfrac{Bx+C}{x^2+px+q}$}
+  \begin{block}{Procedimiento}
+    \begin{enumerate}
+      \item Escribir el numerador como múltiplo de la derivada del denominador más una constante:
+        $Bx+C=\frac B2(2x+p)+\left(C-\frac{Bp}2\right)$.
+      \item La primera parte da un logaritmo; la segunda, tras completar cuadrados, una arcotangente.
+    \end{enumerate}
+  \end{block}
+  \begin{ejemplo}[6]
+    $\displaystyle\int\frac{3x+5}{x^2+2x+5}\dx=\frac32\int\frac{2x+2}{x^2+2x+5}\dx+\int\frac{2}{(x+1)^2+4}\dx$
+    \[ =\frac32\ln(x^2+2x+5)+\arctan\frac{x+1}{2}+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Caso 3: factores cuadráticos distintos}
+  \begin{ejemplo}[7]
+    $\displaystyle\int\frac{2x^2-x+4}{x^3+4x}\dx$. \quad $\dfrac{2x^2-x+4}{x(x^2+4)}=\dfrac Ax+\dfrac{Bx+C}{x^2+4}$.
+    \[ 2x^2-x+4=A(x^2+4)+(Bx+C)x=(A+B)x^2+Cx+4A. \]
+    Comparando: $4A=4$, $C=-1$, $A+B=2$ $\Rightarrow$ $A=1$, $B=1$, $C=-1$.
+    \[ \int\left(\frac1x+\frac{x}{x^2+4}-\frac{1}{x^2+4}\right)dx=\ln|x|+\frac12\ln(x^2+4)-\frac12\arctan\frac x2+K. \]
+  \end{ejemplo}
+  \begin{observacion}
+    Si el discriminante del cuadrático es $\ge0$, \alert{no} es irreducible: factorícelo en lineales.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Caso 4: factores cuadráticos repetidos}
+  \begin{ejemplo}[8]
+    $\displaystyle\int\frac{1-x+2x^2-x^3}{x(x^2+1)^2}\dx$. \quad Forma: $\dfrac Ax+\dfrac{Bx+C}{x^2+1}+\dfrac{Dx+E}{(x^2+1)^2}$.
+
+    Resolviendo: $A=1$, $B=-1$, $C=-1$, $D=1$, $E=0$.
+    \[ \int\left(\frac1x-\frac{x+1}{x^2+1}+\frac{x}{(x^2+1)^2}\right)dx
+       =\ln|x|-\frac12\ln(x^2+1)-\arctan x-\frac{1}{2(x^2+1)}+K. \]
+  \end{ejemplo}
+  \begin{block}{Fórmula de reducción para $I_n=\int\frac{dx}{(x^2+a^2)^n}$}
+    \[ I_{n+1}=\frac{x}{2na^2(x^2+a^2)^n}+\frac{2n-1}{2na^2}I_n,\qquad I_1=\frac1a\arctan\frac xa. \]
+    (Se prueba con partes, o con la sustitución $x=a\tan\theta$.)
+  \end{block}
+\end{frame}
+
+\section{Aplicación}
+
+\begin{frame}{Cinética química: reacción de segundo orden}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      En la reacción $A+B\to P$, si $x(t)$ es la concentración de producto y $a,b$ ($a\neq b$) las concentraciones iniciales:
+      \[ \frac{dx}{dt}=k(a-x)(b-x),\qquad x(0)=0. \]
+      Separando variables y con fracciones parciales:
+      \[ \frac{1}{(a-x)(b-x)}=\frac{1}{b-a}\left(\frac{1}{a-x}-\frac{1}{b-x}\right), \]
+      \[ \int_0^x\frac{du}{(a-u)(b-u)}=kt\ \Rightarrow\ \frac{1}{b-a}\ln\frac{a(b-x)}{b(a-x)}=kt. \]
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$x$}, xmin=0, xmax=5.3, ymin=0, ymax=2.4, width=6.3cm, height=5cm, xtick=\empty, ytick={1,2}, yticklabels={$a$,$b$}, domain=0:5]
+          \addplot[curva] {2*(exp(x)-1)/(2*exp(x)-1)};
+          \addplot[gray, dashed] {1};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Con $a=1$, $b=2$, $k=1$: \ $x(t)=\dfrac{2(e^{t}-1)}{2e^{t}-1}\to a$. \ El reactivo limitante se agota.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\int\frac{x+5}{x^2+x-2}\dx$
+      \item $\displaystyle\int\frac{x^4}{x^2-1}\dx$
+      \item $\displaystyle\int\frac{x^2+1}{(x-1)^3}\dx$
+      \item $\displaystyle\int\frac{dx}{x^3+1}$
+      \item $\displaystyle\int\frac{x^3+2x}{x^4+4x^2+3}\dx$
+      \item $\displaystyle\int\frac{dx}{x^4-1}$
+      \item $\displaystyle\int\frac{x^2}{(x^2+1)^2}\dx$
+      \item $\displaystyle\int_0^1\frac{x^3-4x-10}{x^2-x-6}\dx$
+      \item $\displaystyle\int\frac{dx}{x(x^n+1)}$ \ ($u=x^n$)
+      \item $\displaystyle\int\frac{e^x\dx}{e^{2x}+3e^x+2}$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: aplicaciones]
+    \begin{enumerate}
+      \setcounter{enumi}{10}
+      \item Resuelva la ecuación logística $P'=0.1P\left(1-\frac{P}{1000}\right)$, $P(0)=100$.
+      \item Halle el área bajo $y=1/(x^2+3x+2)$ entre $x=0$ y $x=1$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{enumerate}
+    \item Si $\operatorname{gr}P\ge\operatorname{gr}Q$: dividir.
+    \item Factorizar $Q$ en lineales y cuadráticos irreducibles.
+    \item Escribir la descomposición (un término por cada potencia de cada factor).
+    \item Hallar los coeficientes: evaluar en raíces (Heaviside), comparar coeficientes.
+    \item Integrar: $\ln|x-a|$, potencias negativas, $\ln(x^2+px+q)$ y $\arctan$, reducción.
+  \end{enumerate}
+  \begin{idea}
+    Toda función racional tiene primitiva elemental: combinación de racionales, logaritmos y arcotangentes.
+  \end{idea}
+  \textbf{Próxima sesión:} binomios diferenciales y sustitución universal $t=\tan(x/2)$.
+\end{frame}
+
+\end{document}

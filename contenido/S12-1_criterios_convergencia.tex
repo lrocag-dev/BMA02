@@ -1,0 +1,285 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Series y criterios de convergencia]{Series notables y series de términos no negativos}
+\subtitle{Criterios: comparación, comparación al límite, cociente, raíz, Raabe e integral\\[2pt]\small Semana 12 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Sumar series \resaltar{geométricas} y \resaltar{telescópicas}; conocer el comportamiento de la \resaltar{serie $p$}.
+    \item Caracterizar la convergencia de series de términos no negativos (sumas parciales acotadas).
+    \item Aplicar los criterios de \resaltar{la integral}, \resaltar{comparación}, \resaltar{comparación al límite},
+      \resaltar{cociente}, \resaltar{raíz} y \resaltar{Raabe}.
+    \item Diseñar una estrategia para decidir la convergencia de una serie.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Series geométrica y telescópica\\
+      0:25 -- 0:50 & Términos no negativos. Criterio de la integral. Serie $p$\\
+      0:50 -- 1:15 & Comparación y comparación al límite\\
+      1:15 -- 1:45 & Cociente, raíz y Raabe\\
+      1:45 -- 2:00 & Estrategia, ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Series notables}
+
+\begin{frame}{Serie geométrica}
+  \begin{teorema}
+    La serie geométrica $\displaystyle\sum_{n=0}^\infty ar^n=a+ar+ar^2+\cdots$ ($a\ne0$) converge si y solo si $|r|<1$, y
+    \[ \sum_{n=0}^\infty ar^n=\frac{a}{1-r}. \]
+  \end{teorema}
+  \textbf{Prueba.} $S_n-rS_n=a-ar^{n+1}$, así $S_n=a\dfrac{1-r^{n+1}}{1-r}$ ($r\ne1$), y $r^{n+1}\to0\iff|r|<1$. Si $|r|\ge1$, $ar^n\not\to0$. $\blacksquare$
+\end{frame}
+
+\begin{frame}{Serie geométrica: ejemplos}
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $0.\overline{9}=\dfrac9{10}+\dfrac9{100}+\cdots=\dfrac{9/10}{1-1/10}=1$. \qquad
+        $0.\overline{36}=\dfrac{36/100}{1-1/100}=\dfrac{4}{11}$.
+      \item $\displaystyle\sum_{n=1}^\infty\frac{2^{n+1}}{5^n}=\frac{4/5}{1-2/5}=\frac43$.
+      \item \textbf{Pelota que rebota:} cae de $10$ m y rebota a $\frac34$ de la altura. Distancia total:
+        $10+2\cdot\dfrac{7.5}{1-3/4}=70$ m.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Series telescópicas}
+  \begin{proposicion}
+    Si $a_n=b_n-b_{n+1}$, entonces $S_n=b_1-b_{n+1}$. La serie converge $\iff$ $b_n$ converge, y
+    $\displaystyle\sum_{n=1}^\infty a_n=b_1-\lim_{n\to\infty}b_n$.
+  \end{proposicion}
+  \begin{ejemplo}[1]
+    $\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+1)}=\sum_{n=1}^\infty\left(\frac1n-\frac1{n+1}\right)$: \
+    $S_n=1-\dfrac1{n+1}\to1$.
+  \end{ejemplo}
+  Análogamente: \ $\displaystyle\sum_{n=1}^\infty\frac{1}{4n^2-1}=\frac12\sum_{n=1}^\infty\left(\frac1{2n-1}-\frac1{2n+1}\right)=\frac12$.
+  \begin{ejemplo}[2: telescópica divergente]
+    $\displaystyle\sum_{n=1}^\infty\ln\left(1+\frac1n\right)=\sum\big[\ln(n+1)-\ln n\big]$: \ $S_n=\ln(n+1)\to\infty$. \
+    Diverge (aunque $a_n\to0$).
+  \end{ejemplo}
+\end{frame}
+
+\section{Series de términos no negativos}
+
+\begin{frame}{Series de términos no negativos}
+  \begin{teorema}
+    Si $a_n\ge0$, la sucesión $S_n$ es creciente. Por lo tanto,
+    \[ \sum a_n\ \text{converge}\iff\{S_n\}\ \text{está acotada}. \]
+    Si no está acotada, $\sum a_n=+\infty$.
+  \end{teorema}
+  \begin{idea}
+    Todos los criterios de esta sesión consisten en \textbf{acotar} (o no) las sumas parciales comparándolas con algo conocido:
+    una integral, una serie geométrica o una serie $p$.
+  \end{idea}
+  \begin{observacion}
+    Los criterios se aplican también si $a_n\ge0$ a partir de cierto $n_0$ (las colas no afectan la convergencia).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Criterio de la integral}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[criterio de la integral]
+        Sea $f$ continua, positiva y decreciente en $[1,\infty)$, y $a_n=f(n)$. Entonces
+        \[ \sum_{n=1}^\infty a_n\ \text{converge}\iff\lim_{t\to\infty}\int_1^tf(x)\dx\ \text{existe}. \]
+      \end{teorema}
+      \textbf{Prueba.} Comparando áreas (figura):
+      \[ \sum_{n=2}^Na_n\le\int_1^Nf(x)\dx\le\sum_{n=1}^{N-1}a_n.\qquad\blacksquare \]
+      \small Además, el resto cumple $\displaystyle\int_{N+1}^\infty f\le\sum_{n=N+1}^\infty a_n\le\int_N^\infty f$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0.5, xmax=6.5, ymin=0, ymax=1.15, width=6.3cm, height=3.6cm, xtick={1,...,6}, ytick=\empty]
+          \addplot[fill=uniAzul!30, draw=uniAzul, ybar interval, samples at={1,...,6}] {1/(x+1)^1.3};
+          \addplot[curva, domain=0.8:6.3] {1/x^1.3};
+        \end{axis}
+      \end{tikzpicture}\\[-1mm]
+      {\scriptsize inscritos: $\sum_{n\ge2}a_n\le\int_1^\infty f$}\\
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0.5, xmax=6.5, ymin=0, ymax=1.15, width=6.3cm, height=3.6cm, xtick={1,...,6}, ytick=\empty]
+          \addplot[fill=uniGranate!25, draw=uniGranate, ybar interval, samples at={1,...,6}] {1/x^1.3};
+          \addplot[curva, domain=0.8:6.3] {1/x^1.3};
+        \end{axis}
+      \end{tikzpicture}\\[-1mm]
+      {\scriptsize circunscritos: $\int_1^\infty f\le\sum_{n\ge1}a_n$}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La serie $p$}
+  \begin{teorema}[serie $p$]
+    \[ \sum_{n=1}^\infty\frac1{n^p}\quad\text{converge si } p>1\ \text{ y diverge si } p\le1. \]
+  \end{teorema}
+  \textbf{Prueba.} Si $p\le0$, $\frac1{n^p}\not\to0$. Si $p>0$, $f(x)=x^{-p}$ es positiva y decreciente:
+  \[ \int_1^tx^{-p}\dx=\begin{cases}\dfrac{t^{1-p}-1}{1-p},&p\ne1\\[2mm] \ln t,&p=1\end{cases}\ \xrightarrow[t\to\infty]{}\
+     \begin{cases}\dfrac1{p-1},&p>1\\ \infty,&p\le1.\end{cases}\qquad\blacksquare \]
+  \begin{ejemplo}
+    $\sum\frac1{n^2}$ converge (Euler: $=\frac{\pi^2}{6}$); \ $\sum\frac1{\sqrt n}$ diverge; \ $\sum\frac{1}{n^{1.001}}$ converge.\\
+    Criterio de la integral:
+    $\displaystyle\sum_{n=2}^\infty\frac{1}{n\ln n}$: \ $\displaystyle\int_2^t\frac{dx}{x\ln x}=\ln(\ln t)-\ln(\ln2)\to\infty$. \ Diverge.
+  \end{ejemplo}
+\end{frame}
+
+\section{Criterios de comparación}
+
+\begin{frame}{Criterio de comparación}
+  \begin{teorema}[comparación directa]
+    Sean $0\le a_n\le b_n$ para $n\ge n_0$.
+    \begin{itemize}
+      \item Si $\sum b_n$ converge, entonces $\sum a_n$ converge. \quad (``menor que convergente'')
+      \item Si $\sum a_n$ diverge, entonces $\sum b_n$ diverge. \quad (``mayor que divergente'')
+    \end{itemize}
+  \end{teorema}
+  \begin{ejemplo}[1]
+    $\displaystyle\sum\frac{1}{n^2+n+1}$: \ $\dfrac1{n^2+n+1}<\dfrac1{n^2}$ y $\sum\frac1{n^2}$ converge $\Rightarrow$ converge.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\sum\frac{\ln n}{n}$: \ $\dfrac{\ln n}{n}>\dfrac1n$ para $n\ge3$ y la armónica diverge $\Rightarrow$ diverge.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\sum\frac{\sen^2n}{3^n}\le\sum\frac1{3^n}$ (geométrica) $\Rightarrow$ converge.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Criterio de comparación al límite}
+  \begin{teorema}[comparación al límite]
+    Sean $a_n,b_n>0$ y $\displaystyle\lim_{n\to\infty}\frac{a_n}{b_n}=c$.
+    \begin{itemize}
+      \item Si $0<c<\infty$: \ $\sum a_n$ y $\sum b_n$ son ambas convergentes o ambas divergentes.
+      \item Si $c=0$ y $\sum b_n$ converge, $\sum a_n$ converge. \ Si $c=\infty$ y $\sum b_n$ diverge, $\sum a_n$ diverge.
+    \end{itemize}
+  \end{teorema}
+  \textbf{Idea.} Para $n$ grande, $\frac c2b_n<a_n<2c\,b_n$: se aplica comparación directa. (Útil, p.\,ej., para
+  $\sum\frac1{n^2-n+1}$, donde la comparación directa con $\frac1{n^2}$ va al revés.)
+  \begin{ejemplo}[4]
+    $\displaystyle\sum\frac{2n^2+3n}{\sqrt{5+n^7}}$. \ Términos dominantes: $\dfrac{2n^2}{n^{7/2}}=\dfrac{2}{n^{3/2}}$. Con $b_n=\frac1{n^{3/2}}$:
+    $\dfrac{a_n}{b_n}\to2$. \ Converge ($p=\frac32>1$).
+  \end{ejemplo}
+  \begin{ejemplo}[5]
+    $\displaystyle\sum\sen\frac1n$: \ $\dfrac{\sen(1/n)}{1/n}\to1$ y $\sum\frac1n$ diverge $\Rightarrow$ diverge.
+  \end{ejemplo}
+\end{frame}
+
+\section{Criterios del cociente, raíz y Raabe}
+
+\begin{frame}{Criterio del cociente (D'Alembert)}
+  \begin{teorema}
+    Sea $a_n>0$ y $\displaystyle L=\lim_{n\to\infty}\frac{a_{n+1}}{a_n}$.
+    \quad Si $L<1$ la serie converge; \ si $L>1$ (o $L=\infty$) diverge; \ si $L=1$ el criterio \textbf{no decide}.
+  \end{teorema}
+  \textbf{Idea.} Si $L<r<1$, para $n\ge N$: $a_{n+1}<ra_n$, luego $a_{N+k}<a_Nr^k$: comparación con una geométrica.
+  \begin{ejemplo}[6]
+    $\displaystyle\sum\frac{2^n}{n!}$: \ $\dfrac{a_{n+1}}{a_n}=\dfrac{2}{n+1}\to0<1$. \ Converge.
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    $\displaystyle\sum\frac{n!}{n^n}$: \ $\dfrac{a_{n+1}}{a_n}=\dfrac{(n+1)!}{(n+1)^{n+1}}\cdot\dfrac{n^n}{n!}=\left(\dfrac{n}{n+1}\right)^n\to\dfrac1e<1$. \ Converge.
+  \end{ejemplo}
+  \small \alert{Ojo:} para toda serie $p$, $\frac{a_{n+1}}{a_n}=\left(\frac{n}{n+1}\right)^p\to1$: el cociente no distingue
+  $\sum\frac1n$ de $\sum\frac1{n^2}$. Es ideal con factoriales y exponenciales.
+\end{frame}
+
+\begin{frame}{Criterio de la raíz (Cauchy)}
+  \begin{teorema}
+    Sea $a_n\ge0$ y $\displaystyle L=\lim_{n\to\infty}\sqrt[n]{a_n}$.
+    \quad Si $L<1$ converge; \ si $L>1$ diverge; \ si $L=1$ no decide.
+  \end{teorema}
+  \begin{ejemplo}[8]
+    $\displaystyle\sum\left(\frac{n}{2n+1}\right)^n$: \ $\sqrt[n]{a_n}=\dfrac{n}{2n+1}\to\dfrac12<1$. \ Converge.
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $\displaystyle\sum\frac{n^3}{3^n}$: \ $\sqrt[n]{a_n}=\dfrac{(\sqrt[n]n)^3}{3}\to\dfrac13<1$. \ Converge.
+  \end{ejemplo}
+  \begin{ejemplo}[10]
+    $\displaystyle\sum\left(1-\frac1n\right)^{n^2}$: \ $\sqrt[n]{a_n}=\left(1-\frac1n\right)^n\to e^{-1}<1$. \ Converge.
+  \end{ejemplo}
+  \small Ideal para $a_n=(\cdots)^n$. Si existe el límite del cociente, el de la raíz también y coinciden.
+\end{frame}
+
+\begin{frame}{Criterio de Raabe}
+  Útil cuando el cociente da $L=1$ (p.\,ej.\ cocientes de productos ``tipo factorial'').
+  \begin{teorema}[Raabe]
+    Sea $a_n>0$ y $\displaystyle R=\lim_{n\to\infty}n\left(1-\frac{a_{n+1}}{a_n}\right)$.
+    \quad Si $R>1$ converge; \ si $R<1$ diverge; \ si $R=1$ no decide.
+  \end{teorema}
+  \small (Compara con la serie $p$: para $a_n=\frac1{n^p}$, \ $n\left(1-\left(\frac{n}{n+1}\right)^p\right)\to p$.)
+  \normalsize
+  \begin{ejemplo}[11]
+    $\displaystyle a_n=\frac{1\cdot3\cdot5\cdots(2n-1)}{2\cdot4\cdot6\cdots(2n)}$: \
+    $\dfrac{a_{n+1}}{a_n}=\dfrac{2n+1}{2n+2}\to1$; \
+    $n\left(1-\dfrac{2n+1}{2n+2}\right)=\dfrac{n}{2n+2}\to\dfrac12<1$. \ Diverge.
+  \end{ejemplo}
+  \begin{ejemplo}[12]
+    $\displaystyle a_n=\frac{1\cdot3\cdots(2n-1)}{2\cdot4\cdots(2n)}\cdot\frac{1}{2n+1}$: \
+    $n\left(1-\frac{(2n+1)^2}{(2n+2)(2n+3)}\right)=\dfrac{n(6n+5)}{(2n+2)(2n+3)}\to\dfrac32>1$. \ Converge.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Estrategia para decidir la convergencia}
+  \begin{enumerate}
+    \item ¿$a_n\to0$? Si no, \textbf{diverge}.
+    \item ¿Es geométrica, telescópica o serie $p$? Use el resultado conocido.
+    \item ¿Es una fracción algebraica (potencias de $n$)? \ Comparación al límite con una serie $p$.
+    \item ¿Hay factoriales o exponenciales $c^n$? \ Criterio del cociente (y Raabe si da 1).
+    \item ¿Es de la forma $(b_n)^n$? \ Criterio de la raíz.
+    \item ¿$a_n=f(n)$ con $f$ fácil de integrar y decreciente? \ Criterio de la integral.
+    \item ¿Hay funciones acotadas ($\sen$, $\cos$)? \ Comparación directa.
+  \end{enumerate}
+  \begin{center}
+    \begin{tikzpicture}[node distance=0.3cm, every node/.style={font=\scriptsize, rounded corners, draw, align=center, minimum height=0.6cm}]
+      \node[fill=uniAzul!15] (a) {$\ln n$};
+      \node[fill=uniAzul!15, right=of a] (b) {$n^p$};
+      \node[fill=uniAzul!15, right=of b] (c) {$a^n$};
+      \node[fill=uniAzul!15, right=of c] (d) {$n!$};
+      \node[fill=uniAzul!15, right=of d] (e) {$n^n$};
+      \draw[->] (a) -- (b); \draw[->] (b) -- (c); \draw[->] (c) -- (d); \draw[->] (d) -- (e);
+      \node[draw=none, right=of e] {\scriptsize crecimiento};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    Determine si convergen o divergen (y sume cuando sea posible):
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\sum\frac{3^{n}+2^{n}}{6^n}$
+      \item $\displaystyle\sum\frac{1}{n(n+2)}$
+      \item $\displaystyle\sum\frac{n+1}{n^3+2}$
+      \item $\displaystyle\sum\frac{1}{\sqrt{n(n+1)}}$
+      \item $\displaystyle\sum_{n=1}^\infty ne^{-n^2}$
+      \item $\displaystyle\sum_{n\ge2}\frac{1}{n(\ln n)^2}$
+      \item $\displaystyle\sum\frac{n^{10}}{10^n}$
+      \item $\displaystyle\sum\frac{(2n)!}{(n!)^2}$
+      \item $\displaystyle\sum\left(\frac{3n+1}{4n-1}\right)^{2n}$
+      \item $\displaystyle\sum\frac{n!}{(a+1)(a+2)\cdots(a+n)}$, $a>0$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \textbf{Desafío.} Pruebe que $\displaystyle\frac1{11}<\sum_{n=11}^\infty\frac1{n^2}<\frac1{10}$ y use esto con
+  $\sum_{n=1}^{10}\frac1{n^2}\approx1.5498$ para acotar $\frac{\pi^2}{6}$.
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Geométrica: $\sum ar^n=\frac a{1-r}$ si $|r|<1$. \ Telescópica: $S_n=b_1-b_{n+1}$.
+    \item Serie $p$: $\sum\frac1{n^p}$ converge $\iff p>1$.
+    \item Términos $\ge0$: converge $\iff$ sumas parciales acotadas.
+    \item Criterios: integral; comparación (directa y al límite); cociente y raíz ($L<1$ conv., $L>1$ div.); Raabe ($R>1$ conv., $R<1$ div.).
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} series alternadas, convergencia absoluta, series de potencias y series de Taylor.
+\end{frame}
+
+\end{document}

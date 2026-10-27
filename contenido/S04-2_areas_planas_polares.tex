@@ -1,0 +1,397 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Áreas de regiones planas]{Áreas de regiones planas}
+\subtitle{Regiones del tipo I y tipo II. Regiones polares\\[2pt]\small Semana 4 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Plantear el área entre dos curvas mediante el \resaltar{elemento diferencial de área}.
+    \item Distinguir regiones de \resaltar{tipo I} (integrar en $x$) y \resaltar{tipo II} (integrar en $y$) y elegir la más conveniente.
+    \item Deducir la fórmula del área en \resaltar{coordenadas polares} y aplicarla.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:35 & Regiones del tipo I: entre dos gráficas, curvas que se cruzan\\
+      0:35 -- 1:00 & Regiones del tipo II. ¿Cuál conviene?\\
+      1:00 -- 1:40 & Coordenadas polares y área de regiones polares\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Regiones del tipo I}
+
+\begin{frame}{Área entre dos curvas: el elemento de área}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{definicion}[región tipo I]
+        $R=\{(x,y):\ a\le x\le b,\ g(x)\le y\le f(x)\}$, con $f,g$ continuas.
+      \end{definicion}
+      Un rectángulo vertical típico tiene
+      \[ \text{altura}=f(x)-g(x),\quad\text{ancho}=dx, \]
+      \[ dA=\big[f(x)-g(x)\big]\dx. \]
+      Sumando (integrando):
+      \[ \boxed{A(R)=\int_a^b\big[f(x)-g(x)\big]\dx} \]
+      \small (Es el límite de las sumas de Riemann $\sum[f(c_i)-g(c_i)]\Delta x_i$.)
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.3, ymin=0, ymax=3.6, width=7cm, height=6cm,
+            xtick={0.5,2.2,3.8}, xticklabels={$a$,$x$,$b$}, ytick=\empty, domain=0.5:3.8]
+          \addplot[name path=f, curva] {2.4+0.5*sin(deg(1.5*x))} node[pos=1,right] {$f$};
+          \addplot[name path=g, curva2] {0.6+0.15*(x-2)^2} node[pos=1,right] {$g$};
+          \addplot[uniAzul!20] fill between[of=f and g];
+          \draw[fill=uniVerde!50, draw=uniVerde] (axis cs:2.1,0.6015) rectangle (axis cs:2.3,2.38);
+          \draw[<->] (axis cs:2.45,0.61) -- node[right] {\scriptsize $f-g$} (axis cs:2.45,2.36);
+          \node[below] at (axis cs:2.2,0.55) {\scriptsize $dx$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 1}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Área entre $y=x^2$ y $y=2x-x^2$.
+        \begin{enumerate}
+          \item \textbf{Intersecciones:} $x^2=2x-x^2\iff 2x(x-1)=0$: \ $x=0,\ x=1$.
+          \item \textbf{¿Quién está arriba?} En $x=\tfrac12$: $2x-x^2=\tfrac34>\tfrac14=x^2$.
+          \item \textbf{Integral:}
+          \[ A=\int_0^1\big[(2x-x^2)-x^2\big]\dx=\Big[x^2-\tfrac23x^3\Big]_0^1=\frac13. \]
+        \end{enumerate}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.4, xmax=1.6, ymin=-0.3, ymax=1.4, width=6.5cm, height=5.5cm, xtick={1}, ytick={1}]
+          \addplot[name path=f, curva, domain=-0.3:1.5] {2*x-x^2} node[pos=0.95,below] {\scriptsize $2x-x^2$};
+          \addplot[name path=g, curva2, domain=-0.3:1.15] {x^2} node[pos=1,right] {\scriptsize $x^2$};
+          \addplot[uniAzul!25] fill between[of=f and g, soft clip={domain=0:1}];
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: curvas que se cruzan}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Área entre $y=\sen x$ y $y=\cos x$ en $[0,\frac\pi2]$.
+
+        Se cortan en $x=\frac\pi4$. El área es $\int_0^{\pi/2}|\cos x-\sen x|\dx$:
+        \[ A=\int_0^{\pi/4}(\cos x-\sen x)\dx+\int_{\pi/4}^{\pi/2}(\sen x-\cos x)\dx \]
+        \[ =(\sqrt2-1)+(\sqrt2-1)=2\sqrt2-2. \]
+      \end{ejemplo}
+      \begin{observacion}
+        En general $A=\displaystyle\int_a^b|f(x)-g(x)|\dx$: hay que partir el intervalo en los puntos de corte.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.9, ymin=0, ymax=1.25, width=6.5cm, height=5cm,
+            xtick={0.7854,1.5708}, xticklabels={$\frac\pi4$,$\frac\pi2$}, ytick={1}, domain=0:1.5708]
+          \addplot[name path=s, curva] {sin(deg(x))} node[pos=1,right] {\scriptsize $\sen x$};
+          \addplot[name path=c, curva2] {cos(deg(x))} node[pos=0,above right] {\scriptsize $\cos x$};
+          \addplot[uniGranate!25] fill between[of=s and c, soft clip={domain=0:0.7854}];
+          \addplot[uniAzul!25] fill between[of=s and c, soft clip={domain=0.7854:1.5708}];
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Regiones del tipo II}
+
+\begin{frame}{Regiones del tipo II: integrar respecto de $y$}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{definicion}[región tipo II]
+        $R=\{(x,y):\ c\le y\le d,\ h_1(y)\le x\le h_2(y)\}$.
+      \end{definicion}
+      Rectángulos \emph{horizontales}:
+      \[ dA=\big[h_2(y)-h_1(y)\big]\dy, \]
+      \[ \boxed{A(R)=\int_c^d\big[h_2(y)-h_1(y)\big]\dy} \]
+      \begin{center}
+        \small (derecha $-$ izquierda)
+      \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.2, ymin=0, ymax=3.6, width=6.8cm, height=6cm,
+            ytick={0.4,1.8,3.2}, yticklabels={$c$,$y$,$d$}, xtick=\empty]
+          \addplot[name path=h1, curva2, domain=0.4:3.2] ({0.5+0.3*(x-1.8)^2},{x});
+          \addplot[name path=h2, curva, domain=0.4:3.2] ({3+0.4*sin(deg(2*x))},{x});
+          \addplot[fill=uniAzul!20, draw=none] coordinates {(1.088,0.400) (1.049,0.447) (1.012,0.493) (0.976,0.540) (0.942,0.587) (0.908,0.633) (0.876,0.680) (0.846,0.727) (0.816,0.773) (0.788,0.820) (0.761,0.867) (0.736,0.913) (0.712,0.960) (0.689,1.007) (0.667,1.053) (0.647,1.100) (0.628,1.147) (0.610,1.193) (0.594,1.240) (0.579,1.287) (0.565,1.333) (0.553,1.380) (0.542,1.427) (0.532,1.473) (0.524,1.520) (0.516,1.567) (0.510,1.613) (0.506,1.660) (0.503,1.707) (0.501,1.753) (0.500,1.800) (0.501,1.847) (0.503,1.893) (0.506,1.940) (0.510,1.987) (0.516,2.033) (0.524,2.080) (0.532,2.127) (0.542,2.173) (0.553,2.220) (0.565,2.267) (0.579,2.313) (0.594,2.360) (0.610,2.407) (0.628,2.453) (0.647,2.500) (0.667,2.547) (0.689,2.593) (0.712,2.640) (0.736,2.687) (0.761,2.733) (0.788,2.780) (0.816,2.827) (0.846,2.873) (0.876,2.920) (0.908,2.967) (0.942,3.013) (0.976,3.060) (1.012,3.107) (1.049,3.153) (1.088,3.200) (3.047,3.200) (3.009,3.153) (2.972,3.107) (2.935,3.060) (2.899,3.013) (2.863,2.967) (2.828,2.920) (2.796,2.873) (2.764,2.827) (2.735,2.780) (2.708,2.733) (2.684,2.687) (2.663,2.640) (2.644,2.593) (2.629,2.547) (2.616,2.500) (2.608,2.453) (2.602,2.407) (2.600,2.360) (2.601,2.313) (2.606,2.267) (2.615,2.220) (2.626,2.173) (2.641,2.127) (2.659,2.080) (2.681,2.033) (2.704,1.987) (2.731,1.940) (2.759,1.893) (2.790,1.847) (2.823,1.800) (2.857,1.753) (2.893,1.707) (2.929,1.660) (2.966,1.613) (3.003,1.567) (3.041,1.520) (3.077,1.473) (3.114,1.427) (3.149,1.380) (3.183,1.333) (3.215,1.287) (3.246,1.240) (3.274,1.193) (3.300,1.147) (3.323,1.100) (3.344,1.053) (3.361,1.007) (3.376,0.960) (3.387,0.913) (3.395,0.867) (3.399,0.820) (3.400,0.773) (3.397,0.727) (3.391,0.680) (3.382,0.633) (3.369,0.587) (3.353,0.540) (3.334,0.493) (3.312,0.447) (3.287,0.400)} -- cycle;
+          \draw[fill=uniVerde!50, draw=uniVerde] (axis cs:0.5,1.7) rectangle (axis cs:2.82,1.9);
+          \node[uniGranate] at (axis cs:0.35,3.4) {\scriptsize $x=h_1(y)$};
+          \node[uniAzul] at (axis cs:3.5,3.45) {\scriptsize $x=h_2(y)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: ¿tipo I o tipo II?}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Área entre $y^2=2x+6$ y $y=x-1$.
+
+        Cortes: $(x-1)^2=2x+6\Rightarrow x=-1,5$; puntos $(-1,-2)$ y $(5,4)$.
+
+        \textbf{Tipo II} (una sola integral): \ $h_1(y)=\frac{y^2}{2}-3$, \ $h_2(y)=y+1$.
+        \[ A=\int_{-2}^{4}\left[(y+1)-\left(\tfrac{y^2}{2}-3\right)\right]dy=\left[-\tfrac{y^3}{6}+\tfrac{y^2}2+4y\right]_{-2}^4=18. \]
+        \textbf{Tipo I} requeriría dos integrales (el borde inferior cambia en $x=-1$):
+        \[ A=\int_{-3}^{-1}2\sqrt{2x+6}\dx+\int_{-1}^{5}\left[\sqrt{2x+6}-(x-1)\right]dx. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.8, xmax=6.5, ymin=-3.2, ymax=5, width=6.8cm, height=6.2cm, xtick={-3,-1,5}, ytick={-2,4}]
+          \addplot[name path=p, curva, domain=-2.9:4.6, samples=100] ({x^2/2-3},{x});
+          \addplot[name path=r, curva2, domain=-2.9:4.6] ({x+1},{x});
+          \addplot[uniAzul!25] fill between[of=p and r, soft clip={domain y=-2:4}];
+          \draw[fill=uniVerde!50, draw=uniVerde] (axis cs:-1.5,0.85) rectangle (axis cs:2,1.15);
+          \node[uniAzul] at (axis cs:-2,4.5) {\scriptsize $y^2=2x+6$};
+          \node[uniGranate] at (axis cs:5.3,2.8) {\scriptsize $y=x-1$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Estrategia general}
+  \begin{block}{Pasos para calcular un área}
+    \begin{enumerate}
+      \item \textbf{Graficar} la región. (¡Imprescindible!)
+      \item Hallar los \textbf{puntos de intersección} de las curvas.
+      \item Decidir \textbf{tipo I o tipo II}: elegir aquel en que el borde superior/inferior (o derecho/izquierdo) esté
+        dado por \emph{una sola} fórmula, o donde las funciones sean más fáciles de integrar.
+      \item Dibujar el rectángulo típico y escribir $dA$.
+      \item Integrar y \textbf{verificar} que el resultado sea positivo y razonable.
+    \end{enumerate}
+  \end{block}
+  \begin{ejemplo}[4: área usando simetría]
+    Región encerrada por $y=x^3-4x$ y el eje $x$: por ser impar, las dos partes son iguales:
+    \[ A=2\int_{-2}^0(x^3-4x)\dx=2\left[\tfrac{x^4}{4}-2x^2\right]_{-2}^0=2\cdot4=8. \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Regiones polares}
+
+\begin{frame}{Repaso: coordenadas polares}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      \[ x=r\cos\theta,\quad y=r\sen\theta,\qquad r^2=x^2+y^2. \]
+      Una curva polar es $r=f(\theta)$, $\alpha\le\theta\le\beta$.
+      \begin{ejemplo}[curvas típicas]
+        \begin{itemize}
+          \item $r=a$: circunferencia; \ $r=2a\cos\theta$: circunferencia por el origen.
+          \item $r=a(1+\cos\theta)$: cardioide.
+          \item $r=a\cos(n\theta)$: rosa de $n$ ($n$ impar) o $2n$ pétalos ($n$ par).
+          \item $r^2=a^2\cos2\theta$: lemniscata.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=2.3, ymin=-1.5, ymax=1.5, axis equal image, width=4.5cm, height=4.5cm, xtick=\empty, ytick=\empty, title={\scriptsize $r=1+\cos\theta$}]
+          \addplot[curva, domain=0:360, samples=150] ({(1+cos(x))*cos(x)},{(1+cos(x))*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.5cm, height=4.5cm, xtick=\empty, ytick=\empty, title={\scriptsize $r=\cos2\theta$}]
+          \addplot[curva2, domain=0:360, samples=300] ({cos(2*x)*cos(x)},{cos(2*x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.5cm, height=4.5cm, xtick=\empty, ytick=\empty, title={\scriptsize $r=\cos3\theta$}]
+          \addplot[uniVerde, very thick, domain=0:180, samples=300] ({cos(3*x)*cos(x)},{cos(3*x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=4.5cm, height=4.5cm, xtick=\empty, ytick=\empty, title={\scriptsize $r^2=\cos2\theta$}]
+          \addplot[uniMorado, very thick, domain=-45:45, samples=200] ({sqrt(max(cos(2*x),0))*cos(x)},{sqrt(max(cos(2*x),0))*sin(x)});
+          \addplot[uniMorado, very thick, domain=135:225, samples=200] ({sqrt(max(cos(2*x),0))*cos(x)},{sqrt(max(cos(2*x),0))*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Área en coordenadas polares}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      Región $R=\{(r,\theta):\ \alpha\le\theta\le\beta,\ 0\le r\le f(\theta)\}$.
+
+      Ahora el elemento de área es un \resaltar{sector circular} de radio $r=f(\theta)$ y ángulo $d\theta$:
+      \[ dA=\frac12r^2\dth \qquad(\text{área de sector}=\tfrac12r^2\Delta\theta). \]
+      \begin{teorema}
+        \[ A(R)=\frac12\int_\alpha^\beta\big[f(\theta)\big]^2\dth. \]
+      \end{teorema}
+      \small Prueba: sumas de Riemann con sectores; el sector $i$ está entre sectores de radios $\min f$ y $\max f$ en $[\theta_{i-1},\theta_i]$.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.25]
+        \fill[uniAzul!20] (0,0) -- plot[domain=15:80, samples=50] ({(2+0.5*sin(3*\x))*cos(\x)},{(2+0.5*sin(3*\x))*sin(\x)}) -- cycle;
+        \fill[uniVerde!50] (0,0) -- plot[domain=45:52, samples=10] ({(2+0.5*sin(3*\x))*cos(\x)},{(2+0.5*sin(3*\x))*sin(\x)}) -- cycle;
+        \draw[very thick, uniAzul] plot[domain=0:95, samples=80] ({(2+0.5*sin(3*\x))*cos(\x)},{(2+0.5*sin(3*\x))*sin(\x)});
+        \draw[->] (-0.2,0) -- (2.8,0);
+        \draw[->] (0,-0.2) -- (0,2.7);
+        \draw[dashed] (0,0) -- ({2.35*cos(15)},{2.35*sin(15)}) node[right] {\scriptsize $\theta=\alpha$};
+        \draw[dashed] (0,0) -- ({1.6*cos(80)},{1.6*sin(80)});
+        \node at ({1.75*cos(83)},{1.75*sin(83)}) {\scriptsize $\theta=\beta$};
+        \node[uniAzul] at (2.2,1.9) {$r=f(\theta)$};
+        \node at ({0.9*cos(48)},{0.9*sin(48)}) {\scriptsize $d\theta$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de área polar}
+  \begin{columns}
+    \begin{column}{0.62\textwidth}
+      \begin{ejemplo}[5: cardioide $r=1+\cos\theta$]
+        \[ A=\frac12\int_0^{2\pi}(1+\cos\theta)^2\dth=\frac12\int_0^{2\pi}\left(1+2\cos\theta+\frac{1+\cos2\theta}{2}\right)d\theta=\frac{3\pi}{2}. \]
+      \end{ejemplo}
+      \begin{ejemplo}[6: rosa de 4 pétalos $r=\cos2\theta$]
+        Un pétalo: $-\frac\pi4\le\theta\le\frac\pi4$.
+        \[ A=4\cdot\frac12\int_{-\pi/4}^{\pi/4}\cos^22\theta\dth=2\cdot\frac\pi4=\frac\pi2. \]
+      \end{ejemplo}
+      \begin{observacion}
+        Cuidado con los límites: en $[0,2\pi]$ la rosa $r=\cos3\theta$ se recorre \emph{dos veces}.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.2, xmax=1.2, ymin=-1.2, ymax=1.2, axis equal image, width=5.3cm, height=5.3cm, xtick=\empty, ytick=\empty]
+          \addplot[fill=uniAzul!20, draw=none, domain=-45:45, samples=100] ({cos(2*x)*cos(x)},{cos(2*x)*sin(x)}) -- (axis cs:0,0);
+          \addplot[curva2, domain=0:360, samples=300] ({cos(2*x)*cos(x)},{cos(2*x)*sin(x)});
+          \draw[dashed] (axis cs:0,0) -- (axis cs:0.85,0.85);
+          \draw[dashed] (axis cs:0,0) -- (axis cs:0.85,-0.85);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Pétalo: $|\theta|\le\frac\pi4$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Área entre dos curvas polares}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Si $0\le g(\theta)\le f(\theta)$ en $[\alpha,\beta]$:
+      \[ A=\frac12\int_\alpha^\beta\left(f(\theta)^2-g(\theta)^2\right)d\theta. \]
+      \begin{ejemplo}[7]
+        Región dentro de $r=3\sen\theta$ y fuera de $r=1+\sen\theta$.
+
+        Cortes: $3\sen\theta=1+\sen\theta\Rightarrow\sen\theta=\frac12$: $\theta=\frac\pi6,\frac{5\pi}6$.
+        \[ A=\frac12\int_{\pi/6}^{5\pi/6}\big(9\sen^2\theta-(1+\sen\theta)^2\big)d\theta=\pi. \]
+      \end{ejemplo}
+      \begin{observacion}
+        Los cortes de curvas polares pueden ocurrir con distintos $\theta$ (p.ej.\ en el origen): ¡grafique siempre!
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2, xmax=2, ymin=-0.4, ymax=3.3, axis equal image, width=6cm, height=6cm, xtick=\empty, ytick={1.5,3}]
+          \addplot[fill=uniAzul!30, draw=none] coordinates {(1.299,0.750) (1.337,0.819) (1.370,0.890) (1.400,0.962) (1.427,1.036) (1.449,1.112) (1.467,1.188) (1.482,1.265) (1.492,1.343) (1.498,1.421) (1.500,1.500) (1.498,1.579) (1.492,1.657) (1.482,1.735) (1.467,1.812) (1.449,1.888) (1.427,1.964) (1.400,2.038) (1.370,2.110) (1.337,2.181) (1.299,2.250) (1.258,2.317) (1.214,2.382) (1.166,2.444) (1.115,2.504) (1.061,2.561) (1.004,2.615) (0.944,2.666) (0.882,2.714) (0.817,2.758) (0.750,2.799) (0.681,2.837) (0.610,2.870) (0.538,2.900) (0.464,2.927) (0.388,2.949) (0.312,2.967) (0.235,2.982) (0.157,2.992) (0.079,2.998) (0.000,3.000) (-0.079,2.998) (-0.157,2.992) (-0.235,2.982) (-0.312,2.967) (-0.388,2.949) (-0.464,2.927) (-0.538,2.900) (-0.610,2.870) (-0.681,2.837) (-0.750,2.799) (-0.817,2.758) (-0.882,2.714) (-0.944,2.666) (-1.004,2.615) (-1.061,2.561) (-1.115,2.504) (-1.166,2.444) (-1.214,2.382) (-1.258,2.317) (-1.299,2.250) (-1.337,2.181) (-1.370,2.110) (-1.400,2.038) (-1.427,1.964) (-1.449,1.888) (-1.467,1.812) (-1.482,1.735) (-1.492,1.657) (-1.498,1.579) (-1.500,1.500) (-1.498,1.421) (-1.492,1.343) (-1.482,1.265) (-1.467,1.188) (-1.449,1.112) (-1.427,1.036) (-1.400,0.962) (-1.370,0.890) (-1.337,0.819) (-1.299,0.750) (-1.299,0.750) (-1.298,0.796) (-1.295,0.841) (-1.291,0.887) (-1.285,0.933) (-1.276,0.979) (-1.266,1.025) (-1.254,1.071) (-1.240,1.117) (-1.225,1.162) (-1.207,1.207) (-1.188,1.252) (-1.166,1.295) (-1.143,1.339) (-1.118,1.381) (-1.092,1.423) (-1.063,1.464) (-1.033,1.503) (-1.001,1.542) (-0.968,1.580) (-0.933,1.616) (-0.896,1.651) (-0.858,1.685) (-0.819,1.717) (-0.778,1.748) (-0.736,1.777) (-0.693,1.805) (-0.648,1.831) (-0.603,1.856) (-0.556,1.878) (-0.509,1.899) (-0.460,1.918) (-0.411,1.935) (-0.361,1.950) (-0.311,1.963) (-0.260,1.974) (-0.208,1.984) (-0.157,1.991) (-0.105,1.996) (-0.052,1.999) (0.000,2.000) (0.052,1.999) (0.105,1.996) (0.157,1.991) (0.208,1.984) (0.260,1.974) (0.311,1.963) (0.361,1.950) (0.411,1.935) (0.460,1.918) (0.509,1.899) (0.556,1.878) (0.603,1.856) (0.648,1.831) (0.693,1.805) (0.736,1.777) (0.778,1.748) (0.819,1.717) (0.858,1.685) (0.896,1.651) (0.933,1.616) (0.968,1.580) (1.001,1.542) (1.033,1.503) (1.063,1.464) (1.092,1.423) (1.118,1.381) (1.143,1.339) (1.166,1.295) (1.188,1.252) (1.207,1.207) (1.225,1.162) (1.240,1.117) (1.254,1.071) (1.266,1.025) (1.276,0.979) (1.285,0.933) (1.291,0.887) (1.295,0.841) (1.298,0.796) (1.299,0.750)} -- cycle;
+          \addplot[curva, domain=0:180, samples=150] ({3*sin(x)*cos(x)},{3*sin(x)*sin(x)});
+          \addplot[curva2, domain=0:360, samples=150] ({(1+sin(x))*cos(x)},{(1+sin(x))*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 8: lemniscata}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Área encerrada por $r^2=4\cos2\theta$.
+
+        $r^2\ge0$ requiere $\cos2\theta\ge0$. Por simetría, calculamos un cuarto ($0\le\theta\le\frac\pi4$) y multiplicamos por 4:
+        \[ A=4\cdot\frac12\int_0^{\pi/4}4\cos2\theta\dth=8\cdot\Big[\tfrac12\sen2\theta\Big]_0^{\pi/4}=4. \]
+      \end{ejemplo}
+      \begin{idea}
+        En polares, la fórmula usa $r^2$ directamente: ¡no hace falta despejar $r$!
+      \end{idea}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.3, xmax=2.3, ymin=-1, ymax=1, axis equal image, width=7cm, height=4.5cm, xtick={-2,2}, ytick=\empty]
+          \addplot[fill=uniAzul!25, draw=none, domain=0:45, samples=100] ({2*sqrt(max(cos(2*x),0))*cos(x)},{2*sqrt(max(cos(2*x),0))*sin(x)}) -- (axis cs:0,0);
+          \addplot[uniMorado, very thick, domain=-45:45, samples=200] ({2*sqrt(max(cos(2*x),0))*cos(x)},{2*sqrt(max(cos(2*x),0))*sin(x)});
+          \addplot[uniMorado, very thick, domain=135:225, samples=200] ({2*sqrt(max(cos(2*x),0))*cos(x)},{2*sqrt(max(cos(2*x),0))*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos (I): regiones tipo I y II}
+  \begin{ejercicio}
+    Grafique y calcule el área de la región limitada por:
+    \begin{enumerate}
+      \item $y=x^2-4$ \ y \ $y=-x^2+2x$.
+      \item $y=x^3-x$ \ y \ $y=3x$.
+      \item $y=\sqrt x$, \ $y=x-2$ \ y \ el eje $x$ \ (hágalo como tipo I y como tipo II).
+      \item $x=y^2-4y$ \ y \ $x=2y-y^2$.
+      \item $y=e^x$, \ $y=e^{-x}$ \ y \ $x=\ln 2$.
+      \item $y=\ln x$, \ el eje $y$, \ $y=0$ \ y \ $y=1$.
+      \item $y=\dfrac{1}{1+x^2}$ \ y \ $y=\dfrac{x^2}{2}$.
+      \item Halle $c$ tal que la recta $y=c$ divida en dos partes de igual área la región bajo $y=4-x^2$, $y\ge0$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Ejercicios propuestos (II): regiones polares}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \setcounter{enumi}{8}
+      \item Área encerrada por la rosa $r=2\sen3\theta$.
+      \item Área del lazo interior del caracol $r=1+2\cos\theta$.
+      \item Área dentro de $r=3\cos\theta$ y fuera de $r=1+\cos\theta$.
+      \item Área común a las circunferencias $r=2\cos\theta$ y $r=2\sen\theta$.
+      \item Área dentro de $r^2=8\cos2\theta$ y fuera de $r=2$.
+      \item Pruebe, usando polares, que el área del círculo $r=2a\cos\theta$ es $\pi a^2$.
+      \item Área de la región limitada por la espiral $r=\theta$, $0\le\theta\le2\pi$, y el eje polar positivo.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Tipo I: $A=\int_a^b[f(x)-g(x)]\dx$ \ (arriba $-$ abajo).
+    \item Tipo II: $A=\int_c^d[h_2(y)-h_1(y)]\dy$ \ (derecha $-$ izquierda).
+    \item Curvas que se cruzan: $A=\int|f-g|$; dividir en los puntos de corte.
+    \item Polares: $A=\dfrac12\displaystyle\int_\alpha^\beta r^2\dth$; entre dos curvas: $\dfrac12\displaystyle\int(f^2-g^2)\dth$.
+    \item Siempre: graficar, hallar cortes, elegir el elemento de área adecuado.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} áreas de regiones limitadas por curvas paramétricas y longitud recorrida por una partícula.
+\end{frame}
+
+\end{document}

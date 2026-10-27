@@ -1,0 +1,322 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Paramétricas: área y distancia]{Área de regiones limitadas por curvas paramétricas}
+\subtitle{Longitud recorrida por una partícula\\[2pt]\small Semana 5 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Describir curvas mediante \resaltar{ecuaciones paramétricas} y reconocer su orientación.
+    \item Calcular áreas bajo curvas paramétricas y áreas de regiones encerradas por curvas cerradas.
+    \item Distinguir entre \resaltar{desplazamiento} y \resaltar{distancia recorrida} por una partícula.
+    \item Calcular la distancia recorrida a partir de la rapidez $\sqrt{x'(t)^2+y'(t)^2}$.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Repaso: curvas paramétricas\\
+      0:15 -- 1:05 & Área bajo una curva paramétrica; curvas cerradas; lazos\\
+      1:05 -- 1:40 & Movimiento rectilíneo y en el plano: distancia recorrida\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Curvas paramétricas}
+
+\begin{frame}{Curvas paramétricas}
+  \begin{definicion}
+    Una \resaltar{curva paramétrica} es $C:\ x=f(t),\ y=g(t)$, $t\in[\alpha,\beta]$. El parámetro $t$ (a menudo
+    el tiempo) induce una \emph{orientación}: el sentido en que se recorre la curva.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3.3, xmax=3.3, ymin=-2.3, ymax=2.3, axis equal image, width=5cm, height=4.2cm, xtick={3}, ytick={2}, title={\scriptsize Elipse}]
+          \addplot[curva, domain=0:360, samples=100, -{Stealth[length=6pt]}] ({3*cos(x)},{2*sin(x)});
+        \end{axis}
+      \end{tikzpicture}\\
+      \scriptsize $x=a\cos t,\ y=b\sen t$
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=13, ymin=0, ymax=2.6, axis equal image, width=5.3cm, height=3.5cm, xtick={6.2832,12.566}, xticklabels={$2\pi a$,$4\pi a$}, ytick={2}, yticklabels={$2a$}, title={\scriptsize Cicloide}]
+          \addplot[curva2, domain=0:720, samples=200] ({rad(x)-sin(x)},{1-cos(x)});
+          \draw[gray] (axis cs:3.1416,1) circle[radius=1];
+        \end{axis}
+      \end{tikzpicture}\\
+      \scriptsize $x=a(t-\sen t),\ y=a(1-\cos t)$
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-1.3, ymax=1.3, axis equal image, width=4.4cm, height=4.4cm, xtick={1}, ytick={1}, title={\scriptsize Astroide}]
+          \addplot[uniVerde, very thick, domain=0:360, samples=200] ({cos(x)^3},{sin(x)^3});
+        \end{axis}
+      \end{tikzpicture}\\
+      \scriptsize $x=a\cos^3t,\ y=a\sen^3t$
+    \end{column}
+  \end{columns}
+  \vspace{2mm}
+  \small La cicloide es la trayectoria de un punto de una rueda de radio $a$ que rueda sin deslizar.
+\end{frame}
+
+\section{Área bajo una curva paramétrica}
+
+\begin{frame}{Área bajo una curva paramétrica}
+  \begin{columns}
+    \begin{column}{0.56\textwidth}
+      Si la curva es la gráfica de $y=F(x)\ge0$, $a\le x\le b$, recorrida como $x=f(t)$, $y=g(t)$, con
+      $f(\alpha)=a$, $f(\beta)=b$ y $f$ monótona, el cambio de variable $x=f(t)$ da:
+      \begin{teorema}
+        \[ A=\int_a^by\dx=\int_\alpha^\beta g(t)\,f'(t)\dt. \]
+      \end{teorema}
+      \begin{observacion}
+        Si la curva se recorre de derecha a izquierda ($f$ decreciente), la integral da $-A$.
+        Se toma valor absoluto o se invierten los límites.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.2, ymin=0, ymax=2.6, width=6.3cm, height=5cm, xtick={0.5,3.6}, xticklabels={$f(\alpha)$,$f(\beta)$}, ytick=\empty, domain=0:1]
+          \addplot[fill=uniAzul!25, draw=none, samples=60] ({0.5+3.1*x},{1.2+0.8*sin(deg(5*x))}) -- (axis cs:3.6,0) -- (axis cs:0.5,0) -- cycle;
+          \addplot[curva, samples=60, -{Stealth[length=6pt]}] ({0.5+3.1*x},{1.2+0.8*sin(deg(5*x))});
+          \draw[fill=uniVerde!50, draw=uniVerde] (axis cs:2,0) rectangle (axis cs:2.15,1.9);
+          \node at (axis cs:2.6,0.45) {\scriptsize $y\,dx$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $dA=y\dx=g(t)\,f'(t)\dt$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 1: un arco de cicloide}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        Área bajo un arco de $x=a(t-\sen t)$, $y=a(1-\cos t)$, $0\le t\le2\pi$.
+
+        $dx=a(1-\cos t)\dt$:
+        \[ A=\int_0^{2\pi}a(1-\cos t)\cdot a(1-\cos t)\dt \]
+        \[ =a^2\int_0^{2\pi}(1-2\cos t+\cos^2t)\dt=a^2(2\pi-0+\pi)=3\pi a^2. \]
+      \end{ejemplo}
+      \begin{idea}
+        ¡El área bajo el arco es \textbf{el triple} del área del círculo que rueda! (Galileo lo estimó pesando láminas.)
+      \end{idea}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=6.9, ymin=0, ymax=2.5, axis equal image, width=6.3cm, height=4cm, xtick={3.1416,6.2832}, xticklabels={$\pi a$,$2\pi a$}, ytick={2}, yticklabels={$2a$}]
+          \addplot[fill=uniAzul!25, draw=none, domain=0:360, samples=100] ({rad(x)-sin(x)},{1-cos(x)}) \closedcycle;
+          \addplot[curva2, domain=0:360, samples=100] ({rad(x)-sin(x)},{1-cos(x)});
+          \draw[fill=uniGranate!25, draw=uniGranate] (axis cs:3.1416,1) circle[radius=1];
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Curvas cerradas simples}
+  \begin{teorema}[área encerrada]
+    Si $C$ es una curva cerrada simple recorrida \textbf{en sentido antihorario} una vez para $t\in[\alpha,\beta]$:
+    \[ A=\int_\alpha^\beta x\,y'\dt=-\int_\alpha^\beta y\,x'\dt=\frac12\int_\alpha^\beta\big(x\,y'-y\,x'\big)\dt. \]
+  \end{teorema}
+  \textbf{Idea.} $-\int y\,x'\dt$ = (área bajo el borde inferior, recorrido de izq.\ a der.) $-$ (área bajo el borde
+  superior, recorrido de der.\ a izq.). La forma simétrica se generaliza en Cálculo Vectorial (Teorema de Green).
+  \begin{ejemplo}[2: elipse]
+    $x=a\cos t$, $y=b\sen t$, $0\le t\le2\pi$:
+    \[ A=\frac12\int_0^{2\pi}\big(a\cos t\cdot b\cos t-b\sen t\cdot(-a\sen t)\big)\dt=\frac12\int_0^{2\pi}ab\dt=\pi ab. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: astroide}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}
+        $x=a\cos^3t$, $y=a\sen^3t$, $0\le t\le2\pi$.
+        \[ x\,y'-y\,x'=3a^2\left(\cos^4t\sen^2t+\sen^4t\cos^2t\right)=3a^2\sen^2t\cos^2t. \]
+        \[ A=\frac{3a^2}{2}\int_0^{2\pi}\sen^2t\cos^2t\dt=\frac{3a^2}{8}\int_0^{2\pi}\sen^22t\dt=\frac{3\pi a^2}{8}. \]
+      \end{ejemplo}
+      \small Alternativa: por simetría, $A=4\displaystyle\int_0^a y\dx=4\int_{\pi/2}^{0}a\sen^3t\cdot(-3a\cos^2t\sen t)\dt$.
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-1.3, ymax=1.3, axis equal image, width=5.5cm, height=5.5cm, xtick={1}, xticklabels={$a$}, ytick={1}, yticklabels={$a$}]
+          \addplot[fill=uniVerde!25, draw=none, domain=0:360, samples=200] ({cos(x)^3},{sin(x)^3});
+          \addplot[uniVerde, very thick, domain=0:360, samples=200] ({cos(x)^3},{sin(x)^3});
+          \draw[gray, dashed] (axis cs:0,0) circle[radius=1];
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: área de un lazo}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        La curva $x=t^2$, $y=t^3-3t$ tiene un lazo. Hallar su área.
+
+        \textbf{Autointersección:} $x(t_1)=x(t_2)$ con $t_1\ne t_2\Rightarrow t_2=-t_1$; luego
+        $y(t_1)=y(-t_1)\Rightarrow t_1^3-3t_1=0\Rightarrow t_1=\pm\sqrt3$. El lazo es $-\sqrt3\le t\le\sqrt3$.
+
+        \textbf{Simetría} respecto al eje $x$ ($y$ es impar en $t$):
+        \[ A=2\int_0^{\sqrt3}(3t-t^3)\cdot2t\dt=4\Big[t^3-\tfrac{t^5}{5}\Big]_0^{\sqrt3}=\frac{24\sqrt3}{5}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.5, xmax=5, ymin=-3.3, ymax=3.3, width=6cm, height=6cm, xtick={3}, ytick={-2,2}]
+          \addplot[fill=uniAzul!25, draw=none, domain=-1.732:1.732, samples=100] ({x^2},{x^3-3*x});
+          \addplot[curva, domain=-2.1:2.1, samples=150] ({x^2},{x^3-3*x});
+          \addplot[only marks, mark=*, uniGranate] coordinates {(3,0)};
+          \node[uniGranate, right] at (axis cs:3,0.4) {\scriptsize $t=\pm\sqrt3$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Longitud recorrida por una partícula}
+
+\begin{frame}{Movimiento rectilíneo: desplazamiento vs.\ distancia}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Una partícula se mueve sobre una recta con velocidad $v(t)=s'(t)$.
+      \begin{itemize}
+        \item \resaltar{Desplazamiento}: $\displaystyle s(t_2)-s(t_1)=\int_{t_1}^{t_2}v(t)\dt$.
+        \item \resaltar{Distancia recorrida}: $\displaystyle\int_{t_1}^{t_2}|v(t)|\dt$.
+      \end{itemize}
+      \begin{ejemplo}[5]
+        $v(t)=t^2-2t-3=(t-3)(t+1)$, $0\le t\le6$.
+        \begin{itemize}
+          \item Desplazamiento: $\int_0^6v\dt=72-36-18=18$.
+          \item Distancia: $\int_0^3(-v)\dt+\int_3^6v\dt=9+27=36$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$v$}, xmin=0, xmax=6.5, ymin=-5, ymax=22, width=6.5cm, height=5.5cm, xtick={3,6}, ytick={-4,21}, domain=0:6]
+          \addplot[name path=v, curva] {x^2-2*x-3};
+          \path[name path=ax] (axis cs:0,0) -- (axis cs:6,0);
+          \addplot[uniGranate!30] fill between[of=v and ax, soft clip={domain=0:3}];
+          \addplot[uniAzul!30] fill between[of=v and ax, soft clip={domain=3:6}];
+          \node at (axis cs:1.5,-1.5) {\scriptsize $9$};
+          \node at (axis cs:5,4) {\scriptsize $27$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La partícula retrocede en $[0,3)$ y avanza en $(3,6]$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Movimiento en el plano}
+  Una partícula se mueve según $\mathbf{r}(t)=\big(x(t),y(t)\big)$.
+  \begin{itemize}
+    \item Velocidad: $\mathbf v(t)=\big(x'(t),y'(t)\big)$; \ \ rapidez: $|\mathbf v(t)|=\sqrt{x'(t)^2+y'(t)^2}$.
+    \item En un tiempo $dt$ recorre aproximadamente (Pitágoras):
+      \[ ds=\sqrt{(dx)^2+(dy)^2}=\sqrt{x'(t)^2+y'(t)^2}\dt. \]
+  \end{itemize}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{teorema}[distancia recorrida]
+        La distancia recorrida entre $t=\alpha$ y $t=\beta$ es
+        \[ D=\int_\alpha^\beta\sqrt{x'(t)^2+y'(t)^2}\dt. \]
+      \end{teorema}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \draw[very thick, uniAzul] (0,0) .. controls (1,0.2) and (1.6,0.9) .. (2.4,1.8);
+        \draw[uniGranate, thick] (0.9,0.25) -- (1.8,1.05);
+        \draw[dashed] (0.9,0.25) -- (1.8,0.25) node[midway,below] {\scriptsize $dx$} -- (1.8,1.05) node[midway,right] {\scriptsize $dy$};
+        \node[uniGranate] at (1.15,0.85) {\scriptsize $ds$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos en el plano}
+  \begin{ejemplo}[6]
+    $x=t^2$, $y=\tfrac23t^3$, $0\le t\le\sqrt3$: \
+    $\sqrt{(2t)^2+(2t^2)^2}=2t\sqrt{1+t^2}$,
+    \[ D=\int_0^{\sqrt3}2t\sqrt{1+t^2}\dt=\Big[\tfrac23(1+t^2)^{3/2}\Big]_0^{\sqrt3}=\frac23(8-1)=\frac{14}{3}. \]
+  \end{ejemplo}
+  \begin{ejemplo}[7: la distancia recorrida no es la longitud de la trayectoria]
+    $x=\sen^2t$, $y=\cos^2t$, $0\le t\le3\pi$. La trayectoria es el segmento $x+y=1$, $0\le x\le1$, de longitud $\sqrt2$.
+    Pero la partícula va y vuelve:
+    \[ |\mathbf v|=\sqrt{2}\,|\sen2t|,\qquad D=\sqrt2\int_0^{3\pi}|\sen2t|\dt=\sqrt2\cdot6=6\sqrt2. \]
+    ¡Recorre el segmento \textbf{seis} veces!
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplo 8: un punto de la rueda}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Un punto de una rueda de radio $a$ sigue la cicloide $x=a(t-\sen t)$, $y=a(1-\cos t)$.
+        ¿Qué distancia recorre en una vuelta?
+        \[ x'^2+y'^2=a^2\big[(1-\cos t)^2+\sen^2t\big]=2a^2(1-\cos t)=4a^2\sen^2\tfrac t2. \]
+        \[ D=\int_0^{2\pi}2a\left|\sen\tfrac t2\right|dt=\Big[-4a\cos\tfrac t2\Big]_0^{2\pi}=8a. \]
+      \end{ejemplo}
+      \small La rueda avanza $2\pi a\approx6.28a$, pero el punto recorre $8a$. En $t=0,2\pi$ la rapidez es cero: \emph{cúspides}.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={rapidez}, xmin=0, xmax=6.9, ymin=0, ymax=2.4, width=6.3cm, height=4.6cm, xtick={3.1416,6.2832}, xticklabels={$\pi$,$2\pi$}, ytick={2}, yticklabels={$2a$}, domain=0:6.2832]
+          \addplot[fill=uniAzul!25, draw=none] {2*sin(deg(x/2))} \closedcycle;
+          \addplot[curva] {2*sin(deg(x/2))};
+          \node at (axis cs:3.14,0.7) {\small $D=8a$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Halle el área bajo $x=e^t$, $y=e^{-t}$, $0\le t\le\ln2$, y verifíquelo eliminando el parámetro.
+      \item Área encerrada por $x=\cos t$, $y=\sen2t$, $0\le t\le\pi/2$ y el eje $x$ (un lazo de la ``figura ocho'').
+      \item Área de la región encerrada por la cardioide $x=2\cos t-\cos2t$, $y=2\sen t-\sen2t$.
+      \item Área del lazo del folium $x=\dfrac{3t}{1+t^3}$, $y=\dfrac{3t^2}{1+t^3}$, $t\ge0$.
+        \ \small(Use $\frac12\int(xy'-yx')\dt$.)
+      \item Una partícula se mueve con $v(t)=\cos t$ (m/s). Halle desplazamiento y distancia para $0\le t\le\frac{3\pi}{2}$.
+      \item Una partícula sigue $x=\cos^2t$, $y=\cos t$, $0\le t\le4\pi$. Describa la trayectoria y halle la distancia recorrida.
+      \item Halle la distancia recorrida por $\mathbf r(t)=(e^t\cos t,\ e^t\sen t)$, $0\le t\le2\pi$.
+      \item Compruebe que una partícula sobre $x=3\cos t$, $y=3\sen t$ recorre en $0\le t\le 4\pi$ el doble de la longitud de la circunferencia.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Área bajo curva paramétrica: $A=\displaystyle\int_\alpha^\beta y(t)\,x'(t)\dt$ (cuidar la orientación).
+    \item Curva cerrada simple (antihoraria): $A=\dfrac12\displaystyle\int_\alpha^\beta(xy'-yx')\dt$.
+    \item Desplazamiento $\int v\dt$ \ vs.\ \ distancia $\int|v|\dt$.
+    \item En el plano: $D=\displaystyle\int_\alpha^\beta\sqrt{x'^2+y'^2}\dt$; puede exceder la longitud de la trayectoria si
+      la partícula repite tramos.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} longitud de arco de curvas paramétricas y polares.
+\end{frame}
+
+\end{document}

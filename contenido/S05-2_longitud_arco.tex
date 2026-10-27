@@ -1,0 +1,302 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Longitud de arco]{Longitud de arco}
+\subtitle{Curvas paramétricas y curvas polares\\[2pt]\small Semana 5 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir la \resaltar{longitud de una curva} como límite de longitudes de poligonales inscritas.
+    \item Deducir y aplicar la fórmula $L=\int\sqrt{x'^2+y'^2}\dt$ para curvas paramétricas.
+    \item Obtener los casos particulares: gráficas $y=f(x)$ y \resaltar{curvas polares} $r=f(\theta)$.
+    \item Introducir la función longitud de arco $s(t)$.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Definición: poligonales inscritas. Curvas rectificables\\
+      0:25 -- 1:00 & Fórmula para curvas paramétricas y gráficas. Ejemplos\\
+      1:00 -- 1:40 & Longitud de arco de curvas polares\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Definición de longitud de arco}
+
+\begin{frame}{Aproximación por poligonales}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Sea $C:\ \mathbf r(t)=(x(t),y(t))$, $t\in[\alpha,\beta]$, y $P=\{t_0,\dots,t_n\}$ una partición. La poligonal
+      inscrita une $P_i=\mathbf r(t_i)$:
+      \[ \ell(P)=\sum_{i=1}^n|P_{i-1}P_i|. \]
+      \begin{definicion}
+        $C$ es \resaltar{rectificable} si $\{\ell(P)\}$ está acotado; su \resaltar{longitud} es
+        \[ L(C)=\sup_P\ell(P). \]
+      \end{definicion}
+      \small (Refinar una partición no disminuye $\ell(P)$, por la desigualdad triangular.)
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.2, ymin=0, ymax=3, width=7cm, height=5.6cm, xtick=\empty, ytick=\empty, domain=0.3:3.9]
+          \addplot[curva, samples=100] {1.3+0.9*sin(deg(1.6*x))+0.15*x};
+          \addplot[uniGranate, thick, mark=*, mark size=1.5pt, samples=5] {1.3+0.9*sin(deg(1.6*x))+0.15*x};
+          \addplot[uniVerde, thick, dashed, mark=*, mark size=1pt, samples=9] {1.3+0.9*sin(deg(1.6*x))+0.15*x};
+          \node[uniGranate] at (axis cs:3.2,0.4) {\scriptsize $n=4$};
+          \node[uniVerde] at (axis cs:3.2,0.15) {\scriptsize $n=8$};
+          \node[uniGranate] at (axis cs:0.3,0.95) {\scriptsize $P_0$};
+          \node[uniGranate] at (axis cs:3.9,2.2) {\scriptsize $P_n$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Fórmula de la longitud de arco}
+  \begin{teorema}
+    Si $x',y'$ son continuas en $[\alpha,\beta]$ y $C$ se recorre una sola vez, entonces $C$ es rectificable y
+    \[ L=\int_\alpha^\beta\sqrt{x'(t)^2+y'(t)^2}\dt. \]
+  \end{teorema}
+  \textbf{Idea de la prueba.} Por el TVM, $x(t_i)-x(t_{i-1})=x'(\xi_i)\Delta t_i$ y $y(t_i)-y(t_{i-1})=y'(\eta_i)\Delta t_i$:
+  \[ |P_{i-1}P_i|=\sqrt{x'(\xi_i)^2+y'(\eta_i)^2}\,\Delta t_i. \]
+  Es ``casi'' una suma de Riemann de $\sqrt{x'^2+y'^2}$ (los puntos $\xi_i,\eta_i$ pueden diferir; la continuidad
+  uniforme controla esa diferencia).
+  \begin{block}{Notación diferencial}
+    \[ ds=\sqrt{dx^2+dy^2},\qquad L=\int_C ds. \]
+  \end{block}
+\end{frame}
+
+\begin{frame}{Caso particular: gráficas de funciones}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Si $y=f(x)$, $a\le x\le b$, con $f'$ continua, tomamos $x=t$, $y=f(t)$:
+      \begin{teorema}
+        \[ L=\int_a^b\sqrt{1+f'(x)^2}\dx. \]
+        Análogamente, si $x=g(y)$, $c\le y\le d$: \ $L=\displaystyle\int_c^d\sqrt{1+g'(y)^2}\dy$.
+      \end{teorema}
+      \begin{ejemplo}[1]
+        $y=x^{3/2}$, $0\le x\le4$: \ $f'(x)=\frac32x^{1/2}$,
+        \[ L=\int_0^4\sqrt{1+\tfrac94x}\dx=\frac{8}{27}\Big[(1+\tfrac94x)^{3/2}\Big]_0^4=\frac{8}{27}\big(10\sqrt{10}-1\big). \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.5, ymin=0, ymax=8.6, width=6cm, height=5.6cm, xtick={4}, ytick={8}, domain=0:4]
+          \addplot[curva] {x^1.5} node[pos=0.9,left] {$y=x^{3/2}$};
+          \addplot[uniGranate, thick, dashed] coordinates {(0,0) (4,8)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $L\approx9.07$; \ la cuerda mide $\sqrt{80}\approx8.94$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Más ejemplos con gráficas}
+  \begin{ejemplo}[2]
+    $y=\ln(\cos x)$, $0\le x\le\frac\pi4$: \ $1+f'^2=1+\tan^2x=\sec^2x$,
+    \[ L=\int_0^{\pi/4}\sec x\dx=\Big[\ln|\sec x+\tan x|\Big]_0^{\pi/4}=\ln\big(\sqrt2+1\big). \]
+  \end{ejemplo}
+  \begin{ejemplo}[3: catenaria]
+    $y=\cosh x$, $0\le x\le a$: \ $1+\senh^2x=\cosh^2x$,
+    \quad $L=\displaystyle\int_0^a\cosh x\dx=\senh a$. \ (Forma de un cable colgante.)
+  \end{ejemplo}
+  \begin{observacion}
+    La raíz $\sqrt{1+f'^2}$ rara vez tiene primitiva elemental. Los ejemplos ``calculables'' se diseñan para que
+    $1+f'^2$ sea un cuadrado perfecto. En general se usa integración numérica (Semana 9).
+  \end{observacion}
+\end{frame}
+
+\section{Curvas paramétricas}
+
+\begin{frame}{Ejemplos con curvas paramétricas}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}[4: circunferencia]
+        $x=r\cos t$, $y=r\sen t$: \ $L=\displaystyle\int_0^{2\pi}r\dt=2\pi r$. \quad ¡La definición de $\pi$ es coherente!
+      \end{ejemplo}
+      \begin{ejemplo}[5: astroide]
+        $x=a\cos^3t$, $y=a\sen^3t$: \ $x'^2+y'^2=9a^2\sen^2t\cos^2t$.
+        Por simetría (en el primer cuadrante $|\sen t\cos t|=\sen t\cos t$):
+        \[ L=4\int_0^{\pi/2}3a\sen t\cos t\dt=6a. \]
+      \end{ejemplo}
+      \begin{observacion}
+        En $[0,2\pi]$, $\int_0^{2\pi}3a\sen t\cos t\dt=0$: ¡no olvide el valor absoluto!
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-1.3, ymax=1.3, axis equal image, width=5.5cm, height=5.5cm, xtick={1}, xticklabels={$a$}, ytick={1}, yticklabels={$a$}]
+          \addplot[uniVerde, very thick, domain=0:360, samples=200] ({cos(x)^3},{sin(x)^3});
+          \addplot[uniGranate, ultra thick, domain=0:90, samples=60] ({cos(x)^3},{sin(x)^3});
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Un cuarto mide $\frac32a$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: la elipse y las integrales elípticas}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      $x=a\cos t$, $y=b\sen t$ con $a>b$. Sea $e=\sqrt{1-b^2/a^2}$ la excentricidad.
+      \[ L=4\int_0^{\pi/2}\sqrt{a^2\sen^2t+b^2\cos^2t}\dt=4a\int_0^{\pi/2}\sqrt{1-e^2\cos^2t}\dt. \]
+      Esta es una \resaltar{integral elíptica}: \emph{no} tiene primitiva elemental.
+      \begin{observacion}[aproximación de Ramanujan]
+        $L\approx\pi\left[3(a+b)-\sqrt{(3a+b)(a+3b)}\right]$.\\
+        Para $a=2$, $b=1$: \ $L\approx9.6884$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.4, xmax=2.4, ymin=-1.4, ymax=1.4, axis equal image, width=6.3cm, height=4.6cm, xtick={2}, xticklabels={$a$}, ytick={1}, yticklabels={$b$}]
+          \addplot[curva, domain=0:360, samples=100] ({2*cos(x)},{sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Las integrales elípticas aparecen también en el periodo exacto del péndulo.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{La función longitud de arco}
+  \begin{definicion}
+    Para una curva suave $\mathbf r(t)$, $t\ge\alpha$:\qquad
+    $\displaystyle s(t)=\int_\alpha^t\sqrt{x'(u)^2+y'(u)^2}\du$.
+  \end{definicion}
+  Por el TFC1:\qquad $\dfrac{ds}{dt}=\sqrt{x'(t)^2+y'(t)^2}=|\mathbf v(t)|$\quad (la \emph{rapidez}).
+  \begin{ejemplo}[7: espiral logarítmica]
+    $x=e^t\cos t$, $y=e^t\sen t$: \ $x'^2+y'^2=2e^{2t}$, \ $s(t)=\displaystyle\int_0^t\sqrt2e^u\du=\sqrt2(e^t-1)$.\\[1mm]
+    Despejando $t=\ln\!\left(1+\frac{s}{\sqrt2}\right)$ obtenemos una \resaltar{parametrización por longitud de arco}
+    (rapidez constante $=1$), útil en física y geometría diferencial.
+  \end{ejemplo}
+  \begin{observacion}
+    Cuando $t\to-\infty$ la espiral da infinitas vueltas alrededor del origen, pero $s(0)-s(-\infty)=\sqrt2$: ¡longitud finita!
+  \end{observacion}
+\end{frame}
+
+\section{Curvas polares}
+
+\begin{frame}{Longitud de arco en coordenadas polares}
+  Una curva $r=f(\theta)$, $\alpha\le\theta\le\beta$, es paramétrica con parámetro $\theta$:
+  \[ x=f(\theta)\cos\theta,\qquad y=f(\theta)\sen\theta. \]
+  Entonces $x'=f'\cos\theta-f\sen\theta$, \ $y'=f'\sen\theta+f\cos\theta$, \ y
+  \[ x'^2+y'^2=f(\theta)^2+f'(\theta)^2. \]
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        \[ L=\int_\alpha^\beta\sqrt{r^2+\left(\frac{dr}{d\theta}\right)^2}\dth. \]
+      \end{teorema}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \draw[->] (0,0) -- (2.6,0);
+        \draw (0,0) -- (35:2.2);
+        \draw (0,0) -- (45:2.2);
+        \draw[very thick, uniAzul] (35:2) arc (35:45:2);
+        \draw[uniGranate, thick] (45:2) -- (45:2.4);
+        \draw[uniVerde, thick] (35:2) -- (37:2.4) -- (45:2.4);
+        \node[uniAzul] at (38:1.6) {\scriptsize $r\,d\theta$};
+        \node[uniGranate] at (49:2.45) {\scriptsize $dr$};
+        \node[uniVerde] at (35:2.65) {\scriptsize $ds$};
+      \end{tikzpicture}
+
+      \small $ds^2\approx(r\,d\theta)^2+(dr)^2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos polares}
+  \begin{columns}
+    \begin{column}{0.62\textwidth}
+      \begin{ejemplo}[8: cardioide $r=a(1+\cos\theta)$]
+        \[ r^2+r'^2=a^2\big[(1+\cos\theta)^2+\sen^2\theta\big]=2a^2(1+\cos\theta)=4a^2\cos^2\tfrac\theta2. \]
+        Por simetría:
+        \[ L=2\int_0^{\pi}2a\cos\tfrac\theta2\dth=8a\Big[\sen\tfrac\theta2\Big]_0^\pi=8a. \]
+      \end{ejemplo}
+      \begin{ejemplo}[9: circunferencia $r=2a\cos\theta$]
+        $r^2+r'^2=4a^2\cos^2\theta+4a^2\sen^2\theta=4a^2$, \ $0\le\theta\le\pi$:
+        \quad $L=\int_0^\pi2a\dth=2\pi a$. \ (Se recorre una vez en $[0,\pi]$.)
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.7, xmax=2.3, ymin=-1.5, ymax=1.5, axis equal image, width=5.4cm, height=5.4cm, xtick={2}, xticklabels={$2a$}, ytick=\empty]
+          \addplot[curva2, domain=0:360, samples=200] ({(1+cos(x))*cos(x)},{(1+cos(x))*sin(x)});
+          \addplot[curva, dashed, domain=0:180, samples=100] ({cos(x)*cos(x)},{cos(x)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Cardioide (granate) y circunferencia $r=\cos\theta$ (azul).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 10: espiral logarítmica}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        $r=e^{\theta/5}$, \ $0\le\theta\le4\pi$. \ $r'=\frac15e^{\theta/5}$:
+        \[ \sqrt{r^2+r'^2}=e^{\theta/5}\sqrt{1+\tfrac1{25}}=\frac{\sqrt{26}}{5}e^{\theta/5}. \]
+        \[ L=\frac{\sqrt{26}}{5}\int_0^{4\pi}e^{\theta/5}\dth=\sqrt{26}\left(e^{4\pi/5}-1\right)\approx57.8. \]
+      \end{ejemplo}
+      \begin{observacion}
+        La espiral logarítmica corta a todos los radios con el mismo ángulo. Aparece en conchas de nautilo,
+        galaxias y en la trayectoria de algunos insectos hacia la luz.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-8, xmax=13.5, ymin=-9, ymax=6, axis equal image, width=6.5cm, height=6cm, xtick=\empty, ytick=\empty]
+          \addplot[curva, domain=0:720, samples=300] ({exp(rad(x)/5)*cos(x)},{exp(rad(x)/5)*sin(x)});
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Longitud de $y=\dfrac{x^3}{6}+\dfrac{1}{2x}$, $1\le x\le2$. \ \small(Verifique que $1+y'^2$ es un cuadrado.)
+      \item Longitud de $x=\dfrac{y^4}{8}+\dfrac{1}{4y^2}$, $1\le y\le2$.
+      \item Longitud de $y=\ln(1-x^2)$, $0\le x\le\frac12$. \ \small(Fracciones parciales.)
+      \item Longitud de un arco de la cicloide $x=a(t-\sen t)$, $y=a(1-\cos t)$.
+      \item Longitud de $x=e^t\cos t$, $y=e^t\sen t$, $0\le t\le\pi$.
+      \item Longitud de $x=t-\tanh t$, $y=\sech t$ (tractriz), $0\le t\le T$.
+      \item Longitud total de la curva polar $r=a\sen^3(\theta/3)$.
+      \item Longitud de la espiral de Arquímedes $r=\theta$, $0\le\theta\le2\pi$ (déjela planteada; se resolverá con sustitución trigonométrica).
+      \item Longitud de $r=\dfrac{2}{1+\cos\theta}$, $0\le\theta\le\frac\pi2$ (parábola).
+      \item Pruebe que la longitud de $y=\cosh x$ entre $0$ y $a$ es igual al área bajo la curva entre $0$ y $a$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Longitud $=$ supremo de longitudes de poligonales inscritas.
+    \item Paramétrica: $L=\displaystyle\int_\alpha^\beta\sqrt{x'(t)^2+y'(t)^2}\dt$ (recorrida una vez).
+    \item Gráfica: $L=\displaystyle\int_a^b\sqrt{1+f'(x)^2}\dx$.
+    \item Polar: $L=\displaystyle\int_\alpha^\beta\sqrt{r^2+r'(\theta)^2}\dth$.
+    \item $ds/dt=|\mathbf v|$; muchas longitudes llevan a integrales no elementales (elípticas).
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} sustitución trigonométrica y primitivas de funciones hiperbólicas.
+\end{frame}
+
+\end{document}

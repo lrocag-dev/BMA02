@@ -1,0 +1,315 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Sucesiones y series]{Sucesiones y series numéricas}
+\subtitle{Límite, propiedades, monotonía y convergencia. Series: propiedades\\[2pt]\small Semana 11 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir \resaltar{sucesión} y \resaltar{límite} de una sucesión ($\varepsilon$--$N$).
+    \item Calcular límites usando propiedades algebraicas, el teorema del sándwich y funciones de variable real.
+    \item Aplicar el \resaltar{teorema de la sucesión monótona y acotada} (incluidas sucesiones recursivas).
+    \item Definir \resaltar{serie numérica}, sus sumas parciales y su convergencia; conocer sus propiedades básicas.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:30 & Sucesiones: definición, límite, gráficas\\
+      0:30 -- 0:55 & Propiedades de límites. Sándwich. Límites notables\\
+      0:55 -- 1:20 & Monotonía y acotación. Sucesiones recursivas\\
+      1:20 -- 1:45 & Series: sumas parciales, convergencia, propiedades, criterio del término $n$-ésimo\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Sucesiones y límites}
+
+\begin{frame}{Sucesiones}
+  \begin{definicion}
+    Una \resaltar{sucesión} es una función $a:\N\to\R$, $n\mapsto a_n$. Se denota $\{a_n\}_{n\ge1}$ ó $(a_1,a_2,a_3,\dots)$.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \begin{ejemplo}
+        \begin{itemize}
+          \item $a_n=\dfrac1n$: \ $1,\frac12,\frac13,\dots$
+          \item $b_n=(-1)^n$: \ $-1,1,-1,1,\dots$
+          \item $c_n=\left(1+\frac1n\right)^n$: \ $2,\ 2.25,\ 2.37,\dots$
+          \item Fibonacci: $F_1=F_2=1$, $F_{n+1}=F_n+F_{n-1}$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$n$}, ylabel={}, xmin=0, xmax=16, ymin=-1.3, ymax=3, width=7.5cm, height=5.2cm, xtick={5,10,15}, ytick={-1,1,2,2.718}, yticklabels={$-1$,$1$,$2$,$e$}]
+          \addplot[only marks, mark=*, mark size=1.5pt, uniAzul, samples at={1,...,15}] {1/x};
+          \addplot[only marks, mark=square*, mark size=1.3pt, uniVerde, samples at={1,...,15}] {(-1)^x};
+          \addplot[only marks, mark=triangle*, mark size=1.8pt, uniGranate, samples at={1,...,15}] {(1+1/x)^x};
+          \draw[dashed, gray] (axis cs:0,2.718) -- (axis cs:16,2.718);
+          \node[uniAzul] at (axis cs:13,0.35) {\scriptsize $1/n$};
+          \node[uniGranate] at (axis cs:13,2.3) {\scriptsize $(1+\frac1n)^n$};
+          \node[uniVerde] at (axis cs:14.5,-0.6) {\scriptsize $(-1)^n$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Límite de una sucesión}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \begin{definicion}
+        $\lim\limits_{n\to\infty}a_n=L$ si para todo $\varepsilon>0$ existe $N\in\N$ tal que
+        \[ n\ge N\ \Longrightarrow\ |a_n-L|<\varepsilon. \]
+        Si existe tal $L$, la sucesión es \resaltar{convergente}; si no, \resaltar{divergente}.
+      \end{definicion}
+      \begin{ejemplo}
+        $\lim\frac{n}{n+1}=1$: \ $\left|\frac{n}{n+1}-1\right|=\frac1{n+1}<\varepsilon$ si $n>\frac1\varepsilon-1$.
+      \end{ejemplo}
+      \small $\{(-1)^n\}$ diverge (oscila); \ $\{n^2\}$ diverge a $+\infty$.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$n$}, xmin=0, xmax=21, ymin=0, ymax=1.35, width=7cm, height=5.3cm, xtick={8}, xticklabels={$N$}, ytick={0.85,1,1.15}, yticklabels={$L-\varepsilon$,$L$,$L+\varepsilon$}]
+          \fill[uniVerde!20] (axis cs:0,0.85) rectangle (axis cs:21,1.15);
+          \draw[uniVerde, dashed] (axis cs:0,1) -- (axis cs:21,1);
+          \draw[dashed] (axis cs:8,0) -- (axis cs:8,1.3);
+          \addplot[only marks, mark=*, mark size=1.5pt, uniAzul, samples at={1,...,20}] {1+0.9*(-1)^x/x^1.1};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small A partir de $N$, todos los términos están en la franja.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Propiedades de los límites}
+  \begin{teorema}
+    Si $a_n\to a$ y $b_n\to b$, entonces: \ $a_n\pm b_n\to a\pm b$, \ $c\,a_n\to ca$, \ $a_nb_n\to ab$,
+    \ $\dfrac{a_n}{b_n}\to\dfrac ab$ (si $b\ne0$). El límite, si existe, es único y toda sucesión convergente es acotada.
+  \end{teorema}
+  \begin{teorema}[funciones y sucesiones]
+    Si $\lim\limits_{x\to\infty}f(x)=L$ y $a_n=f(n)$, entonces $a_n\to L$. \ Si $a_n\to L$ y $g$ es continua en $L$, $g(a_n)\to g(L)$.
+  \end{teorema}
+  \begin{ejemplo}
+    $\displaystyle\lim_{n\to\infty}\frac{\ln n}{n}=\lim_{x\to\infty}\frac{\ln x}{x}\overset{\text{L'H}}{=}\lim_{x\to\infty}\frac{1/x}{1}=0$.
+    \qquad (¡L'Hôpital no se aplica directamente a sucesiones!)
+  \end{ejemplo}
+  \begin{teorema}[Sándwich]
+    Si $a_n\le b_n\le c_n$ para $n\ge n_0$ y $a_n\to L$, $c_n\to L$, entonces $b_n\to L$.
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Límites notables}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{proposicion}
+        \begin{enumerate}
+          \item $r^n\to0$ si $|r|<1$; \ diverge si $r>1$ ó $r\le-1$.
+          \item $\sqrt[n]{a}\to1$ ($a>0$), \ $\sqrt[n]{n}\to1$.
+          \item $\left(1+\frac xn\right)^n\to e^x$.
+          \item $\dfrac{x^n}{n!}\to0$ para todo $x$.
+          \item $\dfrac{n^p}{a^n}\to0$ ($a>1$), \ $\dfrac{(\ln n)^p}{n^q}\to0$ ($q>0$).
+        \end{enumerate}
+      \end{proposicion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[{$\sqrt[n]{n}\to1$}]
+        $\ln\sqrt[n]n=\frac{\ln n}{n}\to0$, luego $\sqrt[n]n\to e^0=1$.
+      \end{ejemplo}
+      \begin{ejemplo}[sándwich: $\frac{n!}{n^n}\to0$]
+        \[ 0<\frac{n!}{n^n}=\frac1n\cdot\frac2n\cdots\frac nn\le\frac1n\to0. \]
+      \end{ejemplo}
+      \begin{idea}
+        Jerarquía de crecimiento:\\ $\ln n\ll n^p\ll a^n\ll n!\ll n^n$.
+      \end{idea}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Monotonía y convergencia}
+
+\begin{frame}{Sucesiones monótonas y acotadas}
+  \begin{definicion}
+    $\{a_n\}$ es \resaltar{creciente} si $a_n\le a_{n+1}$ y \resaltar{decreciente} si $a_n\ge a_{n+1}$ para todo $n$
+    (\emph{monótona} si es una de las dos). Es \resaltar{acotada} si existe $M$ con $|a_n|\le M$.
+  \end{definicion}
+  \begin{teorema}[Sucesión monótona]
+    Toda sucesión monótona y acotada es convergente. (Si es creciente, $a_n\to\sup\{a_n\}$.)
+  \end{teorema}
+  \textbf{Idea.} Por el axioma del supremo, $L=\sup a_n$ existe. Dado $\varepsilon$, algún $a_N>L-\varepsilon$, y por ser creciente
+  $L-\varepsilon<a_N\le a_n\le L$ para $n\ge N$. $\blacksquare$
+  \begin{block}{Técnicas para probar monotonía}
+    $a_{n+1}-a_n\ge0$; \quad $\frac{a_{n+1}}{a_n}\ge1$ (si $a_n>0$); \quad $f'(x)\ge0$ si $a_n=f(n)$; \quad inducción.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplo: una sucesión recursiva}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        $a_1=\sqrt2$, \ $a_{n+1}=\sqrt{2+a_n}$, es decir:\\
+        $\sqrt2,\ \sqrt{2+\sqrt2},\ \sqrt{2+\sqrt{2+\sqrt2}},\dots$
+        \begin{enumerate}
+          \item \textbf{Acotada por 2} (inducción): $a_1<2$; si $a_n<2$, $a_{n+1}<\sqrt{4}=2$.
+          \item \textbf{Creciente} (inducción): $a_2>a_1$; si $a_{n+1}>a_n$, entonces $\sqrt{2+a_{n+1}}>\sqrt{2+a_n}$.
+          \item Converge a $L$, y pasando al límite: $L=\sqrt{2+L}\Rightarrow L^2-L-2=0\Rightarrow L=2$.
+        \end{enumerate}
+      \end{ejemplo}
+      \begin{observacion}
+        Pasar al límite en la recurrencia solo es válido \emph{después} de probar que converge.
+        (Con $a_{n+1}=2a_n$, $a_1=1$, ``$L=2L\Rightarrow L=0$'' es falso.)
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$x$}, xmin=0, xmax=2.5, ymin=0, ymax=2.5, width=6cm, height=6cm, xtick={1.414,2}, xticklabels={$a_1$,$2$}, ytick={2}, axis equal image]
+          \addplot[curva, domain=0:2.5] {sqrt(2+x)};
+          \addplot[gray, dashed, domain=0:2.5] {x};
+          \addplot[uniGranate, thick] coordinates {(1.4142,0) (1.4142,1.8478) (1.8478,1.8478) (1.8478,1.9616) (1.9616,1.9616) (1.9616,1.9904) (1.9904,1.9904)};
+          \node[uniAzul] at (axis cs:0.6,1.85) {\scriptsize $y=\sqrt{2+x}$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Diagrama de telaraña: la sucesión sube hacia el punto fijo $L=2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo: el número $e$}
+  \begin{ejemplo}
+    $c_n=\left(1+\frac1n\right)^n$ es creciente y acotada por $3$.
+
+    Por el binomio de Newton:
+    \[ c_n=\sum_{k=0}^n\binom nk\frac1{n^k}=\sum_{k=0}^n\frac1{k!}\left(1-\frac1n\right)\left(1-\frac2n\right)\cdots\left(1-\frac{k-1}n\right). \]
+    \begin{itemize}
+      \item Cada factor $\left(1-\frac jn\right)$ crece con $n$ y hay más términos $\Rightarrow$ $c_n<c_{n+1}$.
+      \item $c_n\le\displaystyle\sum_{k=0}^n\frac1{k!}\le1+1+\frac12+\frac1{2^2}+\dots<3$.
+    \end{itemize}
+    Por el teorema, $\lim c_n$ existe; es el número $e$ (coincide con la definición vía $\ln e=1$).
+  \end{ejemplo}
+\end{frame}
+
+\section{Series numéricas}
+
+\begin{frame}{Series: sumas parciales}
+  \begin{definicion}
+    Dada $\{a_n\}$, la \resaltar{serie} $\displaystyle\sum_{n=1}^\infty a_n$ es la sucesión de \resaltar{sumas parciales}
+    $S_n=a_1+a_2+\dots+a_n$. Si $S_n\to S$, la serie \resaltar{converge} y $\displaystyle\sum_{n=1}^\infty a_n=S$; si no, \resaltar{diverge}.
+  \end{definicion}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[1: serie geométrica de razón $\frac12$]
+        $S_n=\frac12+\frac14+\dots+\frac1{2^n}=1-\frac1{2^n}\to1$.
+        \[ \sum_{n=1}^\infty\frac1{2^n}=1. \]
+      \end{ejemplo}
+      \begin{ejemplo}[2]
+        $\sum(-1)^n$: \ $S_n=-1,0,-1,0,\dots$ \ diverge.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=3.2]
+        \draw (0,0) rectangle (1,1);
+        \fill[uniAzul!50] (0,0) rectangle (0.5,1);
+        \fill[uniAzul!40] (0.5,0) rectangle (1,0.5);
+        \fill[uniAzul!30] (0.5,0.5) rectangle (0.75,1);
+        \fill[uniAzul!20] (0.75,0.5) rectangle (1,0.75);
+        \fill[uniAzul!12] (0.75,0.75) rectangle (0.875,1);
+        \draw (0.5,0) -- (0.5,1); \draw (0.5,0.5) -- (1,0.5); \draw (0.75,0.5) -- (0.75,1); \draw (0.75,0.75) -- (1,0.75);
+        \node at (0.25,0.5) {\scriptsize $\frac12$};
+        \node at (0.75,0.25) {\scriptsize $\frac14$};
+        \node at (0.625,0.75) {\scriptsize $\frac18$};
+        \node at (0.875,0.625) {\tiny $\frac1{16}$};
+      \end{tikzpicture}
+
+      \small Los términos llenan el cuadrado unitario.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Propiedades de las series}
+  \begin{teorema}[linealidad]
+    Si $\sum a_n=A$ y $\sum b_n=B$ convergen, entonces $\sum(\alpha a_n+\beta b_n)=\alpha A+\beta B$.
+    Si $\sum a_n$ converge y $\sum b_n$ diverge, $\sum(a_n+b_n)$ diverge.
+  \end{teorema}
+  \begin{proposicion}[colas]
+    Agregar o quitar un número finito de términos no altera la convergencia (sí el valor de la suma):
+    $\sum_{n=1}^\infty a_n$ converge $\iff$ $\sum_{n=k}^\infty a_n$ converge.
+  \end{proposicion}
+  \begin{teorema}[criterio del término $n$-ésimo]
+    Si $\sum a_n$ converge, entonces $a_n\to0$. \quad Equivalentemente: \ si $a_n\not\to0$, la serie \textbf{diverge}.
+  \end{teorema}
+  \textbf{Prueba.} $a_n=S_n-S_{n-1}\to S-S=0$. $\blacksquare$
+  \begin{ejemplo}
+    $\displaystyle\sum\frac{n}{2n+1}$ diverge, pues $\frac{n}{2n+1}\to\frac12\ne0$. \quad $\displaystyle\sum\cos\frac1n$ diverge ($\to1$).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{¡$a_n\to0$ no basta! La serie armónica}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}
+        La \resaltar{serie armónica} $\displaystyle\sum_{n=1}^\infty\frac1n$ diverge, aunque $\frac1n\to0$.
+      \end{teorema}
+      \textbf{Prueba (Oresme, s.\ XIV).} Agrupando:
+      \[ S_{2^k}=1+\tfrac12+\underbrace{\left(\tfrac13+\tfrac14\right)}_{>\frac12}+\underbrace{\left(\tfrac15+\dots+\tfrac18\right)}_{>\frac12}+\dots\ge1+\frac k2. \]
+      Luego $S_n\to\infty$. $\blacksquare$
+      \begin{observacion}
+        Diverge \emph{muy lentamente}: $S_n\approx\ln n+0.5772$. Para $S_n>20$ se necesitan unos $2.7\times10^8$ términos.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$n$}, xmin=0, xmax=52, ymin=0, ymax=5, width=6.5cm, height=5.3cm, xtick={10,20,30,40,50}, ytick={1,2,3,4}]
+          \addplot[const plot, uniGranate, thick] coordinates {(1,1) (2,1.5) (3,1.8333) (4,2.0833) (5,2.2833) (6,2.45) (7,2.5929) (8,2.7179) (9,2.829) (10,2.929) (15,3.3182) (20,3.5977) (25,3.8160) (30,3.9950) (35,4.1468) (40,4.2785) (45,4.3949) (50,4.4992)};
+          \addplot[uniAzul, dashed, domain=1:50] {ln(x)+0.5772};
+          \node[uniGranate] at (axis cs:15,4.4) {\scriptsize $S_n$};
+          \node[uniAzul] at (axis cs:38,3.5) {\scriptsize $\ln n+\gamma$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Usando la definición, pruebe que $\displaystyle\lim\frac{3n+1}{n+2}=3$.
+      \item Calcule: (a) $\displaystyle\lim\frac{n^2+\sen n}{2n^2-1}$, \ (b) $\displaystyle\lim\left(\sqrt{n^2+n}-n\right)$,
+        \ (c) $\displaystyle\lim\left(1-\frac2n\right)^{3n}$, \ (d) $\displaystyle\lim\frac{2^n+3^n}{3^n+n^5}$, \ (e) $\displaystyle\lim\sqrt[n]{2^n+3^n}$.
+      \item Pruebe que $\frac{n!}{2^n}\to\infty$ y que $\frac{2^n}{n!}\to0$.
+      \item Estudie la monotonía y acotación de $a_n=\dfrac{n}{n^2+1}$ y $b_n=\dfrac{3^n}{n!}$.
+      \item Sea $a_1=2$, $a_{n+1}=\dfrac12\left(a_n+\dfrac{3}{a_n}\right)$. Pruebe que converge a $\sqrt3$ (método de Herón).
+      \item Halle la suma: $\displaystyle\sum_{n=1}^\infty\frac{3}{10^n}$ \ (¿qué número decimal es?).
+      \item Determine si convergen: $\displaystyle\sum\frac{n^2}{3n^2+1}$, \ $\displaystyle\sum\left(1+\frac1n\right)^n$, \ $\displaystyle\sum\left(\frac{1}{2^n}+\frac1n\right)$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $a_n\to L$: para todo $\varepsilon$, los términos terminan en la franja $(L-\varepsilon,L+\varepsilon)$.
+    \item Herramientas: álgebra de límites, sándwich, $f(n)$ con L'Hôpital, continuidad.
+    \item Monótona $+$ acotada $\Rightarrow$ convergente (sucesiones recursivas, número $e$).
+    \item Serie: límite de sumas parciales. Lineal; las colas no afectan la convergencia.
+    \item Si $a_n\not\to0$, $\sum a_n$ diverge; pero $a_n\to0$ \textbf{no} garantiza convergencia (armónica).
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} series notables y criterios de convergencia para series de términos no negativos.
+\end{frame}
+
+\end{document}

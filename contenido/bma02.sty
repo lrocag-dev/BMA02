@@ -1,0 +1,123 @@
+% =====================================================================
+%  bma02.sty  --  Estilo común para las sesiones de BMA02 Cálculo Integral
+%  Facultad de Ciencias - UNI, periodo 2026-2
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bma02}[2026/10/05 Estilo de clases BMA02]
+
+% ---------- Idioma y fuentes ----------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[spanish,es-nodecimaldot,es-noshorthands]{babel}
+\RequirePackage{lmodern}
+
+% ---------- Matemáticas ----------
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{cancel}
+\RequirePackage{multicol}
+
+% ---------- Gráficos ----------
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.pathreplacing,positioning,shapes.geometric,3d,intersections}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween,polar}
+
+% ---------- Cajas ----------
+\RequirePackage[most]{tcolorbox}
+
+% ---------- Tema ----------
+\usetheme{Madrid}
+\usecolortheme{default}
+\definecolor{uniGranate}{RGB}{128,0,32}
+\definecolor{uniAzul}{RGB}{0,63,135}
+\definecolor{uniVerde}{RGB}{0,110,70}
+\definecolor{uniNaranja}{RGB}{210,105,0}
+\definecolor{uniGris}{RGB}{90,90,90}
+\definecolor{uniMorado}{RGB}{100,40,140}
+
+\setbeamercolor{structure}{fg=uniGranate}
+\setbeamercolor{palette primary}{bg=uniGranate,fg=white}
+\setbeamercolor{palette secondary}{bg=uniGranate!80!black,fg=white}
+\setbeamercolor{palette tertiary}{bg=uniGranate!60!black,fg=white}
+\setbeamercolor{title}{bg=uniGranate,fg=white}
+\setbeamercolor{frametitle}{bg=uniGranate!10,fg=uniGranate}
+\setbeamercolor{block title}{bg=uniAzul,fg=white}
+\setbeamercolor{block body}{bg=uniAzul!6}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{frametitle continuation}{\,(cont.)}
+
+\AtBeginSection[]{%
+  \begin{frame}{Contenido}
+    \tableofcontents[currentsection,hideothersubsections]
+  \end{frame}}
+
+% ---------- Entornos didácticos ----------
+\newtcolorbox{definicion}[1][]{enhanced,colback=uniAzul!5,colframe=uniAzul,
+  fonttitle=\bfseries,title={Definición\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{teorema}[1][]{enhanced,colback=uniGranate!5,colframe=uniGranate,
+  fonttitle=\bfseries,title={Teorema\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{proposicion}[1][]{enhanced,colback=uniGranate!5,colframe=uniGranate!70,
+  fonttitle=\bfseries,title={Propiedad\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{ejemplo}[1][]{enhanced,colback=uniVerde!5,colframe=uniVerde,
+  fonttitle=\bfseries,title={Ejemplo\ifx&#1&\else\ #1\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{observacion}[1][]{enhanced,colback=uniNaranja!6,colframe=uniNaranja,
+  fonttitle=\bfseries,title={Observación\ifx&#1&\else\ (#1)\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{ejercicio}[1][]{enhanced,colback=uniMorado!5,colframe=uniMorado,
+  fonttitle=\bfseries,title={Ejercicios propuestos\ifx&#1&\else\ #1\fi},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+\newtcolorbox{idea}{enhanced,colback=yellow!10,colframe=yellow!50!black,
+  fonttitle=\bfseries,title={Idea clave},
+  left=3pt,right=3pt,top=1pt,bottom=1pt,toptitle=0pt,bottomtitle=0pt,boxrule=0.6pt,arc=2pt,before skip=3pt,after skip=3pt}
+
+% ---------- Macros ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\dx}{\,dx}
+\newcommand{\dt}{\,dt}
+\newcommand{\du}{\,du}
+\newcommand{\dy}{\,dy}
+\newcommand{\dv}{\,dv}
+\newcommand{\dr}{\,dr}
+\newcommand{\dth}{\,d\theta}
+
+\newcommand{\eval}[3]{\Big[#1\Big]_{#2}^{#3}}
+\newcommand{\sen}{\operatorname{sen}}
+\newcommand{\arcsen}{\operatorname{arcsen}}
+\newcommand{\senh}{\operatorname{senh}}
+\newcommand{\arcsenh}{\operatorname{arcsenh}}
+\newcommand{\arctanh}{\operatorname{arctanh}}
+\newcommand{\arccosh}{\operatorname{arccosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\csch}{\operatorname{csch}}
+\newcommand{\ctg}{\operatorname{ctg}}
+\newcommand{\cosec}{\operatorname{csc}}
+\newcommand{\resaltar}[1]{{\color{uniGranate}\textbf{#1}}}
+
+% ---------- Estilos pgfplots ----------
+\pgfplotsset{
+  bma/.style={axis lines=middle, xlabel={$x$}, ylabel={$y$},
+    every axis x label/.style={at={(ticklabel* cs:1)},anchor=west},
+    every axis y label/.style={at={(ticklabel* cs:1)},anchor=south},
+    tick label style={font=\scriptsize}, samples=100,
+    width=7cm, height=5cm, clip mode=individual},
+  curva/.style={very thick, uniAzul},
+  curva2/.style={very thick, uniGranate},
+  region/.style={fill=uniAzul!25, draw=none},
+}
+
+% ---------- Portada común ----------
+\author[BMA02 -- Cálculo Integral]{Curso: BMA02 -- Cálculo Integral}
+\institute[FC-UNI]{Facultad de Ciencias\\Universidad Nacional de Ingeniería}
+\date{Periodo académico 2026-2}
+
+\endinput

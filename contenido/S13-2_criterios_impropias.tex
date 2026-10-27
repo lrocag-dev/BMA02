@@ -1,0 +1,275 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Criterios para integrales impropias]{Criterios de convergencia para integrales impropias}
+\subtitle{Comparación, convergencia absoluta y criterio del límite\\[2pt]\small Semana 13 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Decidir la convergencia de integrales impropias \resaltar{sin calcularlas}.
+    \item Aplicar el criterio de \resaltar{comparación} y el de \resaltar{comparación al límite}, usando las integrales $p$ como referencia.
+    \item Usar la \resaltar{convergencia absoluta} para integrandos que cambian de signo.
+    \item Analizar integrales clásicas: Gauss, Dirichlet ($\frac{\sen x}{x}$) y Gamma.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & ¿Por qué criterios? Integrandos sin primitiva elemental\\
+      0:10 -- 0:45 & Criterio de comparación (1.ª y 2.ª especie)\\
+      0:45 -- 1:15 & Criterio del límite. Comportamiento asintótico\\
+      1:15 -- 1:40 & Convergencia absoluta y condicional. $\int\frac{\sen x}x$. Gamma\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Criterio de comparación}
+
+\begin{frame}{Motivación}
+  \begin{itemize}
+    \item ¿Converge $\displaystyle\int_1^\infty e^{-x^2}\dx$? \ No tiene primitiva elemental: no podemos calcular el límite directamente.
+    \item Pero sí sabemos que $e^{-x^2}\le e^{-x}$ para $x\ge1$, y $\int_1^\infty e^{-x}\dx=e^{-1}$.
+  \end{itemize}
+  \begin{proposicion}[base de todo]
+    Si $f\ge0$ en $[a,\infty)$, la función $F(t)=\int_a^tf(x)\dx$ es \textbf{creciente}. Por lo tanto,
+    \[ \int_a^\infty f(x)\dx\ \text{converge}\iff F\ \text{está acotada superiormente}. \]
+  \end{proposicion}
+  \begin{idea}
+    Igual que en las series de términos no negativos: basta \emph{acotar}. Las integrales $p$ juegan el papel de las series $p$.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Criterio de comparación}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{teorema}[comparación]
+        Sean $f,g$ continuas con $0\le f(x)\le g(x)$ para $x\ge a$.
+        \begin{itemize}
+          \item Si $\int_a^\infty g$ converge, entonces $\int_a^\infty f$ converge.
+          \item Si $\int_a^\infty f$ diverge, entonces $\int_a^\infty g$ diverge.
+        \end{itemize}
+        Análogo para integrales de segunda especie.
+      \end{teorema}
+      \begin{ejemplo}[1]
+        $\displaystyle\int_1^\infty e^{-x^2}\dx$: \ $0<e^{-x^2}\le e^{-x}$ en $[1,\infty)$ $\Rightarrow$ converge.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4.2, ymin=0, ymax=1.1, width=6.2cm, height=5cm, xtick={1}, ytick={1}, domain=0:4]
+          \addplot[fill=uniGranate!15, draw=none, domain=1:4] {exp(-x)} \closedcycle;
+          \addplot[fill=uniAzul!35, draw=none, domain=1:4] {exp(-x^2)} \closedcycle;
+          \addplot[curva2] {exp(-x)};
+          \addplot[curva] {exp(-x^2)};
+          \node[uniGranate] at (axis cs:2.5,0.25) {\scriptsize $e^{-x}$};
+          \node[uniAzul] at (axis cs:0.55,0.95) {\scriptsize $e^{-x^2}$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Área azul $\le$ área granate $=e^{-1}$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de comparación}
+  \begin{ejemplo}[2]
+    $\displaystyle\int_1^\infty\frac{\sen^2x}{x^2}\dx$: \ $0\le\dfrac{\sen^2x}{x^2}\le\dfrac1{x^2}$ y $\int_1^\infty\frac{dx}{x^2}=1$ $\Rightarrow$ converge.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\int_1^\infty\frac{1+e^{-x}}{x}\dx$: \ $\dfrac{1+e^{-x}}{x}\ge\dfrac1x$ y $\int_1^\infty\frac{dx}x$ diverge $\Rightarrow$ diverge.
+  \end{ejemplo}
+  \begin{ejemplo}[4: segunda especie]
+    $\displaystyle\int_0^1\frac{e^{x}}{\sqrt x}\dx$: \ $0<\dfrac{e^x}{\sqrt x}\le\dfrac{e}{\sqrt x}$ y $\int_0^1\frac{dx}{\sqrt x}=2$ $\Rightarrow$ converge.
+  \end{ejemplo}
+  \begin{ejemplo}[5: segunda especie]
+    $\displaystyle\int_0^{\pi/2}\frac{\cos x}{x}\dx$: \ como $\cos x\ge\frac12$ si $0<x\le1$, \
+    $\dfrac{\cos x}{x}\ge\dfrac1{2x}$ en $(0,1]$ $\Rightarrow$ diverge.
+  \end{ejemplo}
+\end{frame}
+
+\section{Criterio del límite}
+
+\begin{frame}{Criterio de comparación al límite}
+  \begin{teorema}[criterio del límite]
+    Sean $f,g>0$ continuas en $[a,\infty)$ y $\displaystyle L=\lim_{x\to\infty}\frac{f(x)}{g(x)}$.
+    \begin{itemize}
+      \item Si $0<L<\infty$: \ $\int_a^\infty f$ y $\int_a^\infty g$ convergen o divergen \textbf{simultáneamente}.
+      \item Si $L=0$ y $\int_a^\infty g$ converge $\Rightarrow$ $\int_a^\infty f$ converge.
+      \item Si $L=\infty$ y $\int_a^\infty g$ diverge $\Rightarrow$ $\int_a^\infty f$ diverge.
+    \end{itemize}
+    Para segunda especie en $a$ se toma $\lim_{x\to a^+}$.
+  \end{teorema}
+  \begin{block}{Receta}
+    Identifique el \textbf{comportamiento dominante} de $f$ cerca del punto problemático y compárelo con
+    $\frac1{x^p}$ (en $\infty$) o $\frac1{(x-a)^p}$ (cerca de $a$).
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos del criterio del límite}
+  \small
+  \begin{ejemplo}[6]
+    $\displaystyle\int_1^\infty\frac{dx}{\sqrt{x^3+1}}$: \ para $x$ grande, $\sqrt{x^3+1}\approx x^{3/2}$. Con $g=x^{-3/2}$:
+    $\dfrac{f}{g}=\dfrac{x^{3/2}}{\sqrt{x^3+1}}\to1$. \ Converge ($p=\frac32$).
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    $\displaystyle\int_2^\infty\frac{x^2+1}{x^3-1}\dx$: \ $\dfrac{f}{1/x}\to1$ y $\int\frac{dx}x$ diverge. \ Diverge.
+  \end{ejemplo}
+  \begin{ejemplo}[8: segunda especie]
+    $\displaystyle\int_0^1\frac{dx}{\sqrt{\sen x}}$: \ cerca de $0$, $\sen x\approx x$; \ $\dfrac{1/\sqrt{\sen x}}{1/\sqrt x}=\sqrt{\dfrac{x}{\sen x}}\to1$.
+    \ Converge ($p=\frac12<1$).
+  \end{ejemplo}
+  \begin{ejemplo}[9: $L=0$]
+    $\displaystyle\int_1^\infty\frac{\ln x}{x^2}\dx$: \ con $g=x^{-3/2}$, $\dfrac fg=\dfrac{\ln x}{\sqrt x}\to0$ y $\int g$ converge $\Rightarrow$ converge.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Tercera especie: analizar cada extremo}
+  \begin{ejemplo}[10]
+    $\displaystyle I=\int_0^\infty\frac{dx}{\sqrt x+x^2}$. \ Separamos en $1$:
+    \begin{itemize}
+      \item Cerca de $0$: $\sqrt x+x^2\approx\sqrt x$ $\Rightarrow$ compara con $x^{-1/2}$ ($p=\frac12<1$): \ converge.
+      \item Cerca de $\infty$: $\sqrt x+x^2\approx x^2$ $\Rightarrow$ compara con $x^{-2}$ ($p=2>1$): \ converge.
+    \end{itemize}
+    Ambas partes convergen: \ $I$ converge.
+  \end{ejemplo}
+  \begin{ejemplo}[11: ¿para qué $\alpha$ converge?]
+    $\displaystyle\int_0^\infty\frac{x^{\alpha}}{1+x^2}\dx$:
+    \begin{itemize}
+      \item Cerca de $0$: $\sim x^{\alpha}=\frac1{x^{-\alpha}}$, converge si $-\alpha<1$, es decir $\alpha>-1$.
+      \item Cerca de $\infty$: $\sim x^{\alpha-2}=\frac1{x^{2-\alpha}}$, converge si $2-\alpha>1$, es decir $\alpha<1$.
+    \end{itemize}
+    Converge $\iff -1<\alpha<1$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Convergencia absoluta}
+
+\begin{frame}{Integrales absolutamente convergentes}
+  \begin{teorema}
+    Si $\int_a^\infty|f(x)|\dx$ converge, entonces $\int_a^\infty f(x)\dx$ converge (\resaltar{convergencia absoluta}).
+  \end{teorema}
+  \textbf{Prueba.} $0\le f+|f|\le2|f|$; por comparación $\int(f+|f|)$ converge, y $\int f=\int(f+|f|)-\int|f|$. $\blacksquare$
+  \begin{ejemplo}[12]
+    $\displaystyle\int_1^\infty\frac{\sen x}{x^2}\dx$: \ $\left|\dfrac{\sen x}{x^2}\right|\le\dfrac1{x^2}$ $\Rightarrow$ converge absolutamente.
+  \end{ejemplo}
+  \begin{ejemplo}[13]
+    $\displaystyle\int_0^\infty e^{-x}\cos(\omega x)\dx$ converge absolutamente ($|\cdot|\le e^{-x}$). Su valor es $\dfrac{1}{1+\omega^2}$
+    (transformada de Laplace del coseno en $s=1$).
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{La integral de Dirichlet: convergencia condicional}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}[14]
+        $\displaystyle\int_1^\infty\frac{\sen x}{x}\dx$ \textbf{converge}. Por partes:
+        \[ \int_1^t\frac{\sen x}{x}\dx=\left[-\frac{\cos x}{x}\right]_1^t-\int_1^t\frac{\cos x}{x^2}\dx, \]
+        y la última converge absolutamente. \smallskip
+
+        Pero $\displaystyle\int_1^\infty\frac{|\sen x|}{x}\dx$ \textbf{diverge}: en cada $[k\pi,(k+1)\pi]$ el área es $\ge\frac{2}{(k+1)\pi}$, y
+        $\sum\frac1{k+1}$ diverge.
+      \end{ejemplo}
+      \small Se sabe que $\displaystyle\int_0^\infty\frac{\sen x}{x}\dx=\frac\pi2$ (requiere técnicas más avanzadas).
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=20, ymin=-0.3, ymax=1.1, width=6.3cm, height=4.6cm, xtick={3.1416,6.2832,9.4248,12.566}, xticklabels={$\pi$,$2\pi$,$3\pi$,$4\pi$}, ytick={1}, samples=300, domain=0.01:19.5]
+          \addplot[name path=f, curva] {sin(deg(x))/x};
+          \path[name path=ax] (axis cs:0,0) -- (axis cs:19.5,0);
+          \addplot[uniAzul!30] fill between[of=f and ax, split, every even segment/.style={fill=uniAzul!30}, every odd segment/.style={fill=uniGranate!30}];
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Áreas alternadas decrecientes: como la serie armónica alternada.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Dos integrales famosas}
+  \begin{ejemplo}[15: la función Gamma converge para $x>0$]
+    $\displaystyle\Gamma(x)=\int_0^1t^{x-1}e^{-t}\dt+\int_1^\infty t^{x-1}e^{-t}\dt$.
+    \begin{itemize}
+      \item En $(0,1]$: $t^{x-1}e^{-t}\le t^{x-1}=\frac{1}{t^{1-x}}$, converge si $1-x<1\iff x>0$.
+      \item En $[1,\infty)$: $\dfrac{t^{x-1}e^{-t}}{t^{-2}}=\dfrac{t^{x+1}}{e^t}\to0$ y $\int_1^\infty t^{-2}$ converge.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{ejemplo}[16: integral de Gauss]
+    $\displaystyle\int_{-\infty}^\infty e^{-x^2}\dx$ converge (Ej.\,1 y simetría). Su valor es $\sqrt\pi$ (se demuestra con integrales dobles).
+    \smallskip
+
+    Es la base de la distribución normal: \ $\displaystyle\frac{1}{\sigma\sqrt{2\pi}}\int_{-\infty}^\infty e^{-\frac{(x-\mu)^2}{2\sigma^2}}\dx=1$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Conexión con las series: criterio de la integral}
+  \begin{teorema}[recordatorio]
+    Si $f$ es positiva, continua y decreciente en $[1,\infty)$:
+    \quad $\displaystyle\sum_{n=1}^\infty f(n)$ converge $\iff\displaystyle\int_1^\infty f(x)\dx$ converge.
+  \end{teorema}
+  \begin{ejemplo}[17]
+    $\displaystyle\sum_{n=2}^\infty\frac{1}{n(\ln n)^p}$ y $\displaystyle\int_2^\infty\frac{dx}{x(\ln x)^p}\overset{u=\ln x}{=}\int_{\ln2}^\infty\frac{du}{u^p}$:
+    ambas convergen $\iff p>1$.
+  \end{ejemplo}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{l|l}
+      \textbf{Series} & \textbf{Integrales impropias}\\ \hline
+      $\sum\frac1{n^p}$ & $\int_1^\infty\frac{dx}{x^p}$\\
+      comparación / al límite & comparación / al límite\\
+      absoluta $\Rightarrow$ convergente & absoluta $\Rightarrow$ convergente\\
+      Leibniz (alternadas) & partes (Dirichlet)
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    Determine si convergen (no es necesario calcularlas):
+    \begin{multicols}{3}
+    \begin{enumerate}
+      \item $\int_1^\infty\frac{dx}{x^3+\sqrt x}$
+      \item $\int_1^\infty\frac{x\dx}{\sqrt{x^4-x+1}}$
+      \item $\int_0^\infty\frac{\arctan x}{1+x^2}\dx$
+      \item $\int_1^\infty\frac{\cos^2x}{1+x^2}\dx$
+      \item $\int_0^1\frac{dx}{\sqrt{x}+x^3}$
+      \item $\int_0^1\frac{\ln x}{\sqrt x}\dx$
+      \item $\int_0^1\frac{dx}{e^x-1}$
+      \item $\int_0^\infty\frac{x^2\dx}{e^x}$
+      \item $\int_0^\infty\frac{dx}{\sqrt{x(1+x)}}$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: parámetros y teoría]
+    \begin{enumerate}
+      \setcounter{enumi}{9}
+      \item Halle los $p,q$ para los que converge $\int_0^\infty\frac{x^{p}}{1+x^{q}}\dx$ ($q>0$).
+      \item Pruebe que $\int_0^1\frac{\sen x}{x^{3/2}}\dx$ converge y que $\int_0^1\frac{\sen x}{x^{2}}\dx$ diverge.
+      \item Pruebe que $\int_0^\infty\frac{\sen x}{x}\dx$ converge pero no absolutamente (complete el argumento del Ej.\,14).
+      \item ¿Converge $\int_0^\infty\sen(x^2)\dx$ (integral de Fresnel)? \ (Sugerencia: $u=x^2$ y Dirichlet.)
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Si $f\ge0$: la integral impropia converge $\iff$ las integrales parciales están acotadas.
+    \item \resaltar{Comparación}: menor que convergente converge; mayor que divergente diverge.
+    \item \resaltar{Límite}: si $f/g\to L\in(0,\infty)$, misma naturaleza. Compare con $x^{-p}$.
+    \item \resaltar{Absoluta}: $\int|f|$ converge $\Rightarrow\int f$ converge. \ $\int\frac{\sen x}{x}$: condicional.
+    \item Tercera especie: analizar cada extremo por separado.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} ecuaciones diferenciales de primer orden.
+\end{frame}
+
+\end{document}

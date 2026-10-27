@@ -1,0 +1,291 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Segundo TFC]{El Segundo Teorema Fundamental del Cálculo}
+\subtitle{Cambio de variable e integración por partes en la integral definida\\[2pt]\small Semana 4 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar y demostrar el \resaltar{Segundo Teorema Fundamental del Cálculo} (regla de Barrow).
+    \item Evaluar integrales definidas mediante primitivas, reconociendo cuándo \emph{no} es aplicable.
+    \item Aplicar el \resaltar{teorema de cambio de variable} y aprovechar simetrías.
+    \item Aplicar \resaltar{integración por partes} en integrales definidas (fórmulas de Wallis).
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:35 & TFC2: enunciado, dos demostraciones, ejemplos, advertencias\\
+      0:35 -- 1:10 & Cambio de variable. Funciones pares, impares y periódicas\\
+      1:10 -- 1:40 & Integración por partes en la integral definida. Wallis\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Segundo Teorema Fundamental}
+
+\begin{frame}{Segundo Teorema Fundamental del Cálculo}
+  \begin{teorema}[TFC2 o regla de Barrow]
+    Si $f$ es integrable en $[a,b]$ y $F$ es una primitiva de $f$ en $[a,b]$ ($F'=f$), entonces
+    \[ \int_a^bf(x)\dx=F(b)-F(a)=:\Big[F(x)\Big]_a^b. \]
+  \end{teorema}
+  \textbf{Prueba (si $f$ es continua).} Sea $G(x)=\int_a^xf(t)\dt$. Por el TFC1, $G'=f=F'$, luego
+  $G=F+C$. Como $G(a)=0$, $C=-F(a)$. Así
+  \[ \int_a^bf(t)\dt=G(b)=F(b)-F(a).\qquad\blacksquare \]
+  \begin{idea}
+    Un límite de sumas (área) se calcula con una \emph{diferencia} de valores de una primitiva.
+    ¡Esta es la conexión entre el cálculo diferencial y el integral!
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Segunda prueba: con el Teorema del Valor Medio}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Esta prueba solo usa que $f$ es integrable. Sea $P=\{x_0,\dots,x_n\}$. Por el TVM aplicado a $F$
+      en cada $[x_{i-1},x_i]$ existe $c_i$ con
+      \[ F(x_i)-F(x_{i-1})=f(c_i)\,\Delta x_i. \]
+      Sumando (suma telescópica):
+      \[ F(b)-F(a)=\sum_{i=1}^nf(c_i)\Delta x_i. \]
+      Así $L(f,P)\le F(b)-F(a)\le U(f,P)$ para \emph{toda} $P$. Como $f$ es integrable, el único número
+      entre todas las $L$ y todas las $U$ es $\int_a^bf$. $\blacksquare$
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3.3, ymin=0, ymax=3, width=6cm, height=5cm, xtick={0.4,1.4,2.2,3}, xticklabels={$x_0$,$x_1$,$x_2$,$x_3$}, ytick=\empty, domain=0.3:3.1]
+          \addplot[curva] {0.4+0.18*x^2+0.12*sin(deg(3*x))} node[pos=0.9,above left] {$F$};
+          \draw[uniGranate,thick] (axis cs:0.4,0.541) -- (axis cs:1.4,0.541) -- (axis cs:1.4,0.648);
+          \draw[uniGranate,thick] (axis cs:1.4,0.648) -- (axis cs:2.2,0.648) -- (axis cs:2.2,1.309);
+          \draw[uniGranate,thick] (axis cs:2.2,1.309) -- (axis cs:3,1.309) -- (axis cs:3,2.069);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small El incremento total de $F$ es la suma de los incrementos en cada subintervalo.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[1]
+        $\displaystyle\int_0^\pi\sen x\dx=\Big[-\cos x\Big]_0^\pi=-(-1)-(-1)=2.$
+      \end{ejemplo}
+      \begin{ejemplo}[2]
+        $\displaystyle\int_1^4\left(\sqrt x-\frac1{x^2}\right)dx=\left[\tfrac23x^{3/2}+\tfrac1x\right]_1^4=\frac{14}{3}-\frac34=\frac{47}{12}.$
+      \end{ejemplo}
+      \begin{ejemplo}[3]
+        $\displaystyle\int_0^1\frac{dx}{1+x^2}=\arctan1-\arctan0=\frac\pi4.$
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3.6, ymin=0, ymax=1.3, width=6.5cm, height=4.4cm,
+            xtick={1.5708,3.1416}, xticklabels={$\frac\pi2$,$\pi$}, ytick={1}, domain=0:3.1416]
+          \addplot[fill=uniAzul!30, draw=none] {sin(deg(x))} \closedcycle;
+          \addplot[curva] {sin(deg(x))};
+          \node at (axis cs:1.57,0.4) {Área $=2$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small ¡Arquímedes necesitó una idea genial para cada área; nosotros solo una primitiva!
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{¡Cuidado con las hipótesis!}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}[un error frecuente]
+        ``$\displaystyle\int_{-1}^1\frac{dx}{x^2}=\left[-\frac1x\right]_{-1}^1=-1-1=-2$''.
+        \medskip
+
+        ¡Absurdo! El integrando es positivo. El error: $\frac1{x^2}$ no es acotada en $[-1,1]$ (no es
+        integrable) y $-\frac1x$ no es primitiva en todo $[-1,1]$.
+      \end{ejemplo}
+      \begin{ejemplo}[funciones definidas a trozos]
+        $\displaystyle\int_0^3|x^2-1|\dx=\int_0^1(1-x^2)\dx+\int_1^3(x^2-1)\dx=\frac23+\frac{20}{3}=\frac{22}{3}.$
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=0, ymax=10, width=6cm, height=5cm, xtick={-1,1}, ytick={1}, samples=200]
+          \addplot[curva, domain=-1.2:-0.3] {1/x^2};
+          \addplot[curva, domain=0.3:1.2] {1/x^2};
+          \addplot[fill=uniGranate!25, draw=none, domain=-1:-0.32] {1/x^2} \closedcycle;
+          \addplot[fill=uniGranate!25, draw=none, domain=0.32:1] {1/x^2} \closedcycle;
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $y=1/x^2$ no es acotada cerca de $0$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Cambio de variable}
+
+\begin{frame}{Teorema de cambio de variable}
+  \begin{teorema}[Cambio de variable]
+    Si $g'$ es continua en $[a,b]$ y $f$ es continua en $g([a,b])$, entonces
+    \[ \int_a^bf\big(g(x)\big)\,g'(x)\dx=\int_{g(a)}^{g(b)}f(u)\du. \]
+  \end{teorema}
+  \textbf{Prueba.} Sea $F$ primitiva de $f$. Como $(F\circ g)'=f(g)\,g'$, por el TFC2 ambos lados valen
+  $F(g(b))-F(g(a))$. $\blacksquare$
+  \alert{Se cambian también los límites de integración}; así no hace falta regresar a la variable $x$.
+  \begin{ejemplo}[1]
+    $\displaystyle\int_0^2x\sqrt{x^2+1}\dx$, \ $u=x^2+1$: \ $x=0\mapsto u=1$, \ $x=2\mapsto u=5$:
+    \[ \frac12\int_1^5\sqrt u\du=\frac13\Big[u^{3/2}\Big]_1^5=\frac{5\sqrt5-1}{3}. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Más ejemplos de cambio de variable}
+  \begin{ejemplo}[2]
+    $\displaystyle\int_0^{\pi/2}\frac{\cos x}{1+\sen^2x}\dx\overset{u=\sen x}{=}\int_0^1\frac{du}{1+u^2}=\frac\pi4.$
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\int_1^{e}\frac{(\ln x)^2}{x}\dx\overset{u=\ln x}{=}\int_0^1u^2\du=\frac13.$
+  \end{ejemplo}
+  \begin{ejemplo}[4: área de un círculo, $x=r\sen\theta$]
+    $\displaystyle\int_{-r}^r\sqrt{r^2-x^2}\dx=\int_{-\pi/2}^{\pi/2}r\cos\theta\cdot r\cos\theta\dth
+    =r^2\int_{-\pi/2}^{\pi/2}\frac{1+\cos2\theta}{2}\dth=\frac{\pi r^2}{2}.$\\
+    El área del círculo es $\pi r^2$. (Aquí usamos la sustitución ``al revés'': $x=g(\theta)$.)
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Simetría: funciones pares e impares}
+  \begin{teorema}
+    Sea $f$ continua en $[-a,a]$.
+    \begin{itemize}
+      \item Si $f$ es \resaltar{par} ($f(-x)=f(x)$): \ $\displaystyle\int_{-a}^af(x)\dx=2\int_0^af(x)\dx$.
+      \item Si $f$ es \resaltar{impar} ($f(-x)=-f(x)$): \ $\displaystyle\int_{-a}^af(x)\dx=0$.
+    \end{itemize}
+  \end{teorema}
+  \textbf{Prueba.} $\int_{-a}^0f(x)\dx\overset{x=-u}{=}\int_0^af(-u)\du$, que vale $\int_0^af$ o $-\int_0^af$.
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.2, xmax=2.2, ymin=-1.5, ymax=1.5, width=6cm, height=3.8cm, xtick={-2,2}, xticklabels={$-a$,$a$}, ytick=\empty, domain=-2:2]
+          \addplot[name path=f, curva] {x^3/4-0.5*x+0.3*sin(deg(3*x))};
+          \path[name path=ax] (axis cs:-2,0) -- (axis cs:2,0);
+          \addplot fill between[of=f and ax, split, every segment no 0/.style={fill=uniGranate!30},
+            every segment no 1/.style={fill=uniAzul!30}, every segment no 2/.style={fill=uniGranate!30},
+            every segment no 3/.style={fill=uniAzul!30}, every segment no 4/.style={fill=uniGranate!30}, every segment no 5/.style={fill=uniAzul!30}];
+        \end{axis}
+      \end{tikzpicture}\\ \small impar: las áreas se cancelan
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}
+        $\displaystyle\int_{-2}^2\left(x^5\cos x+\sen x\cdot e^{x^2}+3x^2\right)dx=0+0+2\int_0^23x^2\dx=16.$
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Funciones periódicas y la reflexión $x\mapsto a-x$}
+  \begin{proposicion}[periodicidad]
+    Si $f$ es continua y periódica de periodo $T$, entonces $\displaystyle\int_c^{c+T}f(x)\dx=\int_0^Tf(x)\dx$ para todo $c$.
+  \end{proposicion}
+  \begin{proposicion}[reflexión]
+    $\displaystyle\int_0^af(x)\dx=\int_0^af(a-x)\dx$ \quad (sustituya $u=a-x$).
+  \end{proposicion}
+  \begin{ejemplo}[un truco elegante]
+    $\displaystyle I=\int_0^{\pi/2}\frac{\sen x}{\sen x+\cos x}\dx$. Con $x\mapsto\frac\pi2-x$:
+    $\displaystyle I=\int_0^{\pi/2}\frac{\cos x}{\cos x+\sen x}\dx$.
+    \[ 2I=\int_0^{\pi/2}\frac{\sen x+\cos x}{\sen x+\cos x}\dx=\frac\pi2\quad\Rightarrow\quad I=\frac\pi4. \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Integración por partes en la integral definida}
+
+\begin{frame}{Partes en la integral definida}
+  \begin{teorema}
+    Si $u',v'$ son continuas en $[a,b]$:\qquad
+    $\displaystyle\int_a^bu\,v'\dx=\Big[u\,v\Big]_a^b-\int_a^bv\,u'\dx.$
+  \end{teorema}
+  \begin{ejemplo}[1]
+    $\displaystyle\int_0^1xe^x\dx=\Big[xe^x\Big]_0^1-\int_0^1e^x\dx=e-(e-1)=1.$
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\int_1^e\ln x\dx=\Big[x\ln x\Big]_1^e-\int_1^e1\dx=e-(e-1)=1.$
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\int_0^{1}\arctan x\dx=\Big[x\arctan x\Big]_0^1-\int_0^1\frac{x}{1+x^2}\dx=\frac\pi4-\frac12\ln2.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Fórmulas de Wallis}
+  Sea $W_n=\displaystyle\int_0^{\pi/2}\sen^nx\dx$. Con la fórmula de reducción (Semana 1), el término de
+  frontera se anula en $0$ y $\frac\pi2$:
+  \[ W_n=\frac{n-1}{n}W_{n-2},\qquad W_0=\frac\pi2,\quad W_1=1. \]
+  \begin{teorema}[Wallis]
+    \[ W_{2k}=\frac{1\cdot3\cdot5\cdots(2k-1)}{2\cdot4\cdot6\cdots(2k)}\cdot\frac\pi2,\qquad
+       W_{2k+1}=\frac{2\cdot4\cdots(2k)}{3\cdot5\cdots(2k+1)}. \]
+  \end{teorema}
+  \begin{ejemplo}
+    $\displaystyle\int_0^{\pi/2}\sen^6x\dx=\frac{5}{6}\cdot\frac34\cdot\frac12\cdot\frac\pi2=\frac{5\pi}{32}$,
+    \qquad $\displaystyle\int_0^{\pi/2}\cos^5x\dx=\frac45\cdot\frac23=\frac{8}{15}$ (por reflexión).
+  \end{ejemplo}
+  \small De $W_{2k+1}\le W_{2k}\le W_{2k-1}$ se obtiene el \emph{producto de Wallis}:
+    $\displaystyle\frac\pi2=\lim_{k\to\infty}\frac{2\cdot2\cdot4\cdot4\cdots(2k)(2k)}{1\cdot3\cdot3\cdot5\cdots(2k-1)(2k+1)}$.
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos (I)}
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\int_0^{\pi/4}\sec^2x\,\tan^3x\dx$
+      \item $\displaystyle\int_0^{3}\frac{x}{\sqrt{x+1}}\dx$
+      \item $\displaystyle\int_0^{\ln 2}\frac{e^x}{1+e^{2x}}\dx$
+      \item $\displaystyle\int_{-1}^2|x^3-x|\dx$
+      \item $\displaystyle\int_0^{\pi}x\sen x\dx$
+      \item $\displaystyle\int_0^{1}x^2e^{-x}\dx$
+      \item $\displaystyle\int_1^{e^2}\frac{dx}{x\sqrt{1+\ln x}}$
+      \item $\displaystyle\int_0^{\pi/2}\sen^4x\cos^2x\dx$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: simetría y trucos]
+    \begin{enumerate}
+      \setcounter{enumi}{8}
+      \item $\displaystyle\int_{-\pi}^{\pi}\frac{x^2\sen x}{1+x^6}\dx$ \quad 10. $\displaystyle\int_0^{\pi}\frac{x\sen x}{1+\cos^2x}\dx$
+        \ \small(use $x\mapsto\pi-x$)
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Ejercicios propuestos (II)}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \setcounter{enumi}{10}
+      \item Pruebe que $\displaystyle\int_0^1x^m(1-x)^n\dx=\int_0^1x^n(1-x)^m\dx$.
+      \item Si $f$ es continua, pruebe que $\displaystyle\int_0^{\pi}xf(\sen x)\dx=\frac\pi2\int_0^\pi f(\sen x)\dx$.
+      \item Sea $I_n=\displaystyle\int_0^1x^ne^x\dx$. Pruebe que $I_n=e-nI_{n-1}$ y calcule $I_3$.
+      \item Halle $f$ continua tal que $\displaystyle\int_0^xf(t)\dt=\int_x^1t^2f(t)\dt+\frac{x^{16}}{8}+\frac{x^{18}}{9}+C$, y la constante $C$.
+      \item Calcule $\displaystyle\lim_{n\to\infty}\sum_{k=1}^n\frac{n}{n^2+k^2}$ \ escribiéndolo como suma de Riemann.
+      \item Pruebe que $\displaystyle\int_0^{\pi/2}\ln(\sen x)\dx=-\frac\pi2\ln2$. \ \small(Sugerencia: reflexión y $\sen2x=2\sen x\cos x$.)
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{TFC2}: $\int_a^bf=F(b)-F(a)$ si $F'=f$ en $[a,b]$. Verificar hipótesis (acotación, continuidad).
+    \item \resaltar{Cambio de variable}: $\int_a^bf(g(x))g'(x)\dx=\int_{g(a)}^{g(b)}f(u)\du$ (cambiar límites).
+    \item Simetrías: pares $\to$ el doble; impares $\to$ cero; periódicas; reflexión $x\mapsto a-x$.
+    \item \resaltar{Partes}: $\int_a^buv'=[uv]_a^b-\int_a^bvu'$. Wallis: $W_n=\frac{n-1}{n}W_{n-2}$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} áreas de regiones planas (tipo I, tipo II y polares).
+\end{frame}
+
+\end{document}

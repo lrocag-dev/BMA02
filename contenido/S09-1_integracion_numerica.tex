@@ -1,0 +1,284 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Integración numérica]{Integración numérica}
+\subtitle{Método del trapecio y regla de Simpson\\[2pt]\small Semana 9 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Reconocer cuándo es necesario aproximar una integral numéricamente.
+    \item Deducir la \resaltar{regla del trapecio} y la \resaltar{regla de Simpson} (simples y compuestas).
+    \item Aplicarlas a funciones dadas por fórmulas y por \resaltar{tablas de datos experimentales}.
+    \item Comparar la precisión de los métodos (punto medio, trapecio, Simpson).
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Motivación: integrales no elementales y datos\\
+      0:15 -- 0:50 & Sumas de Riemann y regla del trapecio\\
+      0:50 -- 1:30 & Regla de Simpson: deducción y ejemplos\\
+      1:30 -- 1:45 & Comparación de métodos; implementación\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Motivación}
+
+\begin{frame}{¿Por qué integrar numéricamente?}
+  \begin{itemize}
+    \item Muchas integrales importantes \textbf{no tienen primitiva elemental}:
+      \[ \int_0^1e^{-x^2}\dx\ \ \text{(probabilidad)},\quad \int_0^{\pi/2}\sqrt{1-k^2\sen^2t}\dt\ \ \text{(elipse, péndulo)},\quad \int_0^x\frac{\sen t}{t}\dt. \]
+    \item En el laboratorio la función se conoce solo en \textbf{puntos aislados} (una tabla de mediciones):
+  \end{itemize}
+  \begin{center}
+    \begin{tabular}{c|ccccccc}
+      $t$ (s) & 0 & 2 & 4 & 6 & 8 & 10 & 12\\ \hline
+      $v$ (m/s) & 0 & 6 & 11 & 15 & 18 & 20 & 21
+    \end{tabular}
+  \end{center}
+  \quad ¿Qué distancia recorrió el móvil? \ $\displaystyle d=\int_0^{12}v(t)\dt\approx\ ?$
+  \begin{idea}
+    Reemplazar $f$ por una función sencilla (constante, lineal, cuadrática) en cada subintervalo e integrar ésta exactamente.
+  \end{idea}
+\end{frame}
+
+\section{Regla del trapecio}
+
+\begin{frame}{Punto de partida: sumas de Riemann}
+  Partición regular: $h=\dfrac{b-a}{n}$, \ $x_i=a+ih$, \ $y_i=f(x_i)$.
+  \begin{itemize}
+    \item Extremo izquierdo: \ $L_n=h\,(y_0+y_1+\dots+y_{n-1})$.
+    \item Extremo derecho: \ $R_n=h\,(y_1+y_2+\dots+y_n)$.
+    \item Punto medio: \ $M_n=h\left[f(\bar x_1)+\dots+f(\bar x_n)\right]$, \ $\bar x_i=\frac{x_{i-1}+x_i}{2}$.
+  \end{itemize}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=2.3, width=6.4cm, height=4.5cm, xtick={0.5,1.25,2,2.75,3.5}, xticklabels={$x_0$,$x_1$,$x_2$,$x_3$,$x_4$}, ytick=\empty]
+          \addplot[fill=uniAzul!30, draw=uniAzul, ybar interval, samples=5, domain=0.5:3.5] {1.2+0.6*sin(deg(1.6*(x+0.375)))+0.1*(x+0.375)};
+          \addplot[curva, domain=0.3:3.7] {1.2+0.6*sin(deg(1.6*x))+0.1*x};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $M_4$: altura en el punto medio
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=2.3, width=6.4cm, height=4.5cm, xtick={0.5,1.25,2,2.75,3.5}, xticklabels={$x_0$,$x_1$,$x_2$,$x_3$,$x_4$}, ytick=\empty]
+          \addplot[fill=uniGranate!25, draw=uniGranate, samples=5, domain=0.5:3.5] {1.2+0.6*sin(deg(1.6*x))+0.1*x} \closedcycle;
+          \addplot[uniGranate, ycomb, samples=5, domain=0.5:3.5] {1.2+0.6*sin(deg(1.6*x))+0.1*x};
+          \addplot[curva, domain=0.3:3.7] {1.2+0.6*sin(deg(1.6*x))+0.1*x};
+        \end{axis}
+      \end{tikzpicture}\\
+      \small $T_4$: trapecios
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Regla del trapecio}
+  En $[x_{i-1},x_i]$ reemplazamos $f$ por la recta que une $(x_{i-1},y_{i-1})$ y $(x_i,y_i)$. El área del trapecio es
+  $\dfrac h2(y_{i-1}+y_i)$. Sumando:
+  \begin{teorema}[Regla del trapecio compuesta]
+    \[ \int_a^bf(x)\dx\approx T_n=\frac h2\Big[y_0+2y_1+2y_2+\dots+2y_{n-1}+y_n\Big]. \]
+  \end{teorema}
+  Note que $T_n=\frac{L_n+R_n}{2}$: el promedio de las sumas por la izquierda y por la derecha.
+  \begin{ejemplo}[1]
+    $\displaystyle\int_1^2\frac{dx}{x}$ con $n=4$, $h=0.25$:
+    \[ T_4=\frac{0.25}{2}\left[1+2\left(\tfrac{1}{1.25}+\tfrac1{1.5}+\tfrac1{1.75}\right)+\tfrac12\right]\approx0.697024. \]
+    Valor exacto: $\ln2\approx0.693147$. \ Error $\approx0.0039$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Trapecio con datos experimentales}
+  \begin{ejemplo}[2]
+    Con la tabla de velocidades ($h=2$ s):
+    \[ d\approx T_6=\frac22\Big[0+2(6+11+15+18+20)+21\Big]=161\ \text{m}. \]
+  \end{ejemplo}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[bma, xlabel={$t$}, ylabel={$v$}, xmin=0, xmax=13.5, ymin=0, ymax=24, width=9cm, height=4.8cm, xtick={0,2,...,12}, ytick={10,20}]
+        \addplot[fill=uniGranate!25, draw=uniGranate, mark=*, mark options={fill=uniGranate}] coordinates {(0,0) (2,6) (4,11) (6,15) (8,18) (10,20) (12,21)} \closedcycle;
+        \addplot[uniGranate, ycomb] coordinates {(2,6) (4,11) (6,15) (8,18) (10,20)};
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+  \small Con datos, ni siquiera conocemos $f$ entre los nodos: la regla del trapecio supone que varía linealmente.
+\end{frame}
+
+\section{Regla de Simpson}
+
+\begin{frame}{Regla de Simpson: aproximar con parábolas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Tomamos los subintervalos \textbf{de a pares} ($n$ par) y por cada tres puntos
+      $(x_{i-1},y_{i-1})$, $(x_i,y_i)$, $(x_{i+1},y_{i+1})$ pasamos una parábola.
+      \begin{teorema}[Lema]
+        Si $p(x)=Ax^2+Bx+C$ pasa por $(-h,y_0)$, $(0,y_1)$, $(h,y_2)$:
+        \[ \int_{-h}^hp(x)\dx=\frac h3\big(y_0+4y_1+y_2\big). \]
+      \end{teorema}
+      \textbf{Prueba.} $\int_{-h}^hp=\frac23Ah^3+2Ch=\frac h3(2Ah^2+6C)$. Pero $y_1=C$ y $y_0+y_2=2Ah^2+2C$,
+      así $2Ah^2+6C=y_0+4y_1+y_2$. $\blacksquare$
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=2.3, width=6.6cm, height=5.2cm, xtick={0.5,1.25,2,2.75,3.5}, xticklabels={$x_0$,$x_1$,$x_2$,$x_3$,$x_4$}, ytick=\empty]
+          \addplot[fill=uniVerde!25, draw=none, domain=0.5:2] {1.6804*(x-1.25)*(x-2.0)/((0.5-1.25)*(0.5-2.0))+1.8706*(x-0.5)*(x-2.0)/((1.25-0.5)*(1.25-2.0))+1.3650*(x-0.5)*(x-1.25)/((2.0-0.5)*(2.0-1.25))} \closedcycle;
+          \addplot[fill=uniVerde!40, draw=none, domain=2:3.5] {1.3650*(x-2.75)*(x-3.5)/((2.0-2.75)*(2.0-3.5))+0.9040*(x-2.0)*(x-3.5)/((2.75-2.0)*(2.75-3.5))+1.1712*(x-2.0)*(x-2.75)/((3.5-2.0)*(3.5-2.75))} \closedcycle;
+          \addplot[uniVerde, thick, dashed, domain=0.5:2] {1.6804*(x-1.25)*(x-2.0)/((0.5-1.25)*(0.5-2.0))+1.8706*(x-0.5)*(x-2.0)/((1.25-0.5)*(1.25-2.0))+1.3650*(x-0.5)*(x-1.25)/((2.0-0.5)*(2.0-1.25))};
+          \addplot[uniVerde, thick, dashed, domain=2:3.5] {1.3650*(x-2.75)*(x-3.5)/((2.0-2.75)*(2.0-3.5))+0.9040*(x-2.0)*(x-3.5)/((2.75-2.0)*(2.75-3.5))+1.1712*(x-2.0)*(x-2.75)/((3.5-2.0)*(3.5-2.75))};
+          \addplot[curva, domain=0.3:3.7] {1.2+0.6*sin(deg(1.6*x))+0.1*x};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0.5,1.6804) (1.25,1.8706) (2,1.365) (2.75,0.904) (3.5,1.1712)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Dos arcos de parábola ($n=4$). ¡Casi indistinguibles de la curva!
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Regla de Simpson compuesta}
+  Aplicando el lema en $[x_0,x_2]$, $[x_2,x_4]$, \dots, $[x_{n-2},x_n]$ (traslación horizontal no cambia el área):
+  \begin{teorema}[Regla de Simpson, $n$ par]
+    \[ \int_a^bf(x)\dx\approx S_n=\frac h3\Big[y_0+4y_1+2y_2+4y_3+\dots+2y_{n-2}+4y_{n-1}+y_n\Big]. \]
+  \end{teorema}
+  Patrón de coeficientes: \ $1,\ 4,\ 2,\ 4,\ 2,\ \dots,\ 2,\ 4,\ 1$.
+  \begin{observacion}
+    $S_{2n}=\dfrac{2M_n+T_n}{3}=\dfrac{4T_{2n}-T_n}{3}$: Simpson es un promedio ponderado de punto medio y trapecio
+    (extrapolación de Richardson).
+  \end{observacion}
+  \begin{ejemplo}[3]
+    $\displaystyle\int_1^2\frac{dx}{x}$, $n=4$: \
+    $S_4=\frac{0.25}{3}\left[1+4\cdot\tfrac{1}{1.25}+2\cdot\tfrac{1}{1.5}+4\cdot\tfrac1{1.75}+\tfrac12\right]\approx0.693254$.
+    \ Error $\approx1.1\times10^{-4}$: \ ¡36 veces menor que con trapecios!
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplo: una integral no elemental}
+  \begin{ejemplo}[4]
+    Aproximar $\displaystyle\int_0^1e^{-x^2}\dx$ con $n=4$, $h=0.25$.
+    \begin{center}
+      \begin{tabular}{c|ccccc}
+        $x_i$ & 0 & 0.25 & 0.5 & 0.75 & 1\\ \hline
+        $y_i=e^{-x_i^2}$ & 1 & 0.939413 & 0.778801 & 0.569783 & 0.367879\\
+        coef.\ trapecio & 1 & 2 & 2 & 2 & 1\\
+        coef.\ Simpson & 1 & 4 & 2 & 4 & 1
+      \end{tabular}
+    \end{center}
+    \[ T_4=\frac{0.25}{2}(5.943873)\approx0.742984,\qquad S_4=\frac{0.25}{3}(8.962265)\approx0.746855. \]
+    Valor ``exacto'': $\frac{\sqrt\pi}{2}\operatorname{erf}(1)\approx0.746824$.
+  \end{ejemplo}
+  \vspace{-1mm}
+  \begin{ejemplo}[5: datos]
+    Distancia con Simpson ($n=6$, $h=2$):
+    $d\approx\frac23\big[0+4(6)+2(11)+4(15)+2(18)+4(20)+21\big]=\frac23(243)=162$ m.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Comparación de métodos}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      Errores al aproximar $\int_1^2\frac{dx}{x}=\ln2$:
+      \begin{center}
+        \small
+        \begin{tabular}{c|ccc}
+          $n$ & $E_T$ & $E_M$ & $E_S$\\ \hline
+          4 & $3.9\times10^{-3}$ & $-1.9\times10^{-3}$ & $1.1\times10^{-4}$\\
+          8 & $9.8\times10^{-4}$ & $-4.9\times10^{-4}$ & $7.4\times10^{-6}$\\
+          16 & $2.4\times10^{-4}$ & $-1.2\times10^{-4}$ & $4.7\times10^{-7}$
+        \end{tabular}
+      \end{center}
+      \begin{itemize}
+        \item Duplicar $n$: $E_T$ y $E_M$ se dividen entre $\approx4$; \ $E_S$ entre $\approx16$.
+        \item $E_M\approx-\frac12E_T$ (signos opuestos).
+      \end{itemize}
+      \begin{idea}
+        Errores $\sim h^2$ (trapecio, punto medio) y $\sim h^4$ (Simpson). Se justificará en la próxima sesión.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[xmode=log, ymode=log, log basis x=2, xlabel={$n$}, ylabel={$|E|$}, width=6.5cm, height=5.5cm,
+            tick label style={font=\scriptsize}, xtick={4,8,16}, xticklabels={4,8,16}, legend style={font=\scriptsize}, legend pos=north east]
+          \addplot[uniGranate, thick, mark=*] coordinates {(4,3.88e-3) (8,9.75e-4) (16,2.44e-4)};
+          \addplot[uniAzul, thick, mark=square*] coordinates {(4,1.93e-3) (8,4.87e-4) (16,1.22e-4)};
+          \addplot[uniVerde, thick, mark=triangle*] coordinates {(4,1.07e-4) (8,7.35e-6) (16,4.72e-7)};
+          \legend{Trapecio, Punto medio, Simpson}
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Escala log-log: pendientes $-2$ y $-4$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Implementación (Python)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+\begin{semiverbatim}\small
+def trapecio(f, a, b, n):
+    h = (b - a) / n
+    s = (f(a) + f(b)) / 2
+    for i in range(1, n):
+        s += f(a + i*h)
+    return h * s
+
+def simpson(f, a, b, n):  # n par
+    h = (b - a) / n
+    s = f(a) + f(b)
+    for i in range(1, n):
+        s += (4 if i % 2 else 2) * f(a + i*h)
+    return h * s / 3
+\end{semiverbatim}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item El costo es $\approx n+1$ evaluaciones de $f$ en ambos métodos.
+        \item Con el mismo costo, Simpson es mucho más preciso para funciones suaves.
+        \item Si $f$ no es suave (p.\,ej.\ tiene picos), la ventaja de Simpson disminuye.
+      \end{itemize}
+      \begin{observacion}
+        Simpson es \textbf{exacto} para polinomios de grado $\le3$ (¡no solo 2!). Compruébelo con $\int_{-1}^1x^3\dx$.
+      \end{observacion}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Aproxime $\displaystyle\int_0^2\sqrt{1+x^3}\dx$ con $T_4$ y $S_4$.
+      \item Aproxime $\displaystyle\int_0^{\pi}\frac{\sen x}{x}\dx$ con $S_6$ (defina el integrando como $1$ en $x=0$).
+      \item Aproxime $\ln3=\displaystyle\int_1^3\frac{dx}{x}$ con $T_4$, $M_4$ y $S_8$; compare con el valor real.
+      \item Aproxime la longitud de la elipse $x=2\cos t$, $y=\sen t$ con $S_4$ y compare con la fórmula de Ramanujan.
+      \item Un río tiene 20 m de ancho. Las profundidades (m) medidas cada 2 m son:
+        $0,\ 1.2,\ 2.1,\ 2.8,\ 3.1,\ 3.3,\ 3.0,\ 2.6,\ 1.9,\ 1.0,\ 0$. Estime el área de la sección transversal con Simpson.
+      \item Pruebe que Simpson es exacto para $f(x)=x^3$ en $[-h,h]$, y por tanto para todo polinomio cúbico.
+      \item Pruebe que $S_{2n}=\frac13T_n+\frac23M_n$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Trapecio}: $T_n=\frac h2[y_0+2y_1+\dots+2y_{n-1}+y_n]$ \ (interpolación lineal).
+    \item \resaltar{Simpson} ($n$ par): $S_n=\frac h3[y_0+4y_1+2y_2+\dots+4y_{n-1}+y_n]$ \ (interpolación cuadrática).
+    \item Simpson es exacto para cúbicos; su error decrece como $h^4$, el del trapecio como $h^2$.
+    \item Se aplican a funciones sin primitiva elemental y a \textbf{datos experimentales}.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} cotas de error y volumen de sólidos con sección transversal conocida.
+\end{frame}
+
+\end{document}

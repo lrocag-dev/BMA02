@@ -1,0 +1,303 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Centro de masa y Pappus]{Centro geométrico, masa y centro de masa}
+\subtitle{Teorema de Pappus--Guldin\\[2pt]\small Semana 10 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Calcular la \resaltar{masa} y el \resaltar{centro de masa} de sistemas discretos y de varillas con densidad variable.
+    \item Calcular \resaltar{momentos} y el \resaltar{centroide} (centro geométrico) de regiones planas.
+    \item Enunciar, demostrar y aplicar los \resaltar{teoremas de Pappus--Guldin} para volúmenes y superficies de revolución.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Masas puntuales; varillas con densidad variable\\
+      0:25 -- 1:10 & Láminas planas: momentos y centroide. Simetría. Regiones compuestas\\
+      1:10 -- 1:40 & Teoremas de Pappus--Guldin\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Masa y centro de masa en una dimensión}
+
+\begin{frame}{Masas puntuales: el principio de la palanca}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Masas $m_1,\dots,m_n$ en posiciones $x_1,\dots,x_n$ de una recta. El \resaltar{momento} respecto del origen es
+      $M_0=\sum m_ix_i$. El \resaltar{centro de masa} $\bar x$ es el punto de equilibrio:
+      \[ \sum m_i(x_i-\bar x)=0\quad\Longrightarrow\quad \bar x=\frac{\sum m_ix_i}{\sum m_i}=\frac{M_0}{m}. \]
+      \begin{ejemplo}[1: molécula de CO]
+        C ($12$ u) y O ($16$ u) separados $1.128$ Å. Con el C en el origen:
+        \[ \bar x=\frac{12\cdot0+16\cdot1.128}{28}\approx0.645\text{ Å}. \]
+        El centro de masa está más cerca del oxígeno.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \draw[thick] (-0.3,0) -- (4.3,0);
+        \fill[gray!70] (0,0) circle (0.28) node[white] {\scriptsize C};
+        \fill[uniGranate] (3.6,0) circle (0.34) node[white] {\scriptsize O};
+        \fill[uniAzul] (2.06,-0.2) -- (1.86,-0.6) -- (2.26,-0.6) -- cycle;
+        \node[below] at (2.06,-0.6) {\scriptsize $\bar x$};
+        \draw[<->] (0,0.6) -- (3.6,0.6) node[midway,above] {\scriptsize $1.128$ Å};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Varilla con densidad variable}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Una varilla ocupa $[a,b]$ con densidad lineal $\rho(x)$ (kg/m). Un trocito de longitud $dx$ tiene masa
+      $dm=\rho(x)\dx$ y momento $x\,dm$:
+      \begin{definicion}
+        \[ m=\int_a^b\rho(x)\dx,\qquad M_0=\int_a^bx\,\rho(x)\dx,\qquad \bar x=\frac{M_0}{m}. \]
+      \end{definicion}
+      \begin{ejemplo}[2]
+        $\rho(x)=1+x$ en $[0,2]$: \ $m=\int_0^2(1+x)\dx=4$,
+        \[ M_0=\int_0^2(x+x^2)\dx=2+\tfrac83=\tfrac{14}3,\qquad \bar x=\frac{14/3}{4}=\frac76. \]
+        Es mayor que el punto medio $1$: la varilla es más densa a la derecha.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \shade[left color=uniAzul!15, right color=uniAzul!90] (0,0) rectangle (5,0.4);
+        \draw (0,0) rectangle (5,0.4);
+        \node[below] at (0,0) {\scriptsize $0$};
+        \node[below] at (5,0) {\scriptsize $2$};
+        \fill[uniGranate] (2.92,-0.05) -- (2.77,-0.4) -- (3.07,-0.4) -- cycle;
+        \node[below] at (2.92,-0.4) {\scriptsize $\bar x=\frac76$};
+        \draw[dashed] (2.5,0.4) -- (2.5,0.8) node[above] {\scriptsize punto medio};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Láminas planas y centroides}
+
+\begin{frame}{Sistemas en el plano}
+  Masas $m_i$ en puntos $(x_i,y_i)$:
+  \[ M_y=\sum m_ix_i\ \ (\text{momento respecto al eje }y),\qquad M_x=\sum m_iy_i\ \ (\text{respecto al eje }x). \]
+  \[ (\bar x,\bar y)=\left(\frac{M_y}{m},\frac{M_x}{m}\right). \]
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{Lámina homogénea} (densidad $\rho$ constante) que ocupa la región entre $y=f(x)$ y $y=g(x)$, $a\le x\le b$.
+      Un rectángulo vertical tiene:
+      \begin{itemize}
+        \item masa $dm=\rho\,[f(x)-g(x)]\dx$,
+        \item centro en $\left(x,\ \frac{f(x)+g(x)}{2}\right)$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=4, ymin=0, ymax=3, width=6cm, height=4.4cm, xtick={0.5,3.5}, xticklabels={$a$,$b$}, ytick=\empty, domain=0.5:3.5]
+          \addplot[name path=f, curva] {2.3+0.4*sin(deg(1.8*x))};
+          \addplot[name path=g, curva2] {0.5+0.12*(x-2)^2};
+          \addplot[uniAzul!20] fill between[of=f and g];
+          \draw[fill=uniVerde!50, draw=uniVerde] (axis cs:1.9,0.5012) rectangle (axis cs:2.1,2.11);
+          \fill[uniGranate] (axis cs:2,1.3) circle (2pt);
+          \node[right] at (axis cs:2.1,1.3) {\scriptsize $\left(x,\frac{f+g}2\right)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Centroide de una región plana}
+  \begin{teorema}[momentos y centroide]
+    \[ M_y=\rho\int_a^bx\,[f(x)-g(x)]\dx,\qquad M_x=\rho\int_a^b\frac12\big[f(x)^2-g(x)^2\big]\dx. \]
+    \[ \bar x=\frac1A\int_a^bx\,[f(x)-g(x)]\dx,\qquad \bar y=\frac{1}{2A}\int_a^b\big[f(x)^2-g(x)^2\big]\dx. \]
+  \end{teorema}
+  \begin{observacion}
+    \begin{itemize}
+      \item En una lámina homogénea $\rho$ se cancela: el centro de masa coincide con el \resaltar{centroide}, que depende solo de la forma.
+      \item \textbf{Simetría:} si la región es simétrica respecto de una recta, el centroide está sobre esa recta.
+    \end{itemize}
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: región bajo una parábola}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Región bajo $y=x^2$, $0\le x\le1$. \ $A=\frac13$.
+        \[ \bar x=3\int_0^1x\cdot x^2\dx=\frac34,\qquad \bar y=\frac32\int_0^1x^4\dx=\frac3{10}. \]
+        Centroide: $\left(\frac34,\frac3{10}\right)$.
+      \end{ejemplo}
+      \begin{observacion}
+        El centroide no tiene que estar sobre la curva ni ser el ``centro'' intuitivo: está desplazado hacia donde hay más área.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.25, ymin=0, ymax=1.15, width=6cm, height=5.3cm, xtick={0.75,1}, ytick={0.3,1}, domain=0:1]
+          \addplot[fill=uniAzul!25, draw=none] {x^2} \closedcycle;
+          \addplot[curva, domain=0:1.05] {x^2};
+          \draw[dashed] (axis cs:1,0) -- (axis cs:1,1);
+          \fill[uniGranate] (axis cs:0.75,0.3) circle (2.5pt);
+          \draw[dashed, uniGranate] (axis cs:0.75,0) -- (axis cs:0.75,0.3) -- (axis cs:0,0.3);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: semicírculo}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Semidisco $x^2+y^2\le r^2$, $y\ge0$. Por simetría, $\bar x=0$. Con $A=\frac{\pi r^2}2$:
+        \[ \bar y=\frac{1}{2A}\int_{-r}^r\big(r^2-x^2\big)\dx=\frac{1}{\pi r^2}\cdot\frac{4r^3}{3}=\frac{4r}{3\pi}. \]
+        $\bar y\approx0.424\,r$.
+      \end{ejemplo}
+      \begin{ejemplo}[5: triángulo]
+        El centroide de un triángulo es la intersección de las medianas: el promedio de los vértices.
+        (Ejercicio: compruébelo para el triángulo $(0,0)$, $(b,0)$, $(0,h)$: $\left(\frac b3,\frac h3\right)$.)
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-0.1, ymax=1.25, axis equal image, width=6.5cm, height=4.5cm, xtick={-1,1}, xticklabels={$-r$,$r$}, ytick={0.4244}, yticklabels={$\frac{4r}{3\pi}$}]
+          \addplot[fill=uniAzul!25, draw=uniAzul, thick, domain=-1:1, samples=100] {sqrt(1-x^2)} \closedcycle;
+          \fill[uniGranate] (axis cs:0,0.4244) circle (2.5pt);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Regiones compuestas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Los momentos son \textbf{aditivos}. Si $R=R_1\cup R_2$ (sin solaparse):
+      \[ \bar x=\frac{A_1\bar x_1+A_2\bar x_2}{A_1+A_2},\qquad \bar y=\frac{A_1\bar y_1+A_2\bar y_2}{A_1+A_2}. \]
+      Para un \emph{agujero} se resta el momento y el área.
+      \begin{ejemplo}[6]
+        Cuadrado $[0,2]\times[0,2]$ con un semidisco de radio 1 adosado arriba (centro $(1,2)$).
+        \begin{itemize}
+          \item $A_1=4$, \ $\bar y_1=1$; \quad $A_2=\frac\pi2$, \ $\bar y_2=2+\frac4{3\pi}$.
+          \item $\bar x=1$ (simetría), \ $\bar y=\dfrac{4+\frac\pi2\left(2+\frac4{3\pi}\right)}{4+\frac\pi2}=\dfrac{\frac{14}3+\pi}{4+\frac\pi2}\approx1.40$.
+        \end{itemize}
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.3, xmax=2.5, ymin=-0.2, ymax=3.3, axis equal image, width=5cm, height=6cm, xtick={1,2}, ytick={1,2,3}]
+          \addplot[fill=uniAzul!25, draw=uniAzul] coordinates {(0,0) (2,0) (2,2) (0,2)} -- cycle;
+          \addplot[fill=uniVerde!25, draw=uniVerde, domain=0:2, samples=100] {2+sqrt(max(1-(x-1)^2,0))} -- (axis cs:0,2);
+          \fill[uniGranate] (axis cs:1,1.40) circle (2.5pt);
+          \fill[uniAzul] (axis cs:1,1) circle (1.5pt);
+          \fill[uniVerde] (axis cs:1,2.42) circle (1.5pt);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Teoremas de Pappus--Guldin}
+
+\begin{frame}{Primer teorema de Pappus: volúmenes}
+  \begin{teorema}[Pappus--Guldin I]
+    Si una región plana $R$ de área $A$ gira alrededor de un eje de su plano que no la corta, el volumen generado es
+    \[ V=2\pi\,d\,A, \]
+    donde $d$ es la distancia del centroide de $R$ al eje. \ (\emph{Distancia recorrida por el centroide} $\times$ \emph{área}.)
+  \end{teorema}
+  \textbf{Prueba} (eje $y$, región entre $f$ y $g$ con $x\ge0$). Por capas:
+  \[ V=2\pi\int_a^bx\,[f(x)-g(x)]\dx=2\pi\cdot\bar x\,A.\qquad\blacksquare \]
+  \begin{ejemplo}[7: toro]
+    Disco de radio $a$ con centro a distancia $R$ del eje: \ $V=2\pi R\cdot\pi a^2=2\pi^2Ra^2$. \ (¡Sin integrales!)
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Pappus al revés: hallar centroides}
+  \begin{ejemplo}[8: centroide del semidisco]
+    Al rotar el semidisco de radio $r$ alrededor de su diámetro se obtiene una esfera:
+    \[ \frac43\pi r^3=2\pi\,\bar y\cdot\frac{\pi r^2}{2}\quad\Rightarrow\quad\bar y=\frac{4r}{3\pi}.\ \checkmark \]
+  \end{ejemplo}
+  \begin{ejemplo}[9: cono]
+    El triángulo de vértices $(0,0)$, $(r,0)$, $(0,h)$ gira alrededor del eje $y$. Su centroide está en $\bar x=\frac r3$:
+    \[ V=2\pi\cdot\frac r3\cdot\frac{rh}{2}=\frac13\pi r^2h.\ \checkmark \]
+  \end{ejemplo}
+  \begin{ejemplo}[10]
+    El cuadrado de vértices $(2,0)$, $(4,0)$, $(4,2)$, $(2,2)$ gira alrededor del eje $y$. Su centroide es $(3,1)$ y
+    $A=4$: \ $V=2\pi\cdot3\cdot4=24\pi$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Segundo teorema de Pappus: superficies}
+  \begin{teorema}[Pappus--Guldin II]
+    Si una curva plana de longitud $L$ gira alrededor de un eje de su plano que no la corta, el área de la superficie generada es
+    \[ S=2\pi\,d\,L, \]
+    donde $d$ es la distancia del centroide de la \emph{curva} al eje.
+  \end{teorema}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}[11]
+        \begin{itemize}
+          \item Superficie del toro: \ $S=2\pi R\cdot2\pi a=4\pi^2Ra$.
+          \item Centroide de una semicircunferencia: la esfera tiene área $4\pi r^2=2\pi\bar y\cdot\pi r\Rightarrow\bar y=\dfrac{2r}{\pi}$.
+        \end{itemize}
+      \end{ejemplo}
+      \small (El centroide de una curva: $\bar y=\frac1L\int y\,ds$.)
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.3, xmax=1.3, ymin=-0.1, ymax=1.25, axis equal image, width=6.5cm, height=4.5cm, xtick={-1,1}, xticklabels={$-r$,$r$}, ytick={0.4244,0.6366}, yticklabels={$\frac{4r}{3\pi}$,$\frac{2r}{\pi}$}]
+          \addplot[fill=uniAzul!15, draw=none, domain=-1:1, samples=100] {sqrt(1-x^2)} \closedcycle;
+          \addplot[uniGranate, very thick, domain=-1:1, samples=100] {sqrt(1-x^2)};
+          \fill[uniAzul] (axis cs:0,0.4244) circle (2pt);
+          \fill[uniGranate] (axis cs:0,0.6366) circle (2pt);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Centroide del semidisco (azul) y del arco (granate).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Una varilla de 3 m tiene densidad $\rho(x)=2+\sqrt x$ kg/m. Halle su masa y centro de masa.
+      \item Halle el centroide de la región limitada por: (a) $y=\sqrt x$, $y=0$, $x=4$; \ (b) $y=x$ y $y=x^2$;
+        \ (c) $y=\sen x$, $y=0$, $0\le x\le\pi$.
+      \item Halle el centroide del cuarto de disco $x^2+y^2\le r^2$, $x,y\ge0$.
+      \item Una placa en forma de ``L'' está formada por los rectángulos $[0,4]\times[0,1]$ y $[0,1]\times[1,3]$. Halle su centroide.
+      \item Use Pappus para hallar el volumen generado al rotar el triángulo de vértices $(1,0)$, $(3,0)$, $(2,2)$ alrededor del eje $y$.
+      \item Use Pappus para hallar el centroide de la región bajo $y=\sqrt{r^2-x^2}$, $0\le x\le r$ (cuarto de disco), y compárelo con 3.
+      \item Halle el área de la superficie generada al rotar el segmento de $(1,0)$ a $(3,2)$ alrededor del eje $y$. ¿Qué superficie es?
+      \item Pruebe que el centroide del triángulo de vértices $(0,0)$, $(b,0)$, $(c,h)$ es el promedio de los vértices.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Discreto: $\bar x=\frac{\sum m_ix_i}{\sum m_i}$. \ Varilla: $\bar x=\frac{\int x\rho\dx}{\int\rho\dx}$.
+    \item Lámina homogénea: $\bar x=\frac1A\int x(f-g)\dx$, \ $\bar y=\frac1{2A}\int(f^2-g^2)\dx$.
+    \item Simetría y aditividad de momentos simplifican los cálculos.
+    \item \resaltar{Pappus}: $V=2\pi dA$ (regiones), \ $S=2\pi dL$ (curvas).
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} trabajo (resortes, vaciado de tanques) y fuerza hidrostática.
+\end{frame}
+
+\end{document}

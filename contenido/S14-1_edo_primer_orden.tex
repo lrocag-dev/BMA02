@@ -1,0 +1,265 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[EDO de primer orden]{Ecuaciones diferenciales de primer orden}
+\subtitle{Problemas de valor inicial. Variables separables, homogéneas y exactas\\[2pt]\small Semana 14 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Comprender qué es una \resaltar{ecuación diferencial ordinaria} (EDO), su orden y sus soluciones.
+    \item Plantear y resolver \resaltar{problemas de valor inicial} (PVI); interpretar \resaltar{campos de direcciones}.
+    \item Resolver ecuaciones de \resaltar{variables separables}, \resaltar{homogéneas} y \resaltar{exactas}.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:25 & Conceptos básicos. Campos de direcciones. PVI. Existencia y unicidad\\
+      0:25 -- 0:55 & Variables separables\\
+      0:55 -- 1:20 & Ecuaciones homogéneas\\
+      1:20 -- 1:45 & Ecuaciones exactas\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Conceptos básicos}
+
+\begin{frame}{¿Qué es una ecuación diferencial?}
+  \begin{definicion}
+    Una \resaltar{ecuación diferencial ordinaria} relaciona una función desconocida $y(x)$ con sus derivadas:
+    $F\big(x,y,y',\dots,y^{(n)}\big)=0$. Su \resaltar{orden} es el de la derivada más alta. Una \resaltar{solución} en un intervalo $I$
+    es una función que la satisface en $I$.
+  \end{definicion}
+  \begin{ejemplo}[modelos]
+    \begin{itemize}
+      \item Desintegración radiactiva: \ $\dfrac{dN}{dt}=-\lambda N$.
+      \item Enfriamiento de Newton: \ $\dfrac{dT}{dt}=-k(T-T_a)$.
+      \item Cinética química de 2.º orden: \ $\dfrac{dx}{dt}=k(a-x)(b-x)$.
+      \item Segunda ley de Newton (orden 2): \ $m\,x''=F(t,x,x')$.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{ejemplo}[verificación]
+    $y=Ce^{-x^2}$ es solución de $y'=-2xy$ para toda constante $C$: \ $y'=-2xCe^{-x^2}=-2xy$. \checkmark
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Campo de direcciones}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      Una EDO de primer orden $y'=f(x,y)$ asigna a cada punto $(x,y)$ una \textbf{pendiente}. Dibujando pequeños segmentos con esa
+      pendiente obtenemos el \resaltar{campo de direcciones}.
+      \medskip
+
+      Las soluciones son curvas \textbf{tangentes} al campo en cada punto.
+      \begin{ejemplo}
+        $y'=x-y$. Solución general: $y=x-1+Ce^{-x}$. \ Para $C=0$: la recta $y=x-1$, a la que se acercan todas las demás.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.15]
+        \clip (-2.6,-2.6) rectangle (2.6,2.6);
+        \draw[->, gray] (-2.5,0) -- (2.5,0) node[above left] {\scriptsize $x$};
+        \draw[->, gray] (0,-2.5) -- (0,2.5) node[below right] {\scriptsize $y$};
+        \foreach \x in {-2.25,-1.75,...,2.25} {
+          \foreach \y in {-2.25,-1.75,...,2.25} {
+            \pgfmathsetmacro{\m}{\x-\y}
+            \pgfmathsetmacro{\d}{0.15/sqrt(1+\m*\m)}
+            \draw[uniAzul!70] ({\x-\d},{\y-\m*\d}) -- ({\x+\d},{\y+\m*\d});
+          }
+        }
+        \draw[uniGranate, very thick, domain=-2.5:2.5, samples=60] plot (\x,{\x-1});
+        \draw[uniGranate, thick, domain=-1.2:2.5, samples=60] plot (\x,{\x-1+0.6*exp(-\x)});
+        \draw[uniGranate, thick, domain=-1.1:2.5, samples=60] plot (\x,{\x-1-0.6*exp(-\x)});
+        \draw[uniGranate, thick, domain=-0.7:2.5, samples=60] plot (\x,{\x-1+2*exp(-\x)});
+      \end{tikzpicture}
+
+      \small $y'=x-y$: campo y algunas soluciones.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Problema de valor inicial}
+  \begin{definicion}
+    Un \resaltar{problema de valor inicial} (PVI) es: \quad $y'=f(x,y)$, \quad $y(x_0)=y_0$.
+  \end{definicion}
+  La \resaltar{solución general} contiene una constante arbitraria (familia de curvas); la condición inicial selecciona una
+  \resaltar{solución particular}.
+  \begin{teorema}[existencia y unicidad (Picard)]
+    Si $f$ y $\dfrac{\partial f}{\partial y}$ son continuas en un rectángulo que contiene a $(x_0,y_0)$, entonces el PVI tiene
+    \textbf{una única} solución en algún intervalo alrededor de $x_0$.
+  \end{teorema}
+  \begin{ejemplo}[sin unicidad]
+    $y'=3y^{2/3}$, $y(0)=0$: \ tanto $y\equiv0$ como $y=x^3$ son soluciones. \ Aquí $\frac{\partial f}{\partial y}=2y^{-1/3}$ no es continua en $y=0$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Variables separables}
+
+\begin{frame}{Ecuaciones de variables separables}
+  \begin{definicion}
+    $\dfrac{dy}{dx}=g(x)\,h(y)$.
+  \end{definicion}
+  \begin{block}{Método}
+    Si $h(y)\ne0$: \ separar e integrar ambos lados:
+    \[ \int\frac{dy}{h(y)}=\int g(x)\dx+C. \]
+    \textbf{Justificación:} si $H'=\frac1h$, entonces $\frac{d}{dx}H(y(x))=\frac{y'}{h(y)}=g(x)$, y se integra respecto de $x$.
+  \end{block}
+  \begin{observacion}
+    Las raíces de $h(y_0)=0$ dan \resaltar{soluciones constantes} $y\equiv y_0$ que pueden perderse al dividir. ¡Revíselas!
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplos de variables separables}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}[1]
+        $y'=-\dfrac xy$, \ $y(0)=2$.
+        \[ \int y\dy=-\int x\dx\ \Rightarrow\ \frac{y^2}2=-\frac{x^2}2+C\ \Rightarrow\ x^2+y^2=2C. \]
+        Con $y(0)=2$: $x^2+y^2=4$, y como $y>0$: \ $y=\sqrt{4-x^2}$, \ $-2<x<2$.
+      \end{ejemplo}
+      \begin{ejemplo}[2]
+        $y'=xy^2$: \ $\displaystyle\int\frac{dy}{y^2}=\int x\dx\Rightarrow-\frac1y=\frac{x^2}2+C\Rightarrow y=\frac{-2}{x^2+2C}$.
+        Además, $y\equiv0$ es solución (se perdió al dividir).
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \clip (-2.7,-2.7) rectangle (2.7,2.7);
+        \foreach \x in {-2.25,-1.75,...,2.25} {
+          \foreach \y in {-2.25,-1.75,...,2.25} {
+            \pgfmathsetmacro{\m}{-\x/\y}
+            \pgfmathsetmacro{\d}{0.15/sqrt(1+\m*\m)}
+            \draw[uniAzul!60] ({\x-\d},{\y-\m*\d}) -- ({\x+\d},{\y+\m*\d});
+          }
+        }
+        \draw[->, gray] (-2.6,0) -- (2.6,0);
+        \draw[->, gray] (0,-2.6) -- (0,2.6);
+        \draw[uniGranate, very thick] (2,0) arc (0:180:2);
+        \fill[uniGranate] (0,2) circle (2pt);
+      \end{tikzpicture}
+
+      \small Campo $y'=-x/y$: las soluciones son semicircunferencias.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: crecimiento y decaimiento}
+  \begin{ejemplo}
+    $\dfrac{dN}{dt}=kN$, \ $N(0)=N_0$.
+    \[ \int\frac{dN}{N}=\int k\dt\ \Rightarrow\ \ln|N|=kt+C\ \Rightarrow\ N=Ae^{kt},\qquad A=N_0. \]
+    \[ \boxed{N(t)=N_0e^{kt}} \]
+    $k>0$: crecimiento exponencial (bacterias, interés continuo). \ $k<0$: decaimiento (radiactividad, primer orden en química).
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\dfrac{dy}{dx}=\dfrac{x^2}{1+y^2}$: \ $\displaystyle\int(1+y^2)\dy=\int x^2\dx\Rightarrow y+\frac{y^3}3=\frac{x^3}3+C$.
+    \smallskip
+
+    La solución queda en forma \resaltar{implícita}; no siempre es posible (ni necesario) despejar $y$.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ecuaciones homogéneas}
+
+\begin{frame}{Ecuaciones homogéneas}
+  \begin{definicion}
+    $y'=f(x,y)$ es \resaltar{homogénea} si $f(tx,ty)=f(x,y)$ para todo $t\neq0$; equivalentemente, $y'=F\!\left(\dfrac yx\right)$.
+  \end{definicion}
+  \begin{block}{Método: $y=vx$}
+    $y'=v+xv'$, \ así \ $v+x\dfrac{dv}{dx}=F(v)$ \ $\Rightarrow$ \ $\displaystyle\int\frac{dv}{F(v)-v}=\int\frac{dx}x$ \quad (¡separable!).
+  \end{block}
+  \begin{ejemplo}[5]
+    $y'=\dfrac{x^2+y^2}{xy}=\dfrac{1+v^2}{v}$. \ Entonces $v+xv'=\dfrac1v+v$, \ $xv'=\dfrac1v$:
+    \[ \int v\dv=\int\frac{dx}x\ \Rightarrow\ \frac{v^2}2=\ln|x|+C\ \Rightarrow\ y^2=2x^2\big(\ln|x|+C\big). \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Más ejemplos de homogéneas}
+  \begin{ejemplo}[6]
+    $(x+y)\dx-(x-y)\dy=0$, \ es decir $y'=\dfrac{1+v}{1-v}$.
+    \[ x\,v'=\frac{1+v}{1-v}-v=\frac{1+v^2}{1-v}\ \Rightarrow\ \int\frac{1-v}{1+v^2}\dv=\ln|x|+C \]
+    \[ \arctan v-\tfrac12\ln(1+v^2)=\ln|x|+C\ \Rightarrow\ \arctan\frac yx=\ln\sqrt{x^2+y^2}+C. \]
+    En polares: $\theta=\ln r+C$, es decir $r=Ke^{\theta}$: \ ¡espirales logarítmicas!
+  \end{ejemplo}
+  \begin{block}{Reducibles a homogéneas}
+    $y'=F\!\left(\dfrac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}\right)$: si las rectas se cortan en $(h,k)$, el cambio $x=X+h$, $y=Y+k$ la vuelve
+    homogénea. Si son paralelas, use $u=a_1x+b_1y$.
+  \end{block}
+\end{frame}
+
+\section{Ecuaciones exactas}
+
+\begin{frame}{Ecuaciones exactas}
+  \begin{definicion}
+    $M(x,y)\dx+N(x,y)\dy=0$ es \resaltar{exacta} si existe $F(x,y)$ con $\dfrac{\partial F}{\partial x}=M$, $\dfrac{\partial F}{\partial y}=N$.
+    Entonces $dF=0$ a lo largo de las soluciones, y la solución general es $\boxed{F(x,y)=C}$.
+  \end{definicion}
+  \begin{teorema}[criterio de exactitud]
+    Si $M,N$ tienen derivadas parciales continuas en un rectángulo, la ecuación es exacta $\iff$
+    \[ \frac{\partial M}{\partial y}=\frac{\partial N}{\partial x}. \]
+  \end{teorema}
+  \begin{block}{Método}
+    \begin{enumerate}
+      \item Verificar $M_y=N_x$.
+      \item $F=\int M\dx+g(y)$ \ (integrar en $x$ con $y$ fijo).
+      \item Derivar respecto de $y$ e igualar a $N$ para hallar $g'(y)$, luego $g$.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos de ecuaciones exactas}
+  \begin{ejemplo}[7]
+    $(2xy+3)\dx+(x^2+4y)\dy=0$. \quad $M_y=2x=N_x$ \checkmark
+    \begin{itemize}
+      \item $F=\int(2xy+3)\dx=x^2y+3x+g(y)$.
+      \item $F_y=x^2+g'(y)=x^2+4y\Rightarrow g'(y)=4y\Rightarrow g=2y^2$.
+    \end{itemize}
+    Solución: \ $x^2y+3x+2y^2=C$.
+  \end{ejemplo}
+  \begin{ejemplo}[8: con condición inicial]
+    $(y\cos x+2xe^y)\dx+(\sen x+x^2e^y-1)\dy=0$, \ $y(0)=1$.\\
+    $M_y=\cos x+2xe^y=N_x$ \checkmark. \ $F=y\sen x+x^2e^y+g(y)$, \ $F_y=\sen x+x^2e^y+g'(y)\Rightarrow g'=-1$.
+    \[ y\sen x+x^2e^y-y=C;\qquad y(0)=1\Rightarrow C=-1. \]
+  \end{ejemplo}
+  \small Toda ecuación separable $g(x)\dx-\frac{1}{h(y)}\dy=0$ es exacta. La próxima clase veremos cómo volver exacta una ecuación
+  que no lo es (\emph{factor integrante}).
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Resuelva: (a) $y'=\dfrac{y\cos x}{1+2y^2}$, \ (b) $xy'=y+y^2$, \ (c) $y'=e^{x-y}$, $y(0)=\ln2$, \
+        (d) $\dfrac{dy}{dx}=\dfrac{1+y^2}{1+x^2}$.
+      \item Un cultivo de bacterias se duplica cada 3 horas. ¿En cuánto tiempo se multiplica por 10?
+      \item Resuelva las homogéneas: (a) $y'=\dfrac{y}{x}+\tan\dfrac yx$, \ (b) $(x^2+3xy+y^2)\dx-x^2\dy=0$, \
+        (c) $xy'=y+\sqrt{x^2-y^2}$, $x>0$.
+      \item Resuelva $y'=\dfrac{x+y-3}{x-y-1}$ (reducible a homogénea).
+      \item Verifique que son exactas y resuélvalas: (a) $(3x^2y+e^y)\dx+(x^3+xe^y-2y)\dy=0$, \
+        (b) $\left(\dfrac{y}{x}+6x\right)dx+(\ln x-2)\dy=0$, $x>0$.
+      \item Halle $k$ para que $(y^3+kxy^4-2x)\dx+(3xy^2+20x^2y^3)\dy=0$ sea exacta y resuélvala.
+      \item \textbf{Trayectorias ortogonales.} Halle las curvas que cortan perpendicularmente a la familia $y=Cx^2$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item EDO: relación entre $y$ y sus derivadas; PVI $=$ EDO $+$ condición inicial. Picard garantiza solución única.
+    \item \resaltar{Separables} $y'=g(x)h(y)$: \ $\int\frac{dy}{h(y)}=\int g\dx$ \ (no perder soluciones $h(y)=0$).
+    \item \resaltar{Homogéneas} $y'=F(y/x)$: \ $y=vx$ la vuelve separable.
+    \item \resaltar{Exactas} $M\dx+N\dy=0$ con $M_y=N_x$: \ $F(x,y)=C$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} factor integrante; ecuaciones lineales, Bernoulli, Riccati, Lagrange y Clairaut.
+\end{frame}
+
+\end{document}

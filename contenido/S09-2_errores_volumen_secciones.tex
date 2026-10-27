@@ -1,0 +1,317 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Errores y volúmenes por secciones]{Cotas de error en la integración numérica}
+\subtitle{Volumen de sólidos con área de sección transversal conocida\\[2pt]\small Semana 9 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Enunciar y aplicar las \resaltar{cotas de error} de las reglas del punto medio, trapecio y Simpson.
+    \item Determinar el número de subintervalos necesario para una precisión dada.
+    \item Calcular volúmenes mediante el \resaltar{método de secciones transversales}: $V=\int_a^bA(x)\dx$.
+    \item Comprender el \resaltar{principio de Cavalieri}.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:45 & Cotas de error: enunciados, interpretación, ejemplos\\
+      0:45 -- 1:00 & Idea de la demostración (trapecio)\\
+      1:00 -- 1:40 & Volúmenes por secciones transversales. Cavalieri\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Cotas de error}
+
+\begin{frame}{Teorema de las cotas de error}
+  Sea $E=\int_a^bf-\text{(aproximación)}$, con $h=\frac{b-a}{n}$.
+  \begin{teorema}
+    \begin{itemize}
+      \item Si $|f''(x)|\le K_2$ en $[a,b]$:
+        \[ |E_T|\le\frac{K_2(b-a)^3}{12n^2}=\frac{K_2(b-a)}{12}h^2,\qquad |E_M|\le\frac{K_2(b-a)^3}{24n^2}. \]
+      \item Si $|f^{(4)}(x)|\le K_4$ en $[a,b]$ y $n$ es par:
+        \[ |E_S|\le\frac{K_4(b-a)^5}{180n^4}=\frac{K_4(b-a)}{180}h^4. \]
+    \end{itemize}
+  \end{teorema}
+  \begin{idea}
+    \begin{itemize}
+      \item Trapecio y punto medio usan $f''$: son \textbf{exactos para rectas}.
+      \item Simpson usa $f^{(4)}$: es \textbf{exacto para cúbicos} ($f^{(4)}=0$).
+      \item Duplicar $n$ divide la cota por $4$ (trapecio) o por $16$ (Simpson).
+    \end{itemize}
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Interpretación geométrica: concavidad}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=3.3, ymin=0, ymax=3.3, width=6.5cm, height=5.3cm, xtick={0.5,2.8}, xticklabels={$x_{i-1}$,$x_i$}, ytick=\empty]
+          \addplot[fill=uniGranate!25, draw=uniGranate, thick] coordinates {(0.5,0) (0.5,0.75) (2.8,2.86) (2.8,0)};
+          \addplot[fill=uniAzul!30, draw=none, domain=0.5:2.8] {0.3*x^2+0.4+0.1*x} \closedcycle;
+          \addplot[curva, domain=0.3:3] {0.3*x^2+0.4+0.1*x};
+          \addplot[uniVerde, thick, dashed, domain=0.5:2.8] {0.3*1.65^2+0.4+0.1*1.65+(0.6*1.65+0.1)*(x-1.65)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small $f''>0$ (convexa): el trapecio queda \emph{arriba} de la curva $\Rightarrow$ $T_n$ \textbf{sobreestima}.
+      La tangente en el punto medio queda \emph{abajo} $\Rightarrow$ $M_n$ \textbf{subestima}.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{proposicion}
+        Si $f''>0$ en $[a,b]$:\qquad $M_n<\displaystyle\int_a^bf<T_n$.\\
+        Si $f''<0$, las desigualdades se invierten.
+      \end{proposicion}
+      \begin{observacion}
+        El rectángulo del punto medio tiene la misma área que el trapecio bajo la \emph{recta tangente} en $\bar x_i$.
+      \end{observacion}
+      \begin{ejemplo}
+        $f(x)=1/x$ es convexa en $[1,2]$: \
+        $M_4=0.69122<\ln2<0.69702=T_4$. \checkmark
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{¿Cuántos subintervalos se necesitan?}
+  \begin{ejemplo}[1]
+    ¿Qué $n$ garantiza error menor que $10^{-4}$ al aproximar $\displaystyle\int_1^2\frac{dx}{x}$?
+
+    \textbf{Trapecio.} $f''(x)=\frac2{x^3}\le2=K_2$ en $[1,2]$:
+    \[ \frac{2\cdot1^3}{12n^2}<10^{-4}\iff n^2>1666.7\iff n\ge41. \]
+    \textbf{Simpson.} $f^{(4)}(x)=\frac{24}{x^5}\le24=K_4$:
+    \[ \frac{24\cdot1^5}{180n^4}<10^{-4}\iff n^4>1333.3\iff n>6.04\ \Rightarrow\ n=8\ \ (\text{par}). \]
+  \end{ejemplo}
+  \begin{observacion}
+    La cota es \emph{conservadora}: con $n=4$, la cota de Simpson es $5.2\times10^{-4}$ y el error real es $1.1\times10^{-4}$.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: $\int_0^1e^{-x^2}\dx$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item $f''(x)=(4x^2-2)e^{-x^2}$. En $[0,1]$: $|f''|\le2$.
+        \item $f^{(4)}(x)=(16x^4-48x^2+12)e^{-x^2}$. En $[0,1]$: $|f^{(4)}|\le12$.
+      \end{itemize}
+      Con $n=4$:
+      \[ |E_T|\le\frac{2}{12\cdot16}\approx0.0104,\qquad |E_S|\le\frac{12}{180\cdot256}\approx2.6\times10^{-4}. \]
+      Errores reales: $0.0038$ y $3.1\times10^{-5}$.
+      \medskip
+
+      Para $|E_S|<10^{-6}$: \ $\dfrac{12}{180n^4}<10^{-6}\Rightarrow n\ge 18$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=1.15, ymin=-2.5, ymax=13, width=6.3cm, height=5.5cm, xtick={1}, ytick={-2,2,12}, domain=0:1]
+          \addplot[curva] {(4*x^2-2)*exp(-x^2)};
+          \addplot[curva2] {(16*x^4-48*x^2+12)*exp(-x^2)};
+          \node[uniAzul] at (axis cs:0.8,1.8) {\scriptsize $f''$};
+          \node[uniGranate] at (axis cs:0.3,11) {\scriptsize $f^{(4)}$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Los máximos de $|f''|$ y $|f^{(4)}|$ se alcanzan en $x=0$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Idea de la demostración (trapecio)}
+  En un subintervalo, trasladado a $[0,h]$, sea $e(h)=\displaystyle\int_0^hf(x)\dx-\frac h2\big[f(0)+f(h)\big]$.
+  \begin{itemize}
+    \item $e(0)=0$, \ $e'(h)=f(h)-\tfrac12[f(0)+f(h)]-\tfrac h2f'(h)$, \ $e'(0)=0$.
+    \item $e''(h)=\tfrac12f'(h)-\tfrac12f'(h)-\tfrac h2f''(h)=-\tfrac h2f''(h)$.
+  \end{itemize}
+  Integrando dos veces con $|f''|\le K_2$:
+  \[ |e'(h)|\le\frac{K_2h^2}{4},\qquad |e(h)|\le\frac{K_2h^3}{12}. \]
+  Sumando los $n$ subintervalos:
+  \[ |E_T|\le n\cdot\frac{K_2h^3}{12}=\frac{K_2(b-a)h^2}{12}=\frac{K_2(b-a)^3}{12n^2}.\qquad\blacksquare \]
+  \small (Para Simpson se procede igual con más derivadas; ver ejercicios.)
+\end{frame}
+
+\section{Volumen por secciones transversales}
+
+\begin{frame}{Volumen por rebanadas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Sea $S$ un sólido entre los planos $x=a$ y $x=b$, y $A(x)$ el área de la \resaltar{sección transversal}
+      perpendicular al eje $x$. Una rebanada delgada es casi un ``cilindro'' de base $A(x)$ y altura $dx$:
+      \[ dV=A(x)\dx. \]
+      \begin{definicion}
+        Si $A$ es continua (integrable):\qquad $\displaystyle V(S)=\int_a^bA(x)\dx$.
+      \end{definicion}
+      \small Justificación: $V\approx\sum A(x_i^*)\Delta x_i$, una suma de Riemann.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.95]
+        \draw[->] (-0.3,0) -- (5,0) node[right] {$x$};
+        \draw[thick, uniAzul] (0.4,0) ellipse (0.25 and 0.7);
+        \draw[thick, uniAzul] (0.4,0.7) .. controls (1.5,1.4) and (3,1.3) .. (4.2,0.5);
+        \draw[thick, uniAzul] (0.4,-0.7) .. controls (1.5,-1.4) and (3,-1.3) .. (4.2,-0.5);
+        \draw[thick, uniAzul] (4.2,0) ellipse (0.18 and 0.5);
+        \fill[uniGranate!40] (2.3,0) ellipse (0.36 and 1.18);
+        \draw[uniGranate, thick] (2.3,0) ellipse (0.36 and 1.18);
+        \fill[uniGranate!25] (2.5,0) ellipse (0.36 and 1.17);
+        \draw[uniGranate] (2.5,0) ellipse (0.36 and 1.17);
+        \node at (2.4,-1.6) {\scriptsize $A(x)$};
+        \draw[|-|] (2.3,1.45) -- (2.5,1.45) node[midway,above] {\scriptsize $dx$};
+        \node at (0.4,-1.1) {$a$};
+        \node at (4.2,-0.9) {$b$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: pirámide}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Pirámide de base cuadrada de lado $L$ y altura $H$. Ponemos el eje $y$ vertical desde la base.
+
+        A la altura $y$, la sección es un cuadrado de lado $\ell(y)$. Por semejanza:
+        $\dfrac{\ell(y)}{L}=\dfrac{H-y}{H}$.
+        \[ V=\int_0^H L^2\left(\frac{H-y}{H}\right)^2dy=\frac{L^2}{H^2}\left[-\frac{(H-y)^3}{3}\right]_0^H=\frac13L^2H. \]
+      \end{ejemplo}
+      \begin{observacion}
+        Vale para cualquier cono o pirámide: $V=\tfrac13(\text{área base})(\text{altura})$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \coordinate (A) at (0,0); \coordinate (B) at (2.4,0); \coordinate (C) at (3.2,0.8); \coordinate (D) at (0.8,0.8);
+        \coordinate (V) at (1.6,3);
+        \draw[thick] (A) -- (B) -- (C); \draw[dashed] (C) -- (D) -- (A);
+        \draw[thick] (A) -- (V) -- (B); \draw[thick] (C) -- (V); \draw[dashed] (D) -- (V);
+        \fill[uniGranate!40, opacity=0.8] ($(A)!0.45!(V)$) -- ($(B)!0.45!(V)$) -- ($(C)!0.45!(V)$) -- ($(D)!0.45!(V)$) -- cycle;
+        \draw[->] (-0.4,0) -- (-0.4,3.2) node[above] {$y$};
+        \draw[dashed] (-0.45,1.35) -- ($(A)!0.45!(V)$);
+        \node[left] at (-0.4,1.35) {\scriptsize $y$};
+        \node[below] at (1.2,0) {\scriptsize $L$};
+        \node[right] at ($(B)!0.45!(V)$) {\scriptsize $\ell(y)$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: la esfera}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Esfera de radio $r$: la sección a distancia $x$ del centro es un círculo de radio $\sqrt{r^2-x^2}$:
+        \[ A(x)=\pi(r^2-x^2), \]
+        \[ V=\int_{-r}^r\pi(r^2-x^2)\dx=2\pi\left[r^2x-\frac{x^3}3\right]_0^r=\frac43\pi r^3. \]
+      \end{ejemplo}
+      \begin{ejemplo}[5: casquete esférico]
+        Altura $h$: \ $V=\displaystyle\int_{r-h}^r\pi(r^2-x^2)\dx=\pi h^2\left(r-\frac h3\right)$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.3]
+        \draw[thick, uniAzul] (0,0) circle (1.5);
+        \draw[uniAzul, dashed] (-1.5,0) arc (180:0:1.5 and 0.35);
+        \draw[uniAzul] (-1.5,0) arc (180:360:1.5 and 0.35);
+        \fill[uniGranate!35] (0.7,0) ellipse (0.25 and 1.327);
+        \draw[uniGranate, thick] (0.7,0) ellipse (0.25 and 1.327);
+        \draw[->] (-1.9,0) -- (2,0) node[right] {$x$};
+        \draw[uniVerde, thick] (0,0) -- (0.7,1.327) node[midway,left] {\scriptsize $r$};
+        \draw[uniVerde, thick] (0.7,0) -- (0.7,1.327);
+        \node[uniVerde, right] at (0.7,0.75) {\scriptsize $\sqrt{r^2-x^2}$};
+        \node[below] at (0.7,0) {\scriptsize $x$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: secciones cuadradas sobre un disco}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        La base de un sólido es el disco $x^2+y^2\le r^2$. Las secciones perpendiculares al eje $x$ son
+        \textbf{cuadrados}. Hallar $V$.
+
+        El lado del cuadrado en $x$ es $2\sqrt{r^2-x^2}$:
+        \[ V=\int_{-r}^r4(r^2-x^2)\dx=\frac{16}{3}r^3. \]
+      \end{ejemplo}
+      \begin{observacion}
+        Es también el volumen de la intersección de dos cilindros perpendiculares de radio $r$ (sólido de Steinmetz):
+        sus secciones horizontales son cuadrados de lado $2\sqrt{r^2-z^2}$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85, x={(1.1cm,0cm)}, y={(0.55cm,0.45cm)}, z={(0cm,1cm)}]
+        \fill[uniAzul!15] plot[domain=0:360, samples=72] ({1.5*cos(\x)},{1.5*sin(\x)},0);
+        \draw[thick, uniAzul] plot[domain=0:360, samples=72] ({1.5*cos(\x)},{1.5*sin(\x)},0);
+        \draw[->] (-2,0,0) -- (2.3,0,0) node[right] {$x$};
+        \draw[->] (0,-2,0) -- (0,2.1,0) node[right] {$y$};
+        \fill[uniGranate!45, opacity=0.85] (0.6,-1.375,0) -- (0.6,1.375,0) -- (0.6,1.375,2.75) -- (0.6,-1.375,2.75) -- cycle;
+        \draw[uniGranate, thick] (0.6,-1.375,0) -- (0.6,1.375,0) -- (0.6,1.375,2.75) -- (0.6,-1.375,2.75) -- cycle;
+        \draw[uniVerde, very thick] (0.6,-1.375,0) -- (0.6,1.375,0);
+        \node[uniVerde] at (1.5,-1.9,0) {\scriptsize $2\sqrt{r^2-x^2}$};
+      \end{tikzpicture}
+
+      \small Cuadrado levantado sobre la cuerda (verde) del disco.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 7: cuña de un cilindro y principio de Cavalieri}
+  \begin{ejemplo}[7]
+    De un tronco cilíndrico de radio $r$ se corta una cuña con un plano que pasa por un diámetro de la base y forma
+    $45^\circ$ con ella. Las secciones perpendiculares a ese diámetro son triángulos rectángulos isósceles de cateto
+    $\sqrt{r^2-x^2}$:
+    \[ V=\int_{-r}^r\frac12(r^2-x^2)\dx=\frac23r^3. \]
+  \end{ejemplo}
+  \begin{teorema}[Principio de Cavalieri]
+    Si dos sólidos tienen secciones de igual área a cada altura, tienen el mismo volumen.
+  \end{teorema}
+  \begin{ejemplo}[8]
+    Un cilindro recto y uno oblicuo con la misma base y altura tienen igual volumen ($\pi r^2h$).
+    Una pila de monedas inclinada tiene el mismo volumen que la pila recta.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item ¿Qué $n$ garantiza $|E_T|<10^{-5}$ y $|E_S|<10^{-5}$ al aproximar $\displaystyle\int_0^1e^{x}\dx$? \ Compruebe numéricamente.
+      \item Halle una cota para el error de $M_6$ al aproximar $\displaystyle\int_0^\pi\sen x\dx$. ¿Sobreestima o subestima?
+      \item Pruebe que si $f''>0$ entonces $T_n>\int_a^bf$. Interprete geométricamente.
+      \item Halle el volumen de un cono de radio $r$ y altura $h$ por secciones.
+      \item La base de un sólido es la región entre $y=x^2$ y $y=1$. Las secciones perpendiculares al eje $y$ son
+        triángulos equiláteros. Halle el volumen.
+      \item La base es el triángulo de vértices $(0,0)$, $(1,0)$, $(0,1)$; las secciones perpendiculares al eje $x$ son
+        semicírculos. Halle el volumen.
+      \item Halle el volumen de un tetraedro con tres aristas mutuamente perpendiculares de longitudes $a,b,c$.
+      \item Un tanque tiene secciones horizontales con área $A(y)=4+y^2$ m$^2$ a la altura $y$ (en m), $0\le y\le3$.
+        Calcule su volumen exacto y con Simpson ($n=2$). ¿Por qué coinciden?
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $|E_T|\le\dfrac{K_2(b-a)^3}{12n^2}$, \ $|E_M|\le\dfrac{K_2(b-a)^3}{24n^2}$, \ $|E_S|\le\dfrac{K_4(b-a)^5}{180n^4}$.
+    \item Convexidad: $M_n<\int f<T_n$ si $f''>0$.
+    \item Volumen por secciones: $V=\displaystyle\int_a^bA(x)\dx$ (rebanadas de grosor $dx$).
+    \item Principio de Cavalieri: igual área de secciones $\Rightarrow$ igual volumen.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} volúmenes de sólidos de revolución (discos, arandelas y capas cilíndricas).
+\end{frame}
+
+\end{document}

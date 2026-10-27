@@ -1,0 +1,332 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Logaritmo y exponencial en base $a$]{Logaritmo y exponencial en base $a$}
+\subtitle{Bases positivas diferentes de 1\\[2pt]\small Semana 3 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Definir $a^x$ para todo $x\in\R$ y $a>0$ a partir de $e^x$ y $\ln x$.
+    \item Probar las leyes de los exponentes y calcular derivadas e integrales de $a^x$.
+    \item Definir $\log_ax$ ($a>0$, $a\ne1$), sus propiedades y su derivada.
+    \item Derivar funciones de la forma $f(x)^{g(x)}$ y la potencia real $x^r$.
+    \item Aplicar a modelos en química y física (pH, decibeles, vida media).
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & Repaso: $\ln$ y $\exp$\\
+      0:10 -- 0:50 & La exponencial $a^x$: definición, propiedades, cálculo\\
+      0:50 -- 1:25 & El logaritmo $\log_ax$. Derivación logarítmica, potencias reales\\
+      1:25 -- 1:45 & Límites notables y aplicaciones\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{La función exponencial de base $a$}
+
+\begin{frame}{¿Qué significa $2^{\sqrt2}$?}
+  \begin{itemize}
+    \item $a^n$ ($n\in\N$): producto repetido. \ $a^{-n}=1/a^n$, \ $a^{p/q}=\sqrt[q]{a^p}$.
+    \item ¿Y si el exponente es irracional? Para $r\in\Q$ ya sabemos que $\ln(a^r)=r\ln a$, es decir
+      \[ a^r=e^{r\ln a}\qquad(r\in\Q). \]
+    \item El lado derecho tiene sentido para \emph{todo} $x\in\R$. Esto motiva:
+  \end{itemize}
+  \begin{definicion}
+    Para $a>0$ y $x\in\R$:\qquad $\boxed{a^x=e^{x\ln a}}$.
+  \end{definicion}
+  \begin{ejemplo}
+    $2^{\sqrt2}=e^{\sqrt2\ln2}\approx e^{0.98026}\approx2.6651$.
+    \quad Coincide con el límite de $2^{1.4},2^{1.41},2^{1.414},\dots$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Leyes de los exponentes}
+  \begin{teorema}
+    Para $a,b>0$ y $x,y\in\R$:
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $a^{x+y}=a^xa^y$
+      \item $a^{x-y}=a^x/a^y$
+      \item $(a^x)^y=a^{xy}$
+      \item $(ab)^x=a^xb^x$
+      \item $\ln(a^x)=x\ln a$
+      \item $1^x=1$, \ $a^0=1$
+    \end{enumerate}
+    \end{multicols}
+  \end{teorema}
+  \textbf{Prueba de 1 y 3.}
+  \[ a^{x+y}=e^{(x+y)\ln a}=e^{x\ln a}e^{y\ln a}=a^xa^y. \]
+  \[ (a^x)^y=e^{y\ln(a^x)}=e^{y\,x\ln a}=a^{xy}. \]
+  \begin{observacion}
+    Todas se reducen a propiedades de $e^x$ y $\ln x$, que ya probamos usando integrales.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Gráficas de $y=a^x$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=3, ymin=0, ymax=6, width=7.5cm, height=6cm, ytick={1}, xtick={-2,-1,1,2}, domain=-3:3]
+          \addplot[curva2] {2^x};
+          \addplot[curva] {exp(x)};
+          \addplot[uniVerde, very thick] {(1/2)^x};
+          \addplot[uniNaranja, very thick] {(1/3)^x};
+          \node[uniGranate] at (axis cs:2.75,4.6) {$2^x$};
+          \node[uniAzul] at (axis cs:1.35,4.6) {$e^x$};
+          \node[uniVerde] at (axis cs:-2.75,4.6) {$(\frac12)^x$};
+          \node[uniNaranja] at (axis cs:-1.25,4.6) {$(\frac13)^x$};
+          \addplot[gray, thick] {1};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item Todas pasan por $(0,1)$.
+        \item $a>1$: creciente, $a^x\to0$ si $x\to-\infty$.
+        \item $0<a<1$: decreciente, $a^x\to0$ si $x\to+\infty$.
+        \item $a=1$: constante.
+        \item $\left(\frac1a\right)^x=a^{-x}$: reflexión respecto al eje $y$.
+        \item Siempre $a^x>0$.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Derivada e integral de $a^x$}
+  \begin{teorema}
+    Para $a>0$:\qquad
+    $\displaystyle\frac{d}{dx}a^x=a^x\ln a,\qquad \int a^x\dx=\frac{a^x}{\ln a}+C\quad(a\ne1).$
+  \end{teorema}
+  \textbf{Prueba.} $\dfrac{d}{dx}e^{x\ln a}=e^{x\ln a}\cdot\ln a=a^x\ln a$. \ Para la integral, derive el lado derecho.
+  \begin{ejemplo}[1]
+    $\dfrac{d}{dx}\,10^{x^2}=10^{x^2}\cdot2x\ln10$.\qquad
+    $\dfrac{d}{dx}\,3^{\sen x}=3^{\sen x}\cos x\ln3$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\int x\,5^{x^2}\dx\overset{u=x^2}{=}\frac12\int5^u\du=\frac{5^{x^2}}{2\ln5}+C$.
+    \qquad
+    $\displaystyle\int_0^1 2^x\dx=\frac{2-1}{\ln2}=\frac{1}{\ln 2}$.
+  \end{ejemplo}
+  \begin{observacion}
+    $e$ es la única base con $\frac{d}{dx}a^x=a^x$ (pues $\ln a=1$). Por eso es la base ``natural''.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{La pendiente en $x=0$ caracteriza a $e$}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-1.5, xmax=1.5, ymin=0, ymax=3.2, width=7cm, height=5.8cm, ytick={1}, xtick={-1,1}, domain=-1.5:1.5]
+          \addplot[curva2] {2^x};
+          \addplot[curva] {exp(x)};
+          \addplot[uniVerde, very thick] {3^x};
+          \addplot[uniVerde, dashed, domain=-1:1] {1+ln(3)*x};
+          \addplot[uniAzul, dashed, domain=-1:1] {1+x};
+          \addplot[uniGranate, dashed, domain=-1:1] {1+ln(2)*x};
+          \node[uniVerde] at (axis cs:1.15,3.0) {\scriptsize $3^x$};
+          \node[uniAzul] at (axis cs:1.35,2.5) {\scriptsize $e^x$};
+          \node[uniGranate] at (axis cs:1.35,1.9) {\scriptsize $2^x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      Las rectas tangentes en $(0,1)$ tienen pendiente $\ln a$:
+      \begin{center}
+        \begin{tabular}{c|c}
+          $a$ & pendiente $\ln a$\\ \hline
+          $2$ & $0.693$\\
+          $e$ & $1$\\
+          $3$ & $1.099$
+        \end{tabular}
+      \end{center}
+      \begin{idea}
+        $e$ es la base para la cual la tangente a $a^x$ en $(0,1)$ forma $45^\circ$.
+      \end{idea}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{El logaritmo de base $a$}
+
+\begin{frame}{Definición de $\log_ax$}
+  Para $a>0$, $a\ne1$, la función $x\mapsto a^x$ es estrictamente monótona y continua de $\R$ en $(0,\infty)$:
+  tiene inversa.
+  \begin{definicion}
+    $\log_a:(0,\infty)\to\R$ es la inversa de $a^x$:\qquad $y=\log_ax\iff a^y=x$.
+  \end{definicion}
+  \begin{teorema}[cambio de base]
+    \[ \log_ax=\frac{\ln x}{\ln a}. \]
+  \end{teorema}
+  \textbf{Prueba.} Si $y=\log_ax$, entonces $a^y=x$ y $y\ln a=\ln x$. \ $\blacksquare$
+  \begin{proposicion}
+    $\log_a(xy)=\log_ax+\log_ay$, \quad $\log_a(x^r)=r\log_ax$, \quad $\log_a a=1$, \quad
+    $\log_a x=\dfrac{\log_bx}{\log_ba}$.
+  \end{proposicion}
+\end{frame}
+
+\begin{frame}{Gráficas de $y=\log_ax$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.3, xmax=8, ymin=-3, ymax=3.2, width=7.5cm, height=6cm, xtick={1,2,4,8}, ytick={1,2,3}, domain=0.05:8, samples=200]
+          \addplot[curva2] {ln(x)/ln(2)} node[pos=0.9,above] {$\log_2x$};
+          \addplot[curva] {ln(x)/ln(10)} node[pos=0.9,below] {$\log_{10}x$};
+          \addplot[uniVerde, very thick] {-ln(x)/ln(2)} node[pos=0.9,above] {$\log_{1/2}x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item Todas pasan por $(1,0)$.
+        \item $a>1$: creciente; $0<a<1$: decreciente.
+        \item $\log_{1/a}x=-\log_ax$.
+        \item $\log_ax$ es múltiplo constante de $\ln x$: todas las curvas son ``escalamientos'' verticales de $\ln$.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Derivada del logaritmo en base $a$}
+  \begin{teorema}
+    \[ \frac{d}{dx}\log_ax=\frac{1}{x\ln a},\qquad \frac{d}{dx}\log_a|u|=\frac{u'}{u\ln a}. \]
+  \end{teorema}
+  \begin{ejemplo}[1]
+    $\dfrac{d}{dx}\log_{10}(x^2+1)=\dfrac{2x}{(x^2+1)\ln10}$.
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\int\frac{\log_2x}{x}\dx=\frac1{\ln2}\int\frac{\ln x}{x}\dx=\frac{\ln^2x}{2\ln2}+C$.
+  \end{ejemplo}
+  \begin{ejemplo}[3: partes]
+    $\displaystyle\int\log_3x\dx=\frac1{\ln3}\int\ln x\dx=\frac{x\ln x-x}{\ln3}+C=x\log_3x-\frac{x}{\ln3}+C$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Potencias reales y derivación logarítmica}
+  \begin{teorema}[regla de la potencia general]
+    Para $r\in\R$ y $x>0$:\qquad $x^r=e^{r\ln x}$ \quad y \quad $\dfrac{d}{dx}x^r=rx^{r-1}$.
+  \end{teorema}
+  \textbf{Prueba.} $\dfrac{d}{dx}e^{r\ln x}=e^{r\ln x}\cdot\dfrac rx=rx^{r-1}$.
+  \begin{block}{Funciones de la forma $y=f(x)^{g(x)}$, \ $f>0$}
+    \[ y=e^{g(x)\ln f(x)}\quad\Rightarrow\quad y'=f(x)^{g(x)}\left[g'(x)\ln f(x)+g(x)\frac{f'(x)}{f(x)}\right]. \]
+  \end{block}
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $\dfrac{d}{dx}x^x=x^x(\ln x+1)$. \ (¡No es $x\cdot x^{x-1}$ ni $x^x\ln x$!)
+      \item $\dfrac{d}{dx}(\sen x)^{x^2}=(\sen x)^{x^2}\left(2x\ln\sen x+x^2\ctg x\right)$, \ $0<x<\pi$.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Comparación de crecimiento: $x^x$}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=2.2, ymin=0, ymax=4.3, width=7cm, height=5.8cm, xtick={0.3679,1,2}, xticklabels={$\frac1e$,$1$,$2$}, ytick={0.6922,1,4}, yticklabels={$e^{-1/e}$,$1$,$4$}, domain=0.01:2.1, samples=200]
+          \addplot[curva] {x^x} node[pos=0.95,left] {$y=x^x$};
+          \draw[dashed] (axis cs:0.3679,0) -- (axis cs:0.3679,0.6922) -- (axis cs:0,0.6922);
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0.3679,0.6922)};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[estudio de $y=x^x$, $x>0$]
+        \begin{itemize}
+          \item $y'=x^x(\ln x+1)=0\iff x=\frac1e$.
+          \item Mínimo absoluto: $y\left(\frac1e\right)=e^{-1/e}\approx0.692$.
+          \item $\lim\limits_{x\to0^+}x^x=e^{\lim x\ln x}=e^0=1$.
+        \end{itemize}
+      \end{ejemplo}
+      \begin{observacion}
+        Para límites de la forma $1^\infty$, $0^0$, $\infty^0$ use $f^g=e^{g\ln f}$.
+      \end{observacion}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Límites notables y aplicaciones}
+
+\begin{frame}{El número $e$ como límite}
+  \begin{teorema}
+    \[ \lim_{x\to0}(1+x)^{1/x}=e,\qquad \lim_{n\to\infty}\left(1+\frac{r}{n}\right)^n=e^r. \]
+  \end{teorema}
+  \textbf{Prueba.} $\ln(1+x)^{1/x}=\dfrac{\ln(1+x)}{x}\to(\ln)'(1)=1$, y $e^x$ es continua.
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[interés compuesto]
+        Un capital $P$ al $r$ anual capitalizado $n$ veces al año da $P(1+\frac rn)^{n}$.
+        Capitalización \emph{continua}: $Pe^{r}$.
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering\small
+      \begin{tabular}{r|l}
+        $n$ & $(1+1/n)^n$\\ \hline
+        1 & 2\\
+        10 & 2.59374\\
+        100 & 2.70481\\
+        10\,000 & 2.71815\\
+        $\infty$ & 2.71828\dots
+      \end{tabular}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aplicaciones en ciencias}
+  \begin{ejemplo}[química: pH]
+    $\mathrm{pH}=-\log_{10}[\mathrm{H^+}]$. Si $[\mathrm{H^+}]$ se multiplica por 100, el pH disminuye en 2.
+    Sensibilidad: $\dfrac{d\,\mathrm{pH}}{d[\mathrm{H^+}]}=-\dfrac{1}{[\mathrm{H^+}]\ln10}$.
+  \end{ejemplo}
+  \begin{ejemplo}[física: decibeles]
+    Nivel sonoro $\beta=10\log_{10}\dfrac{I}{I_0}$ dB. Duplicar la intensidad aumenta $\beta$ en
+    $10\log_{10}2\approx3$ dB.
+  \end{ejemplo}
+  \begin{ejemplo}[física nuclear: vida media]
+    $N(t)=N_0\left(\tfrac12\right)^{t/T}$, con $T$ la vida media. Para el $^{14}$C, $T\approx5730$ años.
+    ¿Cuándo queda el 30\,\%? \ $\left(\frac12\right)^{t/T}=0.3\Rightarrow t=T\,\dfrac{\ln0.3}{\ln0.5}\approx9953$ años.
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Pruebe que $(ab)^x=a^xb^x$ y $\log_a x=\dfrac{\log_bx}{\log_ba}$.
+      \item Derive: (a) $y=7^{\tan x}$, \ (b) $y=\log_5(\sec x+\tan x)$, \ (c) $y=x^{\sen x}$, \ (d) $y=(\ln x)^{\ln x}$,
+        \ (e) $y=\log_x2$.
+      \item Calcule: (a) $\displaystyle\int\frac{3^{\sqrt x}}{\sqrt x}\dx$, \ (b) $\displaystyle\int\frac{dx}{x\log_{10}x}$,
+        \ (c) $\displaystyle\int_0^1\frac{2^x}{1+2^x}\dx$, \ (d) $\displaystyle\int x\,2^x\dx$.
+      \item Calcule los límites: $\displaystyle\lim_{x\to0^+}x^{\sen x}$, \ $\displaystyle\lim_{x\to\infty}\left(1+\frac{3}{x}\right)^{2x}$,
+        \ $\displaystyle\lim_{x\to0}\frac{a^x-1}{x}$.
+      \item ¿Qué es mayor, $e^\pi$ o $\pi^e$? \ \small(Estudie $f(x)=\frac{\ln x}{x}$.)
+      \item Pruebe que $f(x)=\left(1+\frac1x\right)^x$ es creciente en $(0,\infty)$.
+      \item Una solución tiene pH $=3.2$. ¿Cuál es su $[\mathrm{H^+}]$? ¿Cuántas veces más ácida es que otra con pH $=5.0$?
+      \item El $^{131}$I tiene vida media de 8 días. ¿Qué fracción queda después de 30 días?
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $a^x:=e^{x\ln a}$ ($a>0$), válida para todo exponente real; cumple las leyes de exponentes.
+    \item $(a^x)'=a^x\ln a$, \quad $\int a^x\dx=\dfrac{a^x}{\ln a}+C$.
+    \item $\log_ax=\dfrac{\ln x}{\ln a}$, \quad $(\log_ax)'=\dfrac{1}{x\ln a}$.
+    \item $(x^r)'=rx^{r-1}$ para $r$ real; \ $f^g=e^{g\ln f}$ para derivar y calcular límites.
+    \item $e=\lim(1+x)^{1/x}$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} Segundo Teorema Fundamental del Cálculo, cambio de variable y partes en la integral definida.
+\end{frame}
+
+\end{document}

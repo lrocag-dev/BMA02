@@ -1,0 +1,280 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Binomios y sustitución universal]{Integración de binomios diferenciales}
+\subtitle{Sustitución por la tangente del ángulo mitad\\(``sustitución trigonométrica universal'')\\[2pt]\small Semana 7 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Racionalizar integrandos con radicales de la forma $\sqrt[q]{ax+b}$.
+    \item Reconocer un \resaltar{binomio diferencial} $x^m(a+bx^n)^p\dx$ y aplicar los tres casos de \resaltar{Chebyshev}.
+    \item Transformar cualquier integral racional en $\sen x$ y $\cos x$ en una integral racional mediante $t=\tan\frac x2$.
+    \item Elegir la sustitución más eficiente según la estructura del integrando.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Repaso de técnicas; integrales con radicales $\sqrt[q]{ax+b}$\\
+      0:15 -- 1:00 & Binomios diferenciales: teorema de Chebyshev y ejemplos\\
+      1:00 -- 1:40 & Sustitución universal $t=\tan(x/2)$ y sustituciones particulares\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Racionalización}
+
+\begin{frame}{Idea general: racionalizar}
+  \begin{idea}
+    Ya sabemos integrar \emph{toda} función racional (fracciones parciales). Muchas técnicas consisten en una
+    sustitución que convierte el integrando en una función \textbf{racional} de la nueva variable.
+  \end{idea}
+  \begin{block}{Radicales del mismo binomio lineal}
+    Para $\displaystyle\int R\left(x,\sqrt[q_1]{ax+b},\dots,\sqrt[q_k]{ax+b}\right)dx$, \ sea $ax+b=t^q$ con $q=\operatorname{mcm}(q_1,\dots,q_k)$.
+  \end{block}
+  \begin{ejemplo}[1]
+    $\displaystyle\int\frac{dx}{\sqrt x+\sqrt[3]x}$. \quad $x=t^6$, $dx=6t^5\dt$:
+    \[ \int\frac{6t^5}{t^3+t^2}\dt=6\int\frac{t^3}{t+1}\dt=6\int\left(t^2-t+1-\frac1{t+1}\right)dt \]
+    \[ =2\sqrt x-3\sqrt[3]x+6\sqrt[6]x-6\ln\left(1+\sqrt[6]x\right)+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\section{Binomios diferenciales}
+
+\begin{frame}{Binomios diferenciales}
+  \begin{definicion}
+    Un \resaltar{binomio diferencial} es una expresión
+    \[ x^m\left(a+bx^n\right)^p\dx,\qquad a,b\in\R\setminus\{0\},\quad m,n,p\in\Q. \]
+  \end{definicion}
+  \begin{teorema}[Chebyshev, 1853]
+    $\displaystyle\int x^m(a+bx^n)^p\dx$ es elemental \textbf{si y solo si} se cumple alguno de los casos:
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{c|l|l}
+      \textbf{Caso} & \textbf{Condición} & \textbf{Sustitución}\\ \hline
+      I & $p\in\Z$ & $x=t^s$, \ $s=$ mcm de denominadores de $m,n$\\
+      II & $\dfrac{m+1}{n}\in\Z$ & $a+bx^n=t^s$, \ $s=$ denominador de $p$\\
+      III & $\dfrac{m+1}{n}+p\in\Z$ & $ax^{-n}+b=t^s$, \ $s=$ denominador de $p$
+    \end{tabular}
+    \end{center}
+  \end{teorema}
+  \small La parte ``solo si'' (no elementalidad en los demás casos) es profunda y no la probaremos.
+\end{frame}
+
+\begin{frame}{¿De dónde salen los casos?}
+  Con $u=x^n$: \ $x=u^{1/n}$, $dx=\frac1nu^{1/n-1}\du$, luego
+  \[ x^m(a+bx^n)^p\dx=\frac1n\,u^{\frac{m+1}{n}-1}(a+bu)^p\du. \]
+  Sea $r=\frac{m+1}{n}-1$. La integral $\int u^r(a+bu)^p\du$ es de la forma ``radicales de binomios lineales'':
+  \begin{itemize}
+    \item Si $p\in\Z$: solo hay un radical (el de $u^r$) $\Rightarrow$ racionalizar $u$. \hfill(Caso I)
+    \item Si $r\in\Z$ (es decir, $\frac{m+1}n\in\Z$): solo hay un radical, $(a+bu)^p$ $\Rightarrow$ $a+bu=t^s$. \hfill(Caso II)
+    \item Si $r+p\in\Z$: escribimos $u^r(a+bu)^p=u^{r+p}\left(\frac{a+bu}{u}\right)^p$ $\Rightarrow$ $\frac{a+bu}{u}=t^s$. \hfill(Caso III)
+  \end{itemize}
+  \begin{observacion}
+    Siempre identifique primero $m$, $n$, $p$ escribiendo el integrando \emph{exactamente} en la forma $x^m(a+bx^n)^p$.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Caso I: $p$ entero}
+  \begin{ejemplo}[2]
+    $\displaystyle\int\frac{\sqrt x}{\left(1+\sqrt[3]x\right)^2}\dx=\int x^{1/2}\left(1+x^{1/3}\right)^{-2}\dx$: \quad
+    $m=\tfrac12$, $n=\tfrac13$, $p=-2\in\Z$.
+
+    $s=\operatorname{mcm}(2,3)=6$: \ $x=t^6$, $dx=6t^5\dt$:
+    \[ \int\frac{t^3\cdot6t^5}{(1+t^2)^2}\dt=6\int\frac{t^8}{(1+t^2)^2}\dt. \]
+    División y fracciones parciales:
+    $\dfrac{t^8}{(1+t^2)^2}=t^4-2t^2+3-\dfrac{4}{1+t^2}+\dfrac{1}{(1+t^2)^2}$, \ y así
+    \[ \int=\tfrac65t^5-4t^3+18t-21\arctan t+\frac{3t}{1+t^2}+C,\qquad t=\sqrt[6]x. \]
+  \end{ejemplo}
+  \small (Se usó $\int\frac{dt}{(1+t^2)^2}=\frac{t}{2(1+t^2)}+\frac12\arctan t$.)
+\end{frame}
+
+\begin{frame}{Caso II: $\frac{m+1}{n}$ entero}
+  \begin{ejemplo}[3]
+    $\displaystyle\int x^5\left(1+x^3\right)^{2/3}\dx$: \quad $m=5$, $n=3$, $p=\tfrac23$; \quad $\dfrac{m+1}n=2\in\Z$.
+
+    Sea $1+x^3=t^3$: \ $3x^2\dx=3t^2\dt$, \ $x^3=t^3-1$:
+    \[ \int x^3\left(1+x^3\right)^{2/3}x^2\dx=\int(t^3-1)\,t^2\cdot t^2\dt=\int(t^7-t^4)\dt=\frac{t^8}{8}-\frac{t^5}{5}+C \]
+    \[ =\frac{(1+x^3)^{8/3}}{8}-\frac{(1+x^3)^{5/3}}{5}+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\displaystyle\int\frac{x^3}{\sqrt{1+x^2}}\dx$: \ $m=3$, $n=2$, $p=-\tfrac12$, $\frac{m+1}n=2$. \ $1+x^2=t^2$:
+    $\displaystyle\int(t^2-1)\dt=\frac{(1+x^2)^{3/2}}{3}-\sqrt{1+x^2}+C$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Caso III: $\frac{m+1}{n}+p$ entero}
+  \begin{ejemplo}[5]
+    $\displaystyle\int\frac{dx}{x^2\left(1+x^2\right)^{3/2}}$: \ $m=-2$, $n=2$, $p=-\tfrac32$; \
+    $\dfrac{m+1}{n}=-\tfrac12\notin\Z$, \ $\dfrac{m+1}{n}+p=-2\in\Z$.
+
+    Sea $x^{-2}+1=t^2$: \ $-2x^{-3}\dx=2t\dt$. \ Como $(1+x^2)^{3/2}=x^3(x^{-2}+1)^{3/2}=x^3t^3$:
+    \[ \int\frac{dx}{x^5t^3}=\int\frac{x^{-2}\cdot x^{-3}\dx}{t^3}=\int\frac{(t^2-1)(-t\dt)}{t^3}=-\int\left(1-\frac1{t^2}\right)dt=-t-\frac1t+C \]
+    \[ =-\frac{\sqrt{1+x^2}}{x}-\frac{x}{\sqrt{1+x^2}}+C. \]
+  \end{ejemplo}
+  \begin{observacion}
+    Esta integral también sale con $x=\tan\theta$. Chebyshev da un \emph{algoritmo} y, además, nos dice cuándo
+    \textbf{no} vale la pena buscar una primitiva elemental.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Cuando no hay primitiva elemental}
+  \begin{ejemplo}[6]
+    $\displaystyle\int\sqrt{1+x^3}\dx$: \ $m=0$, $n=3$, $p=\tfrac12$.
+    \begin{itemize}
+      \item $p\notin\Z$; \quad $\frac{m+1}{n}=\frac13\notin\Z$; \quad $\frac13+\frac12=\frac56\notin\Z$.
+    \end{itemize}
+    Por Chebyshev, \alert{no es elemental} (es una integral elíptica).
+  \end{ejemplo}
+  \begin{ejemplo}[7]
+    $\displaystyle\int\frac{dx}{\sqrt[4]{1+x^4}}$: \ $m=0$, $n=4$, $p=-\frac14$: \ $\frac{m+1}{n}+p=\frac14-\frac14=0\in\Z$. \ ¡Elemental!
+    (Caso III con $x^{-4}+1=t^4$.)
+  \end{ejemplo}
+  \begin{block}{Otras integrales famosas no elementales}
+    $\displaystyle\int e^{-x^2}\dx$, \ $\displaystyle\int\frac{\sen x}{x}\dx$, \ $\displaystyle\int\frac{dx}{\ln x}$,
+    \ $\displaystyle\int\sen(x^2)\dx$, \ $\displaystyle\int\sqrt{1-k^2\sen^2x}\dx$. \
+    Se estudian con series (Semana 12) o numéricamente (Semana 9).
+  \end{block}
+\end{frame}
+
+\section{Sustitución trigonométrica universal}
+
+\begin{frame}{La sustitución $t=\tan\frac x2$}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Para $\displaystyle\int R(\sen x,\cos x)\dx$ con $R$ racional, sea $t=\tan\dfrac x2$, \ $-\pi<x<\pi$:
+      \[ \sen x=\frac{2t}{1+t^2},\quad \cos x=\frac{1-t^2}{1+t^2},\quad dx=\frac{2\dt}{1+t^2}. \]
+      \textbf{Prueba.} $\sen x=2\sen\frac x2\cos\frac x2=2\tan\frac x2\cos^2\frac x2=\dfrac{2t}{\sec^2\frac x2}=\dfrac{2t}{1+t^2}$;
+      análogo para $\cos x=\cos^2\frac x2-\sen^2\frac x2$. Y $x=2\arctan t$.
+      \begin{idea}
+        Toda integral racional en $\sen x$ y $\cos x$ se convierte en la integral de una función racional de $t$.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.6]
+        \draw[gray] (0,0) circle (1);
+        \draw[->] (-1.3,0) -- (1.4,0);
+        \draw[->] (0,-1.2) -- (0,1.3);
+        \coordinate (P) at (60:1);
+        \coordinate (A) at (-1,0);
+        \draw[thick, uniAzul] (A) -- (P);
+        \draw[thick, uniGranate] (0,0) -- (P);
+        \fill (P) circle (1pt) node[above right] {\scriptsize $(\cos x,\sen x)$};
+        \fill (A) circle (1pt) node[below left] {\scriptsize $(-1,0)$};
+        \draw[uniGranate] (0.25,0) arc (0:60:0.25) node[pos=0.5,right] {\scriptsize $x$};
+        \draw[uniAzul] (-0.65,0) arc (0:30:0.35);
+        \node[uniAzul] at (-0.5,0.1) {\tiny $x/2$};
+        \fill[uniVerde] (0,0.577) circle (1pt) node[left] {\scriptsize $t$};
+      \end{tikzpicture}
+
+      \small Ángulo inscrito $=\frac x2$; la recta desde $(-1,0)$ corta el eje $y$ en $t=\tan\frac x2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \begin{ejemplo}[8]
+    $\displaystyle\int\frac{dx}{1+\sen x+\cos x}=\int\frac{\frac{2\dt}{1+t^2}}{\frac{1+t^2+2t+1-t^2}{1+t^2}}=\int\frac{2\dt}{2+2t}
+      =\ln\left|1+\tan\frac x2\right|+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[9]
+    $\displaystyle\int\frac{dx}{2+\cos x}=\int\frac{2\dt}{(1+t^2)\cdot\frac{3+t^2}{1+t^2}}=\int\frac{2\dt}{3+t^2}
+      =\frac{2}{\sqrt3}\arctan\left(\frac{1}{\sqrt3}\tan\frac x2\right)+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[10]
+    $\displaystyle\int\sec x\dx=\int\frac{1+t^2}{1-t^2}\cdot\frac{2\dt}{1+t^2}=\int\frac{2\dt}{1-t^2}=\ln\left|\frac{1+t}{1-t}\right|+C
+      =\ln\left|\tan\left(\frac\pi4+\frac x2\right)\right|+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{¡Cuidado con las integrales definidas!}
+  \begin{columns}
+    \begin{column}{0.57\textwidth}
+      ``$\displaystyle\int_0^{2\pi}\frac{dx}{2+\cos x}=\left[\frac{2}{\sqrt3}\arctan\left(\frac{\tan\frac x2}{\sqrt3}\right)\right]_0^{2\pi}=0$''. \ \alert{¡Falso!} El integrando es positivo.
+      \medskip
+
+      La sustitución $t=\tan\frac x2$ solo es válida en $(-\pi,\pi)$: la ``primitiva'' salta en $x=\pi$.
+      \begin{block}{Correcto (usando periodicidad)}
+        \[ \int_0^{2\pi}\frac{dx}{2+\cos x}=\int_{-\pi}^{\pi}\frac{dx}{2+\cos x}=\frac2{\sqrt3}\left[\frac\pi2-\left(-\frac\pi2\right)\right]=\frac{2\pi}{\sqrt3}. \]
+      \end{block}
+      \small (Los valores en $\pm\pi$ se obtienen como límites, $t\to\pm\infty$.)
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=0, xmax=6.6, ymin=-1.2, ymax=1.4, width=6.4cm, height=5cm, xtick={3.1416,6.2832}, xticklabels={$\pi$,$2\pi$}, ytick={1}, samples=200]
+          \addplot[curva2, domain=0:3.10] {2/sqrt(3)*rad(atan(tan(deg(x/2))/sqrt(3)))};
+          \addplot[curva2, domain=3.18:6.2832] {2/sqrt(3)*rad(atan(tan(deg(x/2))/sqrt(3)))};
+          \addplot[curva, domain=0:6.2832] {1/(2+cos(deg(x)))};
+          \node[uniAzul] at (axis cs:4.6,1.25) {\scriptsize $\frac{1}{2+\cos x}$};
+          \node[uniGranate] at (axis cs:1.2,-0.6) {\scriptsize ``primitiva'' discontinua};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Sustituciones particulares (más eficientes)}
+  La sustitución universal siempre funciona, pero puede generar fracciones parciales muy largas. Antes, intente:
+  \renewcommand{\arraystretch}{1.5}
+  \begin{center}
+  \begin{tabular}{l|l}
+    \textbf{Si} & \textbf{Usar}\\ \hline
+    $R(-\sen x,\cos x)=-R(\sen x,\cos x)$ \ (impar en $\sen$) & $t=\cos x$\\
+    $R(\sen x,-\cos x)=-R(\sen x,\cos x)$ \ (impar en $\cos$) & $t=\sen x$\\
+    $R(-\sen x,-\cos x)=R(\sen x,\cos x)$ & $t=\tan x$
+  \end{tabular}
+  \end{center}
+  \begin{ejemplo}[11: con $t=\tan x$]
+    $\displaystyle\int\frac{dx}{\sen^2x+4\cos^2x}=\int\frac{\sec^2x\dx}{\tan^2x+4}\overset{t=\tan x}{=}\int\frac{dt}{t^2+4}=\frac12\arctan\frac{\tan x}{2}+C.$
+  \end{ejemplo}
+  \small Con $t=\tan\frac x2$ habríamos obtenido una racional de grado 4 en el denominador.
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\int\frac{\sqrt[3]{1+\sqrt[4]x}}{\sqrt x}\dx$
+      \item $\displaystyle\int\frac{dx}{x^4\sqrt{1+x^2}}$
+      \item $\displaystyle\int\frac{dx}{\sqrt[3]{x^2}\left(1+\sqrt[3]{x^2}\right)}$
+      \item $\displaystyle\int x^{-11}\left(1+x^4\right)^{-1/2}\dx$
+      \item $\displaystyle\int\frac{dx}{3+5\cos x}$
+      \item $\displaystyle\int\frac{dx}{\sen x+\cos x}$
+      \item $\displaystyle\int\frac{1+\sen x}{\sen x(1+\cos x)}\dx$
+      \item $\displaystyle\int\frac{\sen^3x}{2+\cos x}\dx$
+      \item $\displaystyle\int_0^{\pi/2}\frac{dx}{2-\sen x}$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+    \begin{enumerate}
+      \setcounter{enumi}{9}
+      \item Determine para qué valores racionales de $k$ la integral $\int\sqrt{1+x^k}\dx$ es elemental.
+      \item Pruebe que $\displaystyle\int_0^{2\pi}\frac{dx}{a+b\cos x}=\frac{2\pi}{\sqrt{a^2-b^2}}$ si $a>|b|$.
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Racionalizar}: $ax+b=t^q$ elimina radicales de un mismo binomio lineal.
+    \item \resaltar{Binomios} $x^m(a+bx^n)^p$: elementales solo si $p\in\Z$, $\frac{m+1}n\in\Z$ ó $\frac{m+1}n+p\in\Z$ (Chebyshev).
+    \item \resaltar{Sustitución universal} $t=\tan\frac x2$:
+      $\sen x=\frac{2t}{1+t^2}$, $\cos x=\frac{1-t^2}{1+t^2}$, $dx=\frac{2\dt}{1+t^2}$.
+    \item Preferir $t=\sen x$, $t=\cos x$ o $t=\tan x$ cuando la simetría lo permita.
+    \item En integrales definidas, cuidar el intervalo de validez $(-\pi,\pi)$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Siguiente:} Rebalance y Examen Parcial (semanas 1 a 7).
+\end{frame}
+
+\end{document}

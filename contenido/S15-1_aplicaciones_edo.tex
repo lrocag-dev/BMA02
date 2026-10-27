@@ -1,0 +1,282 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Aplicaciones de las EDO]{Aplicaciones de las ecuaciones diferenciales}
+\subtitle{Temperatura, decaimiento y crecimiento\\[2pt]\small Semana 15 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Seguir el proceso de \resaltar{modelado}: hipótesis $\to$ EDO $\to$ solución $\to$ interpretación.
+    \item Aplicar la \resaltar{ley de enfriamiento de Newton}.
+    \item Modelar \resaltar{decaimiento} radiactivo, cinética química y eliminación de fármacos; datación por carbono 14.
+    \item Modelar \resaltar{crecimiento} de poblaciones: modelos de Malthus y logístico.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & El ciclo del modelado\\
+      0:10 -- 0:40 & Ley de enfriamiento de Newton\\
+      0:40 -- 1:10 & Decaimiento: radiactividad, C-14, cinética química\\
+      1:10 -- 1:40 & Crecimiento: Malthus y logístico\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Modelado}
+
+\begin{frame}{El ciclo del modelado}
+  \begin{center}
+    \begin{tikzpicture}[node distance=1.1cm and 1.6cm, every node/.style={font=\small, align=center},
+        caja/.style={draw, rounded corners, fill=uniAzul!10, minimum width=3.2cm, minimum height=1cm}]
+      \node[caja] (a) {Fenómeno real\\(datos, observaciones)};
+      \node[caja, right=of a] (b) {Hipótesis\\(``la tasa de cambio es\\proporcional a\dots'')};
+      \node[caja, below=of b] (c) {EDO + condición\\inicial (PVI)};
+      \node[caja, below=of a] (d) {Solución $y(t)$\\predicciones};
+      \draw[->, thick, uniGranate] (a) -- (b);
+      \draw[->, thick, uniGranate] (b) -- (c);
+      \draw[->, thick, uniGranate] (c) -- node[below] {\scriptsize resolver} (d);
+      \draw[->, thick, uniGranate] (d) -- node[left] {\scriptsize validar} (a);
+    \end{tikzpicture}
+  \end{center}
+  \begin{idea}
+    ``La razón de cambio de una cantidad es proporcional a\dots'' se traduce en $\dfrac{dy}{dt}=k\,(\dots)$.
+    Casi todos los modelos de hoy son \textbf{separables} o \textbf{lineales}.
+  \end{idea}
+\end{frame}
+
+\section{Ley de enfriamiento de Newton}
+
+\begin{frame}{Ley de enfriamiento de Newton}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{Hipótesis:} la rapidez con que cambia la temperatura de un cuerpo es proporcional a la diferencia con la temperatura
+      ambiente $T_a$ (constante):
+      \[ \frac{dT}{dt}=-k\,(T-T_a),\qquad k>0. \]
+      \textbf{Solución} (separable o lineal), con $T(0)=T_0$:
+      \[ \boxed{T(t)=T_a+(T_0-T_a)\,e^{-kt}} \]
+      \begin{itemize}
+        \item La diferencia $T-T_a$ decae exponencialmente.
+        \item Vale para calentamiento ($T_0<T_a$) y enfriamiento.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$T$}, xmin=0, xmax=6.3, ymin=0, ymax=95, width=6.3cm, height=5.5cm, xtick=\empty, ytick={5,20,90}, yticklabels={$5$,$T_a=20$,$90$}, domain=0:6]
+          \addplot[curva2] {20+70*exp(-0.6*x)};
+          \addplot[curva] {20-15*exp(-0.6*x)};
+          \addplot[gray, dashed] {20};
+          \node[uniGranate] at (axis cs:2.5,45) {\scriptsize café};
+          \node[uniAzul] at (axis cs:2.5,11) {\scriptsize bebida fría};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 1: hora de fallecimiento (ciencia forense)}
+  \begin{ejemplo}
+    A las 22:00 se encuentra un cuerpo a $30\,^\circ$C en una habitación a $20\,^\circ$C. A las 23:00 su temperatura es $28\,^\circ$C.
+    Suponiendo que en vida tenía $37\,^\circ$C, ¿a qué hora falleció?
+    \begin{enumerate}
+      \item Con $t=0$ a las 22:00: \ $T(t)=20+10e^{-kt}$.
+      \item $T(1)=28$: \ $10e^{-k}=8$ $\Rightarrow$ $k=\ln\frac54\approx0.2231$ h$^{-1}$.
+      \item Buscamos $t^*<0$ con $T(t^*)=37$: \ $10e^{-kt^*}=17$ $\Rightarrow$ $t^*=-\dfrac{\ln1.7}{k}\approx-2.38$ h.
+    \end{enumerate}
+    Falleció unas $2$ h $23$ min antes de las 22:00: \ aproximadamente a las \textbf{19:37}.
+  \end{ejemplo}
+  \begin{observacion}
+    Dos mediciones determinan $k$; el modelo permite extrapolar hacia el pasado. (En la práctica forense se usan modelos refinados.)
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: ¿cuándo agregar la leche al café?}
+  \begin{ejemplo}
+    Un café a $90\,^\circ$C se enfría en un ambiente a $20\,^\circ$C con $k=0.05$ min$^{-1}$. Se dispone de leche fría que baja
+    instantáneamente $10\,^\circ$C la temperatura. Queremos tomarlo a los $10$ min. ¿Conviene echar la leche al inicio o al final?
+    \begin{itemize}
+      \item \textbf{Al inicio:} $T_0=80$: \ $T(10)=20+60e^{-0.5}\approx56.4\,^\circ$C.
+      \item \textbf{Al final:} $T(10)=20+70e^{-0.5}\approx62.5$, y luego $-10$: \ $52.5\,^\circ$C.
+    \end{itemize}
+    Para tomarlo más caliente, conviene echar la leche \textbf{al inicio}: el café se enfría más rápido cuanto más caliente está.
+  \end{ejemplo}
+  \small (Modelo simplificado: en la realidad la mezcla también cambia la masa y el calor específico.)
+\end{frame}
+
+\section{Decaimiento}
+
+\begin{frame}{Decaimiento radiactivo}
+  \begin{columns}
+    \begin{column}{0.56\textwidth}
+      \textbf{Hipótesis:} el número de desintegraciones por unidad de tiempo es proporcional a la cantidad de núcleos:
+      \[ \frac{dN}{dt}=-\lambda N\ \Rightarrow\ N(t)=N_0e^{-\lambda t}. \]
+      \begin{definicion}[vida media]
+        Tiempo $T_{1/2}$ en que se desintegra la mitad: \ $e^{-\lambda T_{1/2}}=\frac12$,
+        \[ T_{1/2}=\frac{\ln2}{\lambda}. \]
+      \end{definicion}
+      \small Por ejemplo: $^{14}$C: 5730 años; \ $^{131}$I: 8 días; \ $^{238}$U: $4.5\times10^9$ años.
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$N$}, xmin=0, xmax=4.4, ymin=0, ymax=1.15, width=6.3cm, height=5.3cm, xtick={1,2,3,4}, xticklabels={$T$,$2T$,$3T$,$4T$}, ytick={0.25,0.5,1}, yticklabels={$\frac{N_0}4$,$\frac{N_0}{2}$,$N_0$}, domain=0:4.2]
+          \addplot[curva] {2^(-x)};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(1,0.5) (2,0.25) (3,0.125) (4,0.0625)};
+          \draw[dashed, gray] (axis cs:1,0) -- (axis cs:1,0.5) -- (axis cs:0,0.5);
+          \draw[dashed, gray] (axis cs:2,0) -- (axis cs:2,0.25) -- (axis cs:0,0.25);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: datación por carbono 14}
+  \begin{ejemplo}
+    Un trozo de carbón vegetal de un sitio arqueológico tiene el 20~\% del $^{14}$C que tendría un organismo vivo. ¿Qué edad tiene?
+
+    $\lambda=\dfrac{\ln2}{5730}$. \ De $N=0.2N_0$:
+    \[ e^{-\lambda t}=0.2\ \Rightarrow\ t=\frac{\ln5}{\lambda}=5730\cdot\frac{\ln5}{\ln2}\approx13\,300\ \text{años}. \]
+  \end{ejemplo}
+  \begin{observacion}[¿por qué funciona?]
+    Mientras el organismo vive, intercambia carbono con el ambiente y mantiene la proporción $^{14}$C/$^{12}$C atmosférica.
+    Al morir, el $^{14}$C solo decae. El método es útil hasta $\sim50\,000$ años (después queda muy poco $^{14}$C).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Cinética química y farmacocinética}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Reacción de primer orden: $A\to P$}
+        \[ \frac{d[A]}{dt}=-k[A]\ \Rightarrow\ [A]=[A]_0e^{-kt}. \]
+        $\ln[A]$ es lineal en $t$ (gráfico para hallar $k$).
+      \end{block}
+      \begin{block}{Segundo orden: $2A\to P$}
+        \[ \frac{d[A]}{dt}=-k[A]^2\ \Rightarrow\ \frac{1}{[A]}=\frac1{[A]_0}+kt. \]
+        Vida media: $t_{1/2}=\dfrac{1}{k[A]_0}$ (depende de la concentración inicial).
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{ejemplo}[4: fármaco con dosis continua]
+        Un suero aporta un fármaco a razón $r$ (mg/h) y el organismo lo elimina a tasa proporcional a la cantidad presente:
+        \[ \frac{dx}{dt}=r-kx,\quad x(0)=0 \]
+        \[ \Rightarrow\ x(t)=\frac rk\left(1-e^{-kt}\right). \]
+        Nivel de equilibrio: $r/k$. Con $k=0.2$ h$^{-1}$, tras $t=\frac{\ln 10}{0.2}\approx11.5$ h se alcanza el 90~\%.
+      \end{ejemplo}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Crecimiento}
+
+\begin{frame}{Modelo de Malthus (crecimiento exponencial)}
+  \textbf{Hipótesis:} la tasa de crecimiento es proporcional a la población: \ $P'=rP$ \ $\Rightarrow$ \ $P(t)=P_0e^{rt}$.
+  \begin{ejemplo}[5]
+    Un cultivo tiene $1000$ bacterias y a las $2$ h hay $3000$. \ $e^{2r}=3\Rightarrow r=\frac{\ln3}{2}\approx0.549$ h$^{-1}$.
+    \begin{itemize}
+      \item A las $5$ h: \ $P(5)=1000\cdot3^{5/2}\approx15\,600$.
+      \item Tiempo de duplicación: \ $t_d=\frac{\ln2}{r}\approx1.26$ h.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{observacion}
+    El modelo predice crecimiento ilimitado: solo es razonable a corto plazo o con recursos abundantes.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Modelo logístico (Verhulst)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{Hipótesis:} la tasa per cápita disminuye linealmente al acercarse a la \resaltar{capacidad de carga} $K$:
+      \[ \frac{dP}{dt}=rP\left(1-\frac PK\right). \]
+      Separable (fracciones parciales) o Bernoulli:
+      \[ \boxed{P(t)=\frac{K}{1+Ae^{-rt}}},\qquad A=\frac{K-P_0}{P_0}. \]
+      \begin{itemize}
+        \item $P\to K$ cuando $t\to\infty$.
+        \item Crecimiento máximo cuando $P=\frac K2$ (punto de inflexión).
+        \item Equilibrios: $P=0$ (inestable), $P=K$ (estable).
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$P$}, xmin=0, xmax=10.5, ymin=0, ymax=1.45, width=6.5cm, height=5.6cm, xtick=\empty, ytick={0.5,1}, yticklabels={$\frac K2$,$K$}, domain=0:10]
+          \addplot[curva] {1/(1+19*exp(-0.8*x))};
+          \addplot[curva2] {1/(1-0.35*exp(-0.8*x))};
+          \addplot[uniVerde, thick, dashed, domain=0:5] {0.05*exp(0.8*x)};
+          \addplot[gray, dashed] {1};
+          \node[uniVerde] at (axis cs:4.2,1.3) {\scriptsize Malthus};
+          \node[uniAzul] at (axis cs:7.5,0.85) {\scriptsize $P_0<K$};
+          \node[uniGranate] at (axis cs:2.2,1.38) {\scriptsize $P_0>K$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: población logística}
+  \begin{ejemplo}
+    Una población de peces en un lago tiene capacidad de carga $K=10\,000$. Inicialmente hay $1000$ peces y al año hay $2500$.
+    \begin{enumerate}
+      \item $A=\frac{10\,000-1000}{1000}=9$, \ $P(t)=\dfrac{10\,000}{1+9e^{-rt}}$.
+      \item $P(1)=2500$: \ $1+9e^{-r}=4\Rightarrow e^{-r}=\frac13\Rightarrow r=\ln3$.
+      \item ¿Cuándo llega a $9000$? \ $1+9\cdot3^{-t}=\frac{10}9\Rightarrow3^{-t}=\frac1{81}\Rightarrow t=4$ años.
+    \end{enumerate}
+  \end{ejemplo}
+  \begin{block}{Otras aplicaciones de la ecuación logística}
+    Propagación de epidemias y rumores, autocatálisis en química ($A+P\to2P$), adopción de tecnologías, crecimiento de tumores.
+  \end{block}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Un termómetro que marca $22\,^\circ$C se lleva al exterior, donde hay $-5\,^\circ$C. Al minuto marca $12\,^\circ$C. ¿Cuándo marcará $0\,^\circ$C?
+      \item Un pastel sale del horno a $180\,^\circ$C y a los $10$ min está a $120\,^\circ$C en una cocina a $25\,^\circ$C. ¿Cuándo estará a $40\,^\circ$C?
+      \item El radio-226 tiene vida media de $1600$ años. ¿Qué porcentaje de una muestra queda después de $500$ años?
+      \item Un fósil contiene el 35~\% del $^{14}$C original. Estime su edad.
+      \item En una reacción de primer orden, la concentración baja de $0.80$ a $0.50$ mol/L en $20$ min. Halle $k$ y $t_{1/2}$.
+      \item Una población crece con $P'=0.03P-h$ (cosecha constante $h$). Con $P(0)=1000$, ¿para qué $h$ la población no se extingue?
+      \item Una epidemia en una comunidad de $5000$ personas sigue $I'=0.0002\,I(5000-I)$, $I(0)=10$. ¿Cuándo se infecta la mitad?
+      \item \textbf{Temperatura ambiente variable.} Resuelva $T'=-k\big(T-(20+5\sen t)\big)$ (lineal) y describa el comportamiento para $t$ grande.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen del curso: la integral en todas partes}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \textbf{Hoy:}
+      \begin{itemize}
+        \item Enfriamiento: $T=T_a+(T_0-T_a)e^{-kt}$.
+        \item Decaimiento: $N=N_0e^{-\lambda t}$, \ $T_{1/2}=\frac{\ln2}\lambda$.
+        \item Malthus: $P=P_0e^{rt}$.
+        \item Logístico: $P=\frac{K}{1+Ae^{-rt}}$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{El curso:}
+      \begin{itemize}
+        \item Primitivas y técnicas de integración.
+        \item Integral de Riemann y TFC.
+        \item Áreas, longitudes, volúmenes, centroides, trabajo, presión.
+        \item Integración numérica.
+        \item Sucesiones, series e integrales impropias.
+        \item Ecuaciones diferenciales de primer orden.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{3mm}
+  \begin{idea}
+    Integrar es \textbf{acumular} cambios pequeños: áreas, masas, trabajo, y también la evolución de un sistema en el tiempo.
+  \end{idea}
+\end{frame}
+
+\end{document}

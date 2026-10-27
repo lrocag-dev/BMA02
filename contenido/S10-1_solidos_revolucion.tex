@@ -1,0 +1,316 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Sólidos de revolución]{Volumen de sólidos de revolución}
+\subtitle{Método de discos y método de capas cilíndricas\\[2pt]\small Semana 10 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Calcular volúmenes de sólidos de revolución con el \resaltar{método de discos} y de \resaltar{arandelas}.
+    \item Deducir y aplicar el \resaltar{método de capas cilíndricas}.
+    \item Rotar regiones alrededor de ejes horizontales y verticales arbitrarios.
+    \item Elegir el método más conveniente para cada problema.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:40 & Discos y arandelas. Ejes paralelos a los coordenados\\
+      0:40 -- 1:20 & Capas cilíndricas: deducción y ejemplos\\
+      1:20 -- 1:40 & ¿Discos o capas? Comparación. El toro\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Método de discos y arandelas}
+
+\begin{frame}{Método de discos}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Al rotar la región bajo $y=f(x)\ge0$, $a\le x\le b$, alrededor del eje $x$, cada sección perpendicular al eje es un
+      \resaltar{disco} de radio $f(x)$:
+      \[ A(x)=\pi\,[f(x)]^2. \]
+      \begin{teorema}[Discos]
+        \[ V=\pi\int_a^b[f(x)]^2\dx. \]
+      \end{teorema}
+      Rotando $x=g(y)\ge0$, $c\le y\le d$, alrededor del eje $y$: \ $V=\pi\displaystyle\int_c^d[g(y)]^2\dy$.
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.05]
+        \draw[->] (-0.3,0) -- (4.6,0) node[right] {$x$};
+        \draw[->] (0,-1.9) -- (0,1.9) node[above] {$y$};
+        \draw[very thick, uniAzul, domain=0.4:4, samples=50] plot (\x,{0.75*sqrt(\x)});
+        \draw[uniAzul, dashed, domain=0.4:4, samples=50] plot (\x,{-0.75*sqrt(\x)});
+        \draw[uniAzul] (4,0) ellipse (0.3 and 1.5);
+        \draw[uniAzul, dashed] (0.4,0) ellipse (0.08 and 0.474);
+        \fill[uniGranate!40] (2.5,0) ellipse (0.24 and 1.186);
+        \draw[uniGranate, thick] (2.5,0) ellipse (0.24 and 1.186);
+        \draw[uniGranate, thick] (2.5,0) -- (2.5,1.186) node[midway,right] {\scriptsize $f(x)$};
+        \node[uniAzul] at (3.3,1.6) {\scriptsize $y=f(x)$};
+      \end{tikzpicture}
+
+      \small Rebanada: disco de grosor $dx$, \ $dV=\pi f(x)^2\dx$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de discos}
+  \begin{ejemplo}[1: paraboloide]
+    Rotar $y=\sqrt x$, $0\le x\le4$, alrededor del eje $x$:
+    \quad $V=\pi\displaystyle\int_0^4(\sqrt x)^2\dx=\pi\left[\frac{x^2}{2}\right]_0^4=8\pi.$
+  \end{ejemplo}
+  \begin{ejemplo}[2: cono]
+    Rotar $y=\dfrac rhx$, $0\le x\le h$: \quad
+    $V=\pi\displaystyle\int_0^h\frac{r^2}{h^2}x^2\dx=\frac13\pi r^2h.$
+  \end{ejemplo}
+  \begin{ejemplo}[3: alrededor del eje $y$]
+    Región limitada por $y=x^3$, $y=8$ y $x=0$, rotada alrededor del eje $y$. Aquí $x=y^{1/3}$:
+    \[ V=\pi\int_0^8\left(y^{1/3}\right)^2dy=\pi\cdot\frac35\Big[y^{5/3}\Big]_0^8=\frac{96\pi}{5}. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Método de arandelas (anillos)}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Si la región está entre $y=R(x)$ (exterior) y $y=r(x)$ (interior), $0\le r\le R$, la sección es una
+      \resaltar{arandela}:
+      \[ A(x)=\pi\big(R(x)^2-r(x)^2\big). \]
+      \begin{teorema}[Arandelas]
+        \[ V=\pi\int_a^b\big(R(x)^2-r(x)^2\big)\dx. \]
+      \end{teorema}
+      \begin{observacion}
+        \alert{¡Cuidado!} \ $R^2-r^2\neq(R-r)^2$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.2]
+        \fill[uniGranate!40, even odd rule] (0,0) ellipse (0.35 and 1.5) (0,0) ellipse (0.18 and 0.75);
+        \draw[uniGranate, thick] (0,0) ellipse (0.35 and 1.5);
+        \draw[uniGranate, thick] (0,0) ellipse (0.18 and 0.75);
+        \draw[->] (-1.2,0) -- (1.4,0);
+        \draw[thick] (0,0) -- (0,1.5) node[midway, right=2pt] {\scriptsize $R$};
+        \draw[thick, uniAzul] (0,0) -- (0,-0.75) node[midway, left] {\scriptsize $r$};
+      \end{tikzpicture}
+
+      \small Arandela: área $\pi R^2-\pi r^2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: arandelas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Región entre $y=x$ y $y=x^2$, $0\le x\le1$.
+
+        \textbf{(a) Alrededor del eje $x$:} $R=x$, $r=x^2$:
+        \[ V=\pi\int_0^1(x^2-x^4)\dx=\pi\left(\tfrac13-\tfrac15\right)=\frac{2\pi}{15}. \]
+        \textbf{(b) Alrededor de la recta $y=2$:} los radios se miden desde $y=2$:
+        $R=2-x^2$, \ $r=2-x$:
+        \[ V=\pi\int_0^1\big[(2-x^2)^2-(2-x)^2\big]dx \]
+        \[ =\pi\int_0^1(x^4-5x^2+4x)\dx=\frac{8\pi}{15}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.2, xmax=1.5, ymin=-0.2, ymax=2.4, width=6cm, height=6cm, xtick={1}, ytick={1,2}]
+          \addplot[name path=a, curva, domain=0:1.2] {x};
+          \addplot[name path=b, curva2, domain=0:1.1] {x^2};
+          \addplot[uniAzul!25] fill between[of=a and b, soft clip={domain=0:1}];
+          \addplot[uniVerde, thick, dashed, domain=-0.2:1.5] {2};
+          \draw[<->, uniGranate, thick] (axis cs:0.6,0.36) -- (axis cs:0.6,2) node[pos=0.3,right] {\scriptsize $R=2-x^2$};
+          \draw[<->, uniAzul, thick] (axis cs:0.75,0.75) -- (axis cs:0.75,2) node[pos=0.7,right] {\scriptsize $r=2-x$};
+          \node[uniVerde] at (axis cs:1.25,2.2) {\scriptsize $y=2$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Método de capas cilíndricas}
+
+\begin{frame}{Capas cilíndricas: la idea}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Rotamos la región bajo $y=f(x)\ge0$, $0\le a\le x\le b$, alrededor del \textbf{eje $y$}. Un rectángulo vertical
+      de ancho $dx$ en la posición $x$ genera una \resaltar{capa cilíndrica}:
+      \begin{itemize}
+        \item radio $x$, \ altura $f(x)$, \ grosor $dx$.
+        \item ``Desenrollada'' es casi una lámina de dimensiones $2\pi x\times f(x)\times dx$.
+      \end{itemize}
+      \[ dV=2\pi x\,f(x)\dx. \]
+      \begin{teorema}[Capas cilíndricas]
+        \[ V=2\pi\int_a^b x\,f(x)\dx=\int_a^b(2\pi\cdot\text{radio})(\text{altura})\dx. \]
+      \end{teorema}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \draw[->] (0,-0.4) -- (0,2.8) node[above] {$y$};
+        \fill[uniGranate!30] (-1.3,0) arc (180:360:1.3 and 0.35) -- (1.3,1.9) arc (0:180:1.3 and 0.35) -- cycle;
+        \fill[uniGranate!45] (1.15,0) -- (1.3,0) -- (1.3,1.9) -- (1.15,1.9) -- cycle;
+        \draw[uniGranate, thick] (0,1.9) ellipse (1.3 and 0.35);
+        \draw[uniGranate, thick] (-1.3,0) arc (180:360:1.3 and 0.35);
+        \draw[uniGranate, thick, dashed] (1.3,0) arc (0:180:1.3 and 0.35);
+        \draw[uniGranate, thick] (-1.3,0) -- (-1.3,1.9);
+        \draw[uniGranate, thick] (1.3,0) -- (1.3,1.9);
+        \draw[thick] (0,0) -- (1.3,0) node[midway,below] {\scriptsize $x$};
+        \draw[|-|] (1.5,0) -- (1.5,1.9) node[midway,right] {\scriptsize $f(x)$};
+        \draw[very thick, uniAzul] (0.2,2.3) .. controls (0.8,2.1) and (1.5,1.95) .. (2.2,1.2);
+      \end{tikzpicture}
+
+      \small La capa: cilindro hueco de radio $x$, altura $f(x)$ y grosor $dx$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Justificación de la fórmula}
+  Volumen exacto de una capa de radios $x_{i-1}<x_i$ y altura $h$:
+  \[ \pi x_i^2h-\pi x_{i-1}^2h=\pi(x_i+x_{i-1})(x_i-x_{i-1})h=2\pi\,\bar x_i\,h\,\Delta x_i,\qquad \bar x_i=\frac{x_{i-1}+x_i}2. \]
+  Con $h=f(\bar x_i)$ y sumando:
+  \[ V\approx\sum_{i=1}^n2\pi\,\bar x_i\,f(\bar x_i)\,\Delta x_i\ \xrightarrow[\|P\|\to0]{}\ 2\pi\int_a^bx\,f(x)\dx. \]
+  \begin{idea}
+    En capas, el rectángulo es \textbf{paralelo} al eje de rotación; en discos, \textbf{perpendicular}.
+  \end{idea}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{l|l|l}
+      & Eje $x$ & Eje $y$\\ \hline
+      Discos/arandelas & integrar en $x$ & integrar en $y$\\
+      Capas & integrar en $y$ & integrar en $x$
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo 5: donde las capas son indispensables}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Rotar alrededor del eje $y$ la región entre $y=2x^2-x^3$ y $y=0$.
+
+        Con arandelas habría que despejar $x$ de $y=2x^2-x^3$ (¡cúbica!). Con capas:
+        \[ V=2\pi\int_0^2x(2x^2-x^3)\dx=2\pi\left[\frac{x^4}{2}-\frac{x^5}{5}\right]_0^2=\frac{16\pi}{5}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.2, xmax=2.4, ymin=-0.2, ymax=1.6, width=6.3cm, height=5cm, xtick={1,2}, ytick={1}]
+          \addplot[fill=uniAzul!25, draw=none, domain=0:2] {2*x^2-x^3} \closedcycle;
+          \addplot[curva, domain=0:2.1] {2*x^2-x^3};
+          \draw[fill=uniGranate!50, draw=uniGranate] (axis cs:1.2,0) rectangle (axis cs:1.3,1.152);
+          \draw[<->] (axis cs:0,0.15) -- (axis cs:1.25,0.15) node[midway,above] {\scriptsize radio $x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: ejes distintos de los coordenados}
+  \begin{ejemplo}
+    Región entre $y=x$ y $y=x^2$, $0\le x\le1$.
+    \begin{itemize}
+      \item \textbf{Alrededor del eje $y$} (capas): radio $x$, altura $x-x^2$:
+        \[ V=2\pi\int_0^1x(x-x^2)\dx=2\pi\left(\tfrac13-\tfrac14\right)=\frac\pi6. \]
+      \item \textbf{Alrededor de $x=2$} (capas): radio $2-x$, altura $x-x^2$:
+        \[ V=2\pi\int_0^1(2-x)(x-x^2)\dx=2\pi\int_0^1(2x-3x^2+x^3)\dx=2\pi\cdot\frac14=\frac\pi2. \]
+      \item \textbf{Alrededor de $x=-1$}: radio $x+1$. \ (Ejercicio: $V=\frac{\pi}{2}$.)
+    \end{itemize}
+  \end{ejemplo}
+  \begin{observacion}
+    El radio es siempre la \textbf{distancia} del rectángulo al eje de rotación.
+  \end{observacion}
+\end{frame}
+
+\section{¿Discos o capas?}
+
+\begin{frame}{El mismo volumen por dos métodos}
+  \begin{ejemplo}[7]
+    Rotar la región bajo $y=\sqrt x$, $0\le x\le4$, alrededor del \textbf{eje $y$}. (La región está entre la curva, el eje $x$ y $x=4$.)
+    \begin{itemize}
+      \item \textbf{Capas} (en $x$): \ $V=2\pi\displaystyle\int_0^4x\sqrt x\dx=2\pi\cdot\frac25\cdot32=\frac{128\pi}5$.
+      \item \textbf{Arandelas} (en $y$, $0\le y\le2$): $R=4$, $r=y^2$:
+        \[ V=\pi\int_0^2(16-y^4)\dy=\pi\left(32-\frac{32}5\right)=\frac{128\pi}5.\ \checkmark \]
+    \end{itemize}
+  \end{ejemplo}
+  \begin{block}{Criterios de elección}
+    \begin{itemize}
+      \item ¿Es fácil despejar la variable? (si no, use el método que integra en la variable dada).
+      \item ¿El borde de la región está dado por una sola fórmula en esa dirección? (evita dividir la integral).
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplo 8: el toro}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{ejemplo}
+        Rotar el disco $(x-R)^2+y^2\le a^2$ ($0<a<R$) alrededor del eje $y$.
+
+        Capas: radio $x$, altura $2\sqrt{a^2-(x-R)^2}$:
+        \[ V=2\pi\int_{R-a}^{R+a}x\cdot2\sqrt{a^2-(x-R)^2}\dx. \]
+        Con $u=x-R$:
+        \[ V=4\pi\int_{-a}^a(u+R)\sqrt{a^2-u^2}\du \]
+        \[ =0+4\pi R\cdot\frac{\pi a^2}{2}=2\pi^2Ra^2. \]
+      \end{ejemplo}
+      \small (La parte impar se anula; la otra es el área de un semicírculo.)
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \draw[thick, uniAzul] (0,0) ellipse (2.6 and 1);
+        \draw[thick, uniAzul] (-1.3,0.05) .. controls (-0.6,-0.35) and (0.6,-0.35) .. (1.3,0.05);
+        \draw[thick, uniAzul] (-1.05,-0.08) .. controls (-0.5,0.2) and (0.5,0.2) .. (1.05,-0.08);
+        \draw[->] (0,-1.5) -- (0,2) node[above] {$y$};
+        \fill[uniGranate!35] (1.9,0) circle (0.6);
+        \draw[uniGranate, thick] (1.9,0) circle (0.6);
+        \draw (0,0) -- (1.9,0) node[midway, above] {\scriptsize $R$};
+        \draw (1.9,0) -- (2.5,0) node[midway, above] {\scriptsize $a$};
+      \end{tikzpicture}
+
+      \small $V=(2\pi R)(\pi a^2)$: ¡longitud de la circunferencia del centro por el área del círculo!
+      (Teorema de Pappus, próxima sesión.)
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Rote alrededor del eje $x$ la región bajo $y=\sen x$, $0\le x\le\pi$. \ (Use $\sen^2x=\frac{1-\cos2x}{2}$.)
+      \item Región entre $y=x^2$ y $y=4$: halle el volumen al rotar alrededor de (a) $y=4$, (b) el eje $y$, (c) $x=2$.
+      \item Región entre $y=e^x$, $y=0$, $x=0$ y $x=1$: rote alrededor del eje $y$ (capas e integración por partes).
+      \item Pruebe con discos y con capas que el volumen de una esfera de radio $r$ es $\frac43\pi r^3$.
+      \item Rote alrededor de $y=-1$ la región entre $y=\sqrt x$ y $y=x$.
+      \item \textbf{Anillo de servilleta.} Se perfora una esfera de radio $R$ con un agujero cilíndrico central, de modo que
+        el anillo resultante tiene altura $h$. Pruebe que su volumen es $\dfrac{\pi h^3}{6}$ (¡no depende de $R$!).
+      \item Halle el volumen del sólido obtenido al rotar la región encerrada por $x^2-y^2=1$ y $x=3$ alrededor del eje $y$.
+      \item El ``cuerno de Gabriel'': rote $y=\frac1x$, $1\le x\le b$, alrededor del eje $x$. ¿Qué pasa con $V$ si $b\to\infty$?
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Discos}: $V=\pi\int_a^b f(x)^2\dx$; \ \resaltar{arandelas}: $V=\pi\int_a^b(R^2-r^2)\dx$.
+    \item \resaltar{Capas}: $V=2\pi\int_a^b(\text{radio})(\text{altura})\dx$.
+    \item Discos: rectángulo $\perp$ al eje; capas: rectángulo $\parallel$ al eje.
+    \item Radios = distancias al eje de rotación (cuidado con ejes $y=c$, $x=c$).
+    \item Elegir el método según la facilidad de despejar y de describir la región.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} centro geométrico, masa, centro de masa y teorema de Pappus--Guldin.
+\end{frame}
+
+\end{document}

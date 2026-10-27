@@ -1,0 +1,329 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Trabajo y fuerza hidrostática]{Aplicaciones físicas de la integral}
+\subtitle{Trabajo realizado por un resorte. Trabajo para vaciar un tanque.\\Fuerza ejercida por un líquido\\[2pt]\small Semana 11 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Calcular el \resaltar{trabajo} realizado por una fuerza variable: $W=\int_a^bF(x)\dx$.
+    \item Aplicarlo a resortes (ley de Hooke), cables y bombeo de líquidos desde tanques.
+    \item Calcular la \resaltar{fuerza hidrostática} sobre una placa sumergida verticalmente.
+    \item Plantear integrales mediante el razonamiento ``elemento diferencial $\to$ suma $\to$ integral''.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:30 & Trabajo con fuerza variable. Resortes. Cables\\
+      0:30 -- 1:10 & Trabajo para vaciar tanques\\
+      1:10 -- 1:45 & Presión y fuerza hidrostática\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Trabajo}
+
+\begin{frame}{Trabajo realizado por una fuerza variable}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item Fuerza constante $F$ a lo largo de una distancia $d$: \ $W=F\cdot d$ \ (joules, J $=$ N$\cdot$m).
+        \item Fuerza variable $F(x)$ en $[a,b]$: en un tramo pequeño $dx$, la fuerza es casi constante:
+          \[ dW=F(x)\dx. \]
+      \end{itemize}
+      \begin{definicion}
+        \[ W=\int_a^bF(x)\dx=\lim_{\|P\|\to0}\sum F(x_i^*)\Delta x_i. \]
+      \end{definicion}
+      \small $W$ es el área bajo la gráfica de $F$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$x$}, ylabel={$F$}, xmin=0, xmax=4.3, ymin=0, ymax=3, width=6.3cm, height=5cm, xtick={0.5,3.8}, xticklabels={$a$,$b$}, ytick=\empty, domain=0.5:3.8]
+          \addplot[fill=uniAzul!25, draw=none] {1+0.5*x-0.2*sin(deg(3*x))} \closedcycle;
+          \addplot[curva, domain=0.3:4] {1+0.5*x-0.2*sin(deg(3*x))};
+          \draw[fill=uniGranate!50, draw=uniGranate] (axis cs:2,0) rectangle (axis cs:2.15,1.94);
+          \node at (axis cs:2.08,-0.25) {\scriptsize $dx$};
+          \node at (axis cs:1.2,0.6) {$W$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Resortes: ley de Hooke}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Para estirar (o comprimir) un resorte $x$ unidades desde su longitud natural se necesita
+      \[ F(x)=kx\qquad(k=\text{constante del resorte}). \]
+      \begin{ejemplo}[1]
+        Se requiere una fuerza de $40$ N para mantener un resorte estirado de su longitud natural de $10$ cm a $15$ cm.
+        ¿Cuánto trabajo se hace para estirarlo de $15$ cm a $18$ cm?
+
+        $k\cdot0.05=40\Rightarrow k=800$ N/m.
+        \[ W=\int_{0.05}^{0.08}800x\dx=400\left(0.08^2-0.05^2\right)=1.56\ \text{J}. \]
+      \end{ejemplo}
+      \alert{Ojo:} $x$ se mide desde la longitud natural, \emph{no} desde el extremo fijo.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \fill[pattern=north east lines] (-0.3,-0.5) rectangle (0,0.5);
+        \draw[thick] (0,-0.5) -- (0,0.5);
+        \draw[thick, uniAzul, decorate, decoration={coil, aspect=0.5, segment length=5pt, amplitude=6pt}] (0,0) -- (3,0);
+        \draw[fill=uniGranate!40] (3,-0.3) rectangle (3.6,0.3);
+        \draw[->, thick, uniGranate] (3.6,0) -- (4.5,0) node[right] {$F$};
+        \draw[dashed] (2,-0.8) -- (2,0.8);
+        \node[below] at (2,-0.8) {\scriptsize natural};
+        \draw[<->] (2,-1.3) -- (3,-1.3) node[midway,below] {\scriptsize $x$};
+      \end{tikzpicture}
+      \vspace{2mm}
+
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$x$}, ylabel={$F$}, xmin=0, xmax=0.1, ymin=0, ymax=75, width=5.5cm, height=3.8cm, xtick={0.05,0.08}, ytick={40,64}, scaled x ticks=false, xticklabel style={/pgf/number format/fixed}]
+          \addplot[fill=uniAzul!30, draw=none, domain=0.05:0.08] {800*x} \closedcycle;
+          \addplot[curva, domain=0:0.09] {800*x};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 2: enrollar un cable}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}
+        Un cable de $20$ m y $2$ kg/m cuelga desde lo alto de un edificio. ¿Cuánto trabajo se requiere para subirlo
+        completamente? ($g=9.8$ m/s$^2$.)
+
+        \textbf{Método 1 (trocear el cable).} El trozo que está $x$ metros debajo de la cima pesa $2\cdot9.8\dx$ N y debe
+        subir $x$ metros:
+        \[ W=\int_0^{20}19.6\,x\dx=19.6\cdot\frac{20^2}{2}=3920\ \text{J}. \]
+        \textbf{Método 2 (fuerza variable).} Cuando quedan $y$ m colgando, la fuerza es $19.6\,y$; al subir $dy$:
+        $W=\int_0^{20}19.6\,y\dy$. \ ¡Mismo resultado!
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85]
+        \fill[gray!30] (-1.5,0) rectangle (0,4);
+        \draw (-1.5,0) rectangle (0,4);
+        \draw[very thick, uniAzul] (0.2,4) -- (0.2,0.3);
+        \fill (0.2,4) circle (2pt);
+        \draw[fill=uniGranate!50, draw=uniGranate] (0.1,2) rectangle (0.3,2.2);
+        \draw[<->] (0.6,4) -- (0.6,2.1) node[midway,right] {\scriptsize $x$};
+        \node[right] at (0.3,2.1) {\scriptsize $dx$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Trabajo para vaciar un tanque: método}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{block}{Estrategia}
+        \begin{enumerate}
+          \item Colocar un eje vertical $y$ y dibujar una \textbf{capa horizontal} de líquido de espesor $dy$ a la altura $y$.
+          \item Volumen de la capa: $dV=A(y)\dy$ ($A(y)$: área de la sección horizontal).
+          \item Peso: $dF=\rho g\,A(y)\dy$ \ ($\rho_{\text{agua}}=1000$ kg/m$^3$).
+          \item Distancia que debe subir: $D(y)$ (hasta el punto de descarga).
+          \item $dW=\rho g\,A(y)\,D(y)\dy$, \ e integrar sobre la altura \emph{ocupada por el líquido}.
+        \end{enumerate}
+      \end{block}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \fill[uniAzul!20] (0,0) -- (0,3) arc (180:360:1.5 and 0.35) -- (3,0) arc (360:180:1.5 and 0.35) -- cycle;
+        \draw[thick] (0,0) -- (0,4); \draw[thick] (3,0) -- (3,4);
+        \draw[thick] (1.5,4) ellipse (1.5 and 0.35);
+        \draw[thick] (0,0) arc (180:360:1.5 and 0.35);
+        \draw[thick, dashed] (3,0) arc (0:180:1.5 and 0.35);
+        \draw[uniAzul] (1.5,3) ellipse (1.5 and 0.35);
+        \fill[uniGranate!50] (1.5,1.6) ellipse (1.5 and 0.35);
+        \draw[uniGranate] (1.5,1.6) ellipse (1.5 and 0.35);
+        \draw[->] (-0.6,0) -- (-0.6,4.6) node[above] {$y$};
+        \draw[dashed] (-0.65,1.6) -- (0,1.6); \node[left] at (-0.6,1.6) {\scriptsize $y$};
+        \draw[<->, uniVerde, thick] (3.4,1.6) -- (3.4,4.8) node[midway,right] {\scriptsize $D(y)$};
+        \draw[->, thick] (1.5,4) -- (1.5,4.8) -- (2.3,4.8);
+        \node at (1.5,-0.8) {\scriptsize capa: $A(y)\,dy$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 3: tanque cilíndrico}
+  \begin{ejemplo}
+    Un tanque cilíndrico vertical de radio $3$ m y altura $5$ m está lleno de agua. ¿Cuánto trabajo se requiere para
+    bombear toda el agua hasta $1$ m por encima del borde?
+    \begin{itemize}
+      \item $A(y)=9\pi$ (constante), \ $D(y)=6-y$, \ $0\le y\le5$.
+    \end{itemize}
+    \[ W=\int_0^5 9800\cdot9\pi\,(6-y)\dy=88\,200\pi\left[6y-\frac{y^2}2\right]_0^5=88\,200\pi\cdot17.5\approx4.85\times10^6\ \text{J}. \]
+  \end{ejemplo}
+  \begin{observacion}[comprobación con el centro de masa]
+    El centro de masa del agua está a $y=2.5$ m: debe subir $6-2.5=3.5$ m. Peso total $9800\cdot45\pi$ N.
+    $W=9800\cdot45\pi\cdot3.5$. ¡Coincide! (vale cuando todo se bombea al mismo nivel).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Ejemplo 4: tanque cónico}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}
+        Tanque en forma de cono invertido: altura $10$ m, radio superior $4$ m. Contiene agua hasta $8$ m de altura.
+        Bombear el agua hasta el borde superior.
+        \begin{itemize}
+          \item Por semejanza, a la altura $y$: $r=\frac{4}{10}y=0.4y$, \ $A(y)=0.16\pi y^2$.
+          \item $D(y)=10-y$, \ $0\le y\le8$ (\textbf{solo donde hay agua}).
+        \end{itemize}
+        \[ W=9800\cdot0.16\pi\int_0^8y^2(10-y)\dy=1568\pi\left[\frac{10y^3}3-\frac{y^4}4\right]_0^8 \]
+        \[ =1568\pi\cdot\frac{2048}3\approx3.36\times10^6\ \text{J}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.42]
+        \fill[uniAzul!20] (0,0) -- (-3.2,8) arc (180:360:3.2 and 0.6) -- cycle;
+        \draw[thick] (0,0) -- (-4,10); \draw[thick] (0,0) -- (4,10);
+        \draw[thick] (0,10) ellipse (4 and 0.75);
+        \draw[uniAzul] (0,8) ellipse (3.2 and 0.6);
+        \fill[uniGranate!50] (0,5) ellipse (2 and 0.4);
+        \draw[uniGranate] (0,5) ellipse (2 and 0.4);
+        \draw[->] (5.5,0) -- (5.5,11) node[above] {$y$};
+        \draw[dashed] (2,5) -- (5.5,5) node[right] {\scriptsize $y$};
+        \draw[dashed] (4,10) -- (5.5,10) node[right] {\scriptsize $10$};
+        \draw[dashed] (3.2,8) -- (5.5,8) node[right] {\scriptsize $8$};
+        \node at (0,5.9) {\scriptsize $r=0.4y$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Fuerza hidrostática}
+
+\begin{frame}{Presión y fuerza de un líquido}
+  \begin{itemize}
+    \item A profundidad $h$, la presión en un líquido de densidad $\rho$ es \ $P=\rho g h$ \ (Pa $=$ N/m$^2$),
+      y actúa igual en todas las direcciones (principio de Pascal).
+    \item Sobre una placa \emph{horizontal} de área $A$ a profundidad $h$: \ $F=\rho g h A$.
+    \item Sobre una placa \emph{vertical}, la presión varía con la profundidad: usamos franjas horizontales.
+  \end{itemize}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{teorema}[fuerza hidrostática]
+        Si la placa ocupa profundidades $a\le h\le b$ y $w(h)$ es su ancho a profundidad $h$:
+        \[ F=\int_a^b\rho g\,h\,w(h)\,dh. \]
+      \end{teorema}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.85]
+        \fill[uniAzul!15] (-0.5,0) rectangle (4.5,-3.2);
+        \draw[thick, uniAzul] (-0.5,0) -- (4.5,0);
+        \draw[thick, fill=gray!30] (0.5,-0.5) -- (3.5,-0.5) -- (2.8,-2.8) -- (1.2,-2.8) -- cycle;
+        \fill[uniGranate!60] (0.8,-1.5) rectangle (3.2,-1.65);
+        \draw[->] (4.2,0) -- (4.2,-3) node[below] {$h$};
+        \draw[dashed] (3.2,-1.57) -- (4.2,-1.57) node[right] {\scriptsize $h$};
+        \node at (2,-1.95) {\scriptsize $w(h)$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 5: una represa}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{ejemplo}
+        La cara de una represa es un trapecio vertical: $50$ m de ancho arriba, $30$ m abajo y $20$ m de alto. El agua llega
+        hasta el borde. Halle la fuerza sobre la represa.
+
+        El ancho decrece linealmente: $w(h)=50-h$, \ $0\le h\le20$.
+        \[ F=\int_0^{20}9800\,h(50-h)\,dh=9800\left[25h^2-\frac{h^3}3\right]_0^{20} \]
+        \[ =9800\cdot\frac{22\,000}{3}\approx7.19\times10^7\ \text{N}. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.09]
+        \fill[uniAzul!15] (-30,0) rectangle (30,-22);
+        \draw[thick, fill=gray!30] (-25,0) -- (25,0) -- (15,-20) -- (-15,-20) -- cycle;
+        \fill[uniGranate!60] (-20.5,-9) rectangle (20.5,-10.5);
+        \node[above] at (0,0) {\scriptsize $50$};
+        \node[below] at (0,-20) {\scriptsize $30$};
+        \draw[<->] (28,0) -- (28,-20) node[midway,right] {\scriptsize $20$};
+        \node at (0,-14) {\scriptsize $w(h)=50-h$};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo 6: ventana circular y centroide}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{ejemplo}
+        Un acuario tiene una ventana circular vertical de radio $1$ m cuyo centro está a $3$ m de profundidad.
+        Con $y$ medido desde el centro (hacia arriba), la profundidad es $3-y$ y el ancho $2\sqrt{1-y^2}$:
+        \[ F=\int_{-1}^19800(3-y)\,2\sqrt{1-y^2}\dy=9800\cdot3\cdot\pi\approx9.24\times10^4\ \text{N}. \]
+        (La parte $-y\sqrt{1-y^2}$ es impar y se anula.)
+      \end{ejemplo}
+      \begin{idea}
+        $F=\rho g\,\bar h\,A$, con $\bar h$ la profundidad del \textbf{centroide} de la placa.
+      \end{idea}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.7]
+        \fill[uniAzul!15] (-2,0) rectangle (2.5,-4.6);
+        \draw[thick, uniAzul] (-2,0) -- (2.5,0);
+        \draw[thick, fill=gray!30] (0,-3) circle (1);
+        \fill[uniGranate!60] (-0.8,-2.45) rectangle (0.8,-2.6);
+        \fill (0,-3) circle (2pt);
+        \draw[<->] (1.8,0) -- (1.8,-3) node[midway,right] {\scriptsize $3$};
+        \draw[dashed] (0,-3) -- (1.8,-3);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Un resorte de longitud natural $20$ cm requiere $6$ J para estirarse de $20$ a $30$ cm. ¿Cuánto trabajo para
+        estirarlo de $30$ a $40$ cm?
+      \item Una cadena de $10$ m y $3$ kg/m cuelga de un malacate. Halle el trabajo para subir solo la mitad superior.
+      \item Un balde de $5$ kg con $20$ kg de agua se sube $10$ m con una cuerda de masa despreciable; el agua se fuga a razón constante
+        y el balde llega vacío. Halle el trabajo.
+      \item Un tanque hemisférico de radio $2$ m (cara plana arriba) está lleno de agua. Halle el trabajo para bombearla al borde.
+      \item Un tanque horizontal cilíndrico de radio $1$ m y largo $4$ m está lleno de petróleo ($\rho=900$ kg/m$^3$). Halle el
+        trabajo para bombearlo hasta $1$ m sobre la parte superior.
+      \item Una placa triangular equilátera de lado $2$ m se sumerge verticalmente con un vértice hacia arriba a $1$ m de
+        profundidad. Halle la fuerza hidrostática en una cara.
+      \item Pruebe que la fuerza sobre una placa vertical es $\rho g\bar hA$.
+      \item \textbf{Ley de Coulomb.} Halle el trabajo para acercar una carga $q$ desde $r=1$ m hasta $r=0.5$ m de una carga
+        fija $Q$ del mismo signo, si la fuerza de repulsión es $F=\frac{kqQ}{r^2}$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item Trabajo: $W=\int_a^bF(x)\dx$. Resorte: $F=kx$ ($x$ desde la longitud natural).
+    \item Bombeo: $W=\int\rho g\,A(y)\,D(y)\dy$ \ (capa horizontal $\times$ distancia que sube).
+    \item Fuerza hidrostática: $F=\int\rho g\,h\,w(h)\,dh=\rho g\bar hA$.
+    \item Método general: trocear, aproximar el elemento ($dW$, $dF$), sumar e integrar.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} sucesiones y series numéricas.
+\end{frame}
+
+\end{document}

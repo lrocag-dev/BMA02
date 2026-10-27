@@ -1,0 +1,279 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Series alternadas, de potencias y Taylor]{Series alternadas y series de potencias}
+\subtitle{Radio de convergencia. Derivación e integración. Serie de Taylor y aplicaciones\\[2pt]\small Semana 12 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Aplicar el \resaltar{criterio de Leibniz} para series alternadas y estimar el error al truncarlas.
+    \item Hallar el \resaltar{radio} y el \resaltar{intervalo de convergencia} de una serie de potencias.
+    \item Derivar e integrar series de potencias término a término.
+    \item Obtener \resaltar{series de Taylor} y usarlas para calcular límites e integrales.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:20 & Series alternadas: criterio de Leibniz y estimación del error\\
+      0:20 -- 0:50 & Series de potencias: radio e intervalo de convergencia\\
+      0:50 -- 1:10 & Derivación e integración término a término\\
+      1:10 -- 1:45 & Series de Taylor y Maclaurin; aplicaciones a límites e integrales\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Series alternadas}
+
+\begin{frame}{Criterio de Leibniz}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      Una \resaltar{serie alternada} es $\sum(-1)^{n-1}b_n=b_1-b_2+b_3-\cdots$, \ $b_n>0$.
+      \begin{teorema}[Leibniz]
+        Si $b_{n+1}\le b_n$ para todo $n$ y $b_n\to0$, entonces $\sum(-1)^{n-1}b_n$ converge. Además, el error al truncar cumple
+        \[ |S-S_n|\le b_{n+1}. \]
+      \end{teorema}
+      \textbf{Idea.} $S_2\le S_4\le S_6\le\cdots\le S_5\le S_3\le S_1$: las sumas pares crecen, las impares decrecen y
+      $S_{2k+1}-S_{2k}=b_{2k+1}\to0$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$n$}, xmin=0, xmax=13, ymin=0.4, ymax=1.05, width=6.4cm, height=5.3cm, xtick={2,4,...,12}, ytick={0.5,0.6931,1}, yticklabels={$0.5$,$\ln 2$,$1$}]
+          \addplot[uniAzul, thick, mark=*, mark size=1.5pt] coordinates {(1,1) (2,0.5) (3,0.8333) (4,0.5833) (5,0.7833) (6,0.6167) (7,0.7595) (8,0.6345) (9,0.7456) (10,0.6456) (11,0.7365) (12,0.6532)};
+          \draw[dashed, uniGranate] (axis cs:0,0.6931) -- (axis cs:13,0.6931);
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Sumas parciales de $1-\frac12+\frac13-\cdots$ oscilando alrededor de $\ln2$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos de series alternadas}
+  \begin{ejemplo}[1: armónica alternada]
+    $\displaystyle\sum_{n=1}^\infty\frac{(-1)^{n-1}}{n}=1-\frac12+\frac13-\cdots$ converge ($\frac1n$ decrece a $0$). Su suma es $\ln2$ (lo veremos con series de potencias).
+  \end{ejemplo}
+  \begin{ejemplo}[2: estimación]
+    ¿Cuántos términos de $\displaystyle\sum_{n=0}^\infty\frac{(-1)^n}{n!}=e^{-1}$ garantizan error $<10^{-4}$?
+    \quad Necesitamos $\frac{1}{(n+1)!}<10^{-4}$: \ $8!=40320$, así basta $S$ hasta $n=7$.
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\sum(-1)^n\frac{n}{n^2+1}$: \ $f(x)=\frac{x}{x^2+1}$ tiene $f'(x)=\frac{1-x^2}{(x^2+1)^2}<0$ para $x>1$ y $f\to0$. Converge.
+  \end{ejemplo}
+  \begin{observacion}
+    $\sum(-1)^n\frac{n}{2n+1}$ \alert{diverge}: el término no tiende a $0$. ¡Verifique siempre ambas hipótesis!
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Convergencia absoluta (adelanto)}
+  \begin{definicion}
+    $\sum a_n$ es \resaltar{absolutamente convergente} si $\sum|a_n|$ converge, y \resaltar{condicionalmente convergente} si
+    converge pero $\sum|a_n|$ diverge.
+  \end{definicion}
+  \begin{teorema}
+    Toda serie absolutamente convergente es convergente. \quad (Se probará en la Semana 13.)
+  \end{teorema}
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $\sum\frac{(-1)^n}{n^2}$: absolutamente convergente.
+      \item $\sum\frac{(-1)^n}{n}$: condicionalmente convergente.
+    \end{itemize}
+  \end{ejemplo}
+  \small Gracias a este teorema podemos usar el criterio del cociente con $|a_n|$ para series con signos arbitrarios, como las
+  series de potencias.
+\end{frame}
+
+\section{Series de potencias}
+
+\begin{frame}{Series de potencias}
+  \begin{definicion}
+    Una \resaltar{serie de potencias} centrada en $a$ es
+    \[ \sum_{n=0}^\infty c_n(x-a)^n=c_0+c_1(x-a)+c_2(x-a)^2+\cdots \]
+    Define una función $f(x)$ en el conjunto de los $x$ donde converge.
+  \end{definicion}
+\end{frame}
+
+\begin{frame}{Radio de convergencia}
+  \begin{teorema}[radio de convergencia]
+    Para cada serie de potencias existe $R\in[0,\infty]$ tal que:
+    \begin{itemize}
+      \item converge absolutamente si $|x-a|<R$,
+      \item diverge si $|x-a|>R$,
+      \item en $x=a\pm R$ puede ocurrir cualquier cosa (se analiza aparte).
+    \end{itemize}
+    Si existe, $\displaystyle R=\lim_{n\to\infty}\left|\frac{c_n}{c_{n+1}}\right|$.
+  \end{teorema}
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      \draw[->] (-4,0) -- (4,0);
+      \draw[uniVerde, line width=3pt] (-2,0) -- (2,0);
+      \draw[uniGranate, line width=3pt] (-4,0) -- (-2.1,0); \draw[uniGranate, line width=3pt] (2.1,0) -- (3.9,0);
+      \node[below] at (0,-0.1) {\scriptsize $a$}; \fill (0,0) circle (1.5pt);
+      \node[below] at (-2,-0.1) {\scriptsize $a-R$}; \node[below] at (2,-0.1) {\scriptsize $a+R$};
+      \node[above, uniVerde] at (0,0.1) {\scriptsize converge};
+      \node[above, uniGranate] at (-3,0.1) {\scriptsize diverge}; \node[above, uniGranate] at (3,0.1) {\scriptsize diverge};
+      \node[above] at (-2,0.1) {\scriptsize ?}; \node[above] at (2,0.1) {\scriptsize ?};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplos: radio e intervalo de convergencia}
+  \begin{ejemplo}[4]
+    $\displaystyle\sum x^n$: \ $R=1$; en $x=\pm1$ diverge. \ Intervalo: $(-1,1)$, y $\displaystyle\sum x^n=\frac1{1-x}$.
+  \end{ejemplo}
+  \begin{ejemplo}[5]
+    $\displaystyle\sum\frac{x^n}{n!}$: \ $\left|\frac{c_n}{c_{n+1}}\right|=n+1\to\infty$: \ $R=\infty$ (converge para todo $x$).
+    \quad $\displaystyle\sum n!\,x^n$: \ $R=0$ (solo converge en $x=0$).
+  \end{ejemplo}
+  \begin{ejemplo}[6]
+    $\displaystyle\sum_{n=1}^\infty\frac{(x-3)^n}{n\,2^n}$: \ $\left|\dfrac{c_n}{c_{n+1}}\right|=\dfrac{(n+1)2^{n+1}}{n\,2^n}\to2$. \ Converge si $|x-3|<2$.
+    \begin{itemize}
+      \item $x=5$: $\sum\frac1n$ diverge. \quad $x=1$: $\sum\frac{(-1)^n}{n}$ converge (Leibniz).
+    \end{itemize}
+    Intervalo de convergencia: $[1,5)$.
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Derivación e integración término a término}
+  \begin{teorema}
+    Si $f(x)=\sum c_n(x-a)^n$ tiene radio $R>0$, entonces $f$ es derivable en $(a-R,a+R)$ y
+    \[ f'(x)=\sum_{n=1}^\infty nc_n(x-a)^{n-1},\qquad \int f(x)\dx=C+\sum_{n=0}^\infty c_n\frac{(x-a)^{n+1}}{n+1}, \]
+    ambas con el \textbf{mismo radio} $R$ (los extremos pueden cambiar).
+  \end{teorema}
+  \begin{idea}
+    Dentro del intervalo de convergencia, una serie de potencias se comporta como un ``polinomio infinito'':
+    podemos fabricar nuevas series a partir de otras conocidas.
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Nuevas series a partir de la geométrica}
+  \begin{ejemplo}[7]
+    \begin{itemize}
+      \item Derivando $\frac1{1-x}=\sum x^n$: \ $\displaystyle\frac1{(1-x)^2}=\sum_{n=1}^\infty nx^{n-1}$, \ $|x|<1$.
+      \item Con $x\to-t$ e integrando de $0$ a $x$: \ $\displaystyle\ln(1+x)=\sum_{n=1}^\infty\frac{(-1)^{n-1}x^n}{n}$, \ $-1<x\le1$.
+      \item Con $x\to-t^2$ e integrando: \ $\displaystyle\arctan x=\sum_{n=0}^\infty\frac{(-1)^nx^{2n+1}}{2n+1}$, \ $|x|\le1$.
+    \end{itemize}
+    En $x=1$: \ $\ln2=1-\frac12+\frac13-\cdots$ \ y \ $\dfrac\pi4=1-\frac13+\frac15-\cdots$ \ (Leibniz--Gregory).
+  \end{ejemplo}
+\end{frame}
+
+\section{Series de Taylor}
+
+\begin{frame}{Serie de Taylor}
+  \begin{teorema}
+    Si $f(x)=\sum c_n(x-a)^n$ en $|x-a|<R$, entonces necesariamente $c_n=\dfrac{f^{(n)}(a)}{n!}$.
+  \end{teorema}
+  \begin{definicion}
+    La \resaltar{serie de Taylor} de $f$ en $a$ es $\displaystyle\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n$
+    (\resaltar{Maclaurin} si $a=0$). Su suma parcial de grado $n$ es el \resaltar{polinomio de Taylor} $T_n(x)$.
+  \end{definicion}
+  \begin{teorema}[resto de Lagrange]
+    $f(x)=T_n(x)+R_n(x)$, con $R_n(x)=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}$ para algún $\xi$ entre $a$ y $x$.
+    La serie converge a $f(x)$ si y solo si $R_n(x)\to0$.
+  \end{teorema}
+\end{frame}
+
+\begin{frame}{Ejemplo: la serie de $e^x$}
+  \begin{ejemplo}[$e^x$]
+    $f^{(n)}(x)=e^x$, así $f^{(n)}(0)=1$ y la serie de Maclaurin es $\displaystyle\sum_{n=0}^\infty\frac{x^n}{n!}$ ($R=\infty$).
+    \[ |R_n(x)|=\frac{e^{\xi}|x|^{n+1}}{(n+1)!}\le e^{|x|}\frac{|x|^{n+1}}{(n+1)!}\xrightarrow[n\to\infty]{}0, \]
+    luego la serie converge a $e^x$ para todo $x\in\R$.
+  \end{ejemplo}
+  \begin{ejemplo}[cálculo de $e$]
+    $e=\sum\frac1{n!}$. Con $n=0,\dots,9$: \ $e\approx2.7182815$, \ error $\le\frac{e}{10!}<10^{-6}$.
+  \end{ejemplo}
+  \begin{observacion}
+    Existen funciones cuya serie de Taylor converge pero \emph{no} a la función: $f(x)=e^{-1/x^2}$ ($f(0)=0$) tiene
+    todas sus derivadas nulas en $0$.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Polinomios de Taylor de $\sen x$}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-7, xmax=7, ymin=-2.2, ymax=2.2, width=8cm, height=6cm, xtick={-6.2832,-3.1416,3.1416,6.2832}, xticklabels={$-2\pi$,$-\pi$,$\pi$,$2\pi$}, ytick={-1,1}, samples=200, domain=-7:7, restrict y to domain=-3:3]
+          \addplot[black, very thick] {sin(deg(x))};
+          \addplot[uniAzul, thick] {x};
+          \addplot[uniVerde, thick] {x-x^3/6};
+          \addplot[uniNaranja, thick] {x-x^3/6+x^5/120};
+          \addplot[uniGranate, thick] {x-x^3/6+x^5/120-x^7/5040+x^9/362880};
+          \node[uniAzul] at (axis cs:2.3,2) {\scriptsize $T_1$};
+          \node[uniVerde] at (axis cs:3.4,-1.8) {\scriptsize $T_3$};
+          \node[uniNaranja] at (axis cs:4.3,1.8) {\scriptsize $T_5$};
+          \node[uniGranate] at (axis cs:6.4,1.3) {\scriptsize $T_9$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{block}{Series de Maclaurin fundamentales}
+        \footnotesize
+        \begin{align*}
+          e^x&=\sum_{n\ge0}\frac{x^n}{n!} & &\R\\
+          \sen x&=\sum_{n\ge0}\frac{(-1)^nx^{2n+1}}{(2n+1)!} & &\R\\
+          \cos x&=\sum_{n\ge0}\frac{(-1)^nx^{2n}}{(2n)!} & &\R\\
+          (1+x)^k&=\sum_{n\ge0}\binom knx^n & &|x|<1
+        \end{align*}
+      \end{block}
+      \small $\binom kn=\frac{k(k-1)\cdots(k-n+1)}{n!}$, $k\in\R$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Aplicaciones: límites e integrales}
+  \begin{ejemplo}[8: límites]
+    \[ \lim_{x\to0}\frac{\sen x-x}{x^3}=\lim_{x\to0}\frac{-\frac{x^3}{6}+\frac{x^5}{120}-\cdots}{x^3}=-\frac16,\qquad
+       \lim_{x\to0}\frac{e^{x^2}-1-x^2}{x^4}=\frac12. \]
+  \end{ejemplo}
+  \begin{ejemplo}[9: una integral no elemental]
+    $\displaystyle\int_0^1e^{-x^2}\dx=\int_0^1\sum_{n=0}^\infty\frac{(-1)^nx^{2n}}{n!}\dx=\sum_{n=0}^\infty\frac{(-1)^n}{n!\,(2n+1)}
+      =1-\frac13+\frac1{10}-\frac1{42}+\frac1{216}-\cdots$
+    \smallskip
+
+    Es alternada: con 5 términos, $S\approx0.747487$ y el error es $<\frac1{5!\cdot11}\approx7.6\times10^{-4}$.
+    Con 6 términos, $0.746729$, error $<\frac1{6!\cdot13}\approx1.1\times10^{-4}$. \ (Compare con Simpson, Semana 9.)
+  \end{ejemplo}
+  \begin{ejemplo}[10: física]
+    Energía relativista: $E=mc^2(1-v^2/c^2)^{-1/2}=mc^2+\frac12mv^2+\frac38m\frac{v^4}{c^2}+\cdots$ \
+    ¡La energía cinética clásica es el primer término de corrección!
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos}
+  \small
+  \begin{ejercicio}
+    \begin{enumerate}
+      \item Determine si convergen: $\sum\frac{(-1)^n\ln n}{n}$, \ $\sum\frac{(-1)^n}{\sqrt n}$, .
+      \item Aproxime $\sum_{n=1}^\infty\frac{(-1)^{n+1}}{n^3}$ con error menor que $10^{-3}$.
+      \item Halle el radio e intervalo de convergencia: \ (a) $\sum\frac{x^n}{n^2}$, \ (b) $\sum\frac{(2x-1)^n}{\sqrt n}$,
+        \ (c) $\sum\frac{n!\,x^n}{n^n}$, \ (d) $\sum\frac{(x+2)^n}{n\,3^n}$.
+      \item Halle una serie de potencias para $\dfrac{x}{(1-x)^2}$ y úsela para sumar $\sum_{n=1}^\infty\frac{n}{2^n}$.
+      \item Obtenga la serie de Maclaurin de $\dfrac1{\sqrt{1-x^2}}$ y, integrando, la de $\arcsen x$.
+      \item Calcule con series: $\lim_{x\to0}\frac{1-\cos x-\frac{x^2}{2}}{x^4}$ \ y \ $\lim_{x\to0}\frac{\ln(1+x)-x+\frac{x^2}2}{x^3}$.
+      \item Aproxime $\int_0^{1/2}\frac{dx}{1+x^4}$ y $\int_0^1\frac{\sen x}{x}\dx$ con error $<10^{-4}$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Leibniz}: $b_n\downarrow0\Rightarrow\sum(-1)^nb_n$ converge; \ $|S-S_n|\le b_{n+1}$.
+    \item Serie de potencias: radio $R$ (cociente); analizar los extremos por separado.
+    \item Se derivan e integran término a término dentro del radio.
+    \item Taylor: $c_n=\frac{f^{(n)}(a)}{n!}$; converge a $f$ si $R_n\to0$.
+    \item Aplicaciones: límites, integrales no elementales, aproximaciones en física.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} convergencia absoluta e integrales impropias.
+\end{frame}
+
+\end{document}
