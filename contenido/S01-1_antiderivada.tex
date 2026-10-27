@@ -1,0 +1,419 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Antiderivada e integral indefinida]{Antiderivada e integral indefinida}
+\subtitle{Propiedades básicas. Integración por sustitución\\[2pt]\small Semana 1 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  Al finalizar la sesión, el estudiante será capaz de:
+  \begin{enumerate}
+    \item Definir \resaltar{antiderivada} (primitiva) de una función en un intervalo.
+    \item Comprender por qué dos primitivas difieren en una constante.
+    \item Usar la tabla de integrales inmediatas y la linealidad de la integral indefinida.
+    \item Aplicar el método de \resaltar{sustitución} (cambio de variable).
+  \end{enumerate}
+  \vspace{2mm}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & Motivación: el problema inverso de la derivada\\
+      0:15 -- 0:50 & Antiderivada, integral indefinida, propiedades y tabla\\
+      0:50 -- 1:35 & Método de sustitución: teoría y ejemplos\\
+      1:35 -- 2:00 & Ejercicios en clase y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Motivación}
+
+\begin{frame}{El problema inverso}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      En Cálculo Diferencial resolvimos:
+      \[ \text{dada } F,\ \text{hallar } F'. \]
+      Ahora planteamos el problema \resaltar{inverso}:
+      \[ \text{dada } f,\ \text{hallar } F \text{ tal que } F' = f. \]
+      \begin{ejemplo}[(Física)]
+        Una partícula se mueve con velocidad $v(t)=3t^2$ m/s. Si $s(0)=2$,
+        ¿dónde está en el instante $t$?
+
+        Buscamos $s$ con $s'(t)=3t^2$: \ $s(t)=t^3+C$, y $s(0)=2\Rightarrow C=2$.
+        \[ s(t)=t^3+2. \]
+      \end{ejemplo}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, ylabel={$s$}, xmin=0, xmax=2.2, ymin=0, ymax=12,
+            width=6.5cm, height=5.5cm, domain=0:2]
+          \addplot[curva] {x^3+2} node[pos=0.95,left] {$s(t)=t^3+2$};
+          \addplot[curva2, dashed, domain=0:1.8] {x^3} node[pos=1,right] {$t^3$};
+          \addplot[only marks, mark=*, uniGranate] coordinates {(0,2)};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Todas las curvas $t^3+C$ tienen la misma pendiente en cada $t$;
+      la condición inicial elige \emph{una}.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Antiderivada e integral indefinida}
+
+\begin{frame}{Antiderivada}
+  \begin{definicion}
+    Sea $f$ definida en un intervalo $I$. Una función $F:I\to\R$ es una
+    \resaltar{antiderivada} (o \resaltar{primitiva}) de $f$ en $I$ si
+    \[ F'(x)=f(x)\qquad\text{para todo } x\in I. \]
+  \end{definicion}
+  \begin{ejemplo}
+    \begin{itemize}
+      \item $F(x)=x^2$ es primitiva de $f(x)=2x$ en $\R$. También lo son $x^2+5$, $x^2-\pi$.
+      \item $F(x)=\sen x$ es primitiva de $\cos x$ en $\R$.
+      \item $F(x)=\ln|x|$ es primitiva de $1/x$ en $(0,\infty)$ y en $(-\infty,0)$.
+    \end{itemize}
+  \end{ejemplo}
+  \begin{observacion}
+    La primitiva siempre se considera \emph{en un intervalo}. Este detalle es esencial en el
+    siguiente teorema.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{¿Cuántas primitivas tiene una función?}
+  \begin{teorema}
+    Si $F$ y $G$ son primitivas de $f$ en un intervalo $I$, entonces existe una constante $C$ tal que
+    \[ G(x)=F(x)+C\quad\forall x\in I. \]
+  \end{teorema}
+  \textbf{Demostración.} Sea $H=G-F$. Entonces $H'(x)=f(x)-f(x)=0$ en $I$.
+  Por el \resaltar{Teorema del Valor Medio}, para $a,b\in I$:
+  \[ H(b)-H(a)=H'(\xi)(b-a)=0 \ \Rightarrow\ H \text{ es constante en } I. \qquad\blacksquare \]
+  \begin{observacion}[¡el intervalo importa!]
+    En $\R\setminus\{0\}$ la función
+    $G(x)=\begin{cases}\ln x+1,& x>0\\ \ln(-x)-3,& x<0\end{cases}$
+    también cumple $G'(x)=1/x$, pero $G-\ln|x|$ \emph{no} es constante.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Interpretación geométrica: familia de curvas}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.3, xmax=2.3, ymin=-3, ymax=5, width=7.5cm, height=6cm, domain=-2.2:2.2]
+          \foreach \c in {-2,-1,0,1,2} {
+            \addplot[uniAzul!60, thick] {x^2+\c};
+          }
+          \addplot[curva2] {x^2+1};
+          % tangentes paralelas en x=1
+          \addplot[uniVerde, thick, domain=0.3:1.7] {2*(x-1)+1-1};
+          \addplot[uniVerde, thick, domain=0.3:1.7] {2*(x-1)+2};
+          \addplot[uniVerde, thick, domain=0.3:1.7] {2*(x-1)+3};
+          \draw[dashed, gray] (axis cs:1,-3) -- (axis cs:1,5);
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      Las primitivas de $f(x)=2x$ son
+      \[ F_C(x)=x^2+C. \]
+      \begin{itemize}
+        \item Son \emph{traslaciones verticales} unas de otras.
+        \item En cada abscisa $x$ todas tienen \resaltar{tangentes paralelas} (pendiente $2x$).
+        \item Por cada punto $(x_0,y_0)$ pasa exactamente una: $C=y_0-x_0^2$.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Integral indefinida}
+  \begin{definicion}
+    El conjunto de todas las primitivas de $f$ en $I$ se llama \resaltar{integral indefinida} de $f$:
+    \[ \int f(x)\dx = F(x)+C, \]
+    donde $F$ es una primitiva cualquiera y $C\in\R$ es una constante arbitraria.
+  \end{definicion}
+  \begin{center}
+  \begin{tikzpicture}[every node/.style={font=\footnotesize}]
+    \node (int) at (0,0) {$\displaystyle\int$};
+    \node (f) at (1.2,0) {$f(x)$};
+    \node (dx) at (2.3,0) {$dx$};
+    \node at (3.2,0) {$=$};
+    \node (F) at (4.3,0) {$F(x)$};
+    \node (C) at (5.6,0) {$+\,C$};
+    \draw[<-,uniGranate] (int.south) -- ++(0,-0.3) node[below] {signo integral};
+    \draw[<-,uniGranate] (f.north) -- ++(0,0.3) node[above] {integrando};
+    \draw[<-,uniGranate] (dx.south) -- ++(0,-0.3) node[below] {variable de integración};
+    \draw[<-,uniGranate] (F.north) -- ++(0,0.3) node[above] {una primitiva};
+    \draw[<-,uniGranate] (C.south) -- ++(0,-0.3) node[below] {constante};
+  \end{tikzpicture}
+  \end{center}
+  \begin{proposicion}[derivada e integral son inversas]
+    \[ \frac{d}{dx}\left(\int f(x)\dx\right)=f(x),\qquad \int F'(x)\dx=F(x)+C. \]
+  \end{proposicion}
+\end{frame}
+
+\begin{frame}{Propiedades: linealidad}
+  \begin{proposicion}
+    Si $f$ y $g$ tienen primitivas en $I$ y $k\in\R$:
+    \begin{enumerate}
+      \item $\displaystyle\int k\,f(x)\dx = k\int f(x)\dx$.
+      \item $\displaystyle\int \big[f(x)\pm g(x)\big]\dx=\int f(x)\dx\pm\int g(x)\dx$.
+    \end{enumerate}
+  \end{proposicion}
+  Ambas se prueban derivando el lado derecho.
+  \begin{ejemplo}
+    \[
+      \int\left(4x^3-\frac{3}{x}+2e^x\right)dx
+      = 4\cdot\frac{x^4}{4}-3\ln|x|+2e^x+C = x^4-3\ln|x|+2e^x+C.
+    \]
+  \end{ejemplo}
+  \begin{observacion}
+    \alert{No} existe una regla del producto para integrales:
+    $\int f g\dx \neq \left(\int f\dx\right)\left(\int g\dx\right)$.
+    Ej.: $\int x\cdot x\dx=\tfrac{x^3}{3}+C\neq \tfrac{x^2}{2}\cdot\tfrac{x^2}{2}$.
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Tabla de integrales inmediatas}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{2.1}
+      \begin{tabular}{|l|}
+        \hline
+        $\int x^n\dx=\dfrac{x^{n+1}}{n+1}+C,\ n\neq-1$\\ \hline
+        $\int \dfrac{dx}{x}=\ln|x|+C$\\ \hline
+        $\int e^x\dx=e^x+C$\\ \hline
+        $\int a^x\dx=\dfrac{a^x}{\ln a}+C,\ a>0,\ a\ne1$\\ \hline
+        $\int \sen x\dx=-\cos x+C$\\ \hline
+        $\int \cos x\dx=\sen x+C$\\ \hline
+        $\int \sec^2 x\dx=\tan x+C$\\ \hline
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \renewcommand{\arraystretch}{2.1}
+      \begin{tabular}{|l|}
+        \hline
+        $\int \cosec^2 x\dx=-\ctg x+C$\\ \hline
+        $\int \sec x\tan x\dx=\sec x+C$\\ \hline
+        $\int \cosec x\ctg x\dx=-\cosec x+C$\\ \hline
+        $\int \dfrac{dx}{\sqrt{a^2-x^2}}=\arcsen\dfrac{x}{a}+C$\\ \hline
+        $\int \dfrac{dx}{a^2+x^2}=\dfrac1a\arctan\dfrac{x}{a}+C$\\ \hline
+        $\int \senh x\dx=\cosh x+C$\\ \hline
+        $\int \cosh x\dx=\senh x+C$\\ \hline
+      \end{tabular}
+    \end{column}
+  \end{columns}
+  \vspace{2mm}
+  \begin{idea}
+    Cada fórmula se verifica \emph{derivando} el lado derecho. ¡Esa es la mejor manera de memorizarlas!
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Ejemplos con la tabla}
+  \begin{ejemplo}[1]
+    $\displaystyle\int \frac{x^2+\sqrt{x}-1}{x}\dx=\int\left(x+x^{-1/2}-\frac1x\right)dx
+    =\frac{x^2}{2}+2\sqrt{x}-\ln|x|+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[2]
+    $\displaystyle\int \tan^2 x\dx=\int(\sec^2x-1)\dx=\tan x-x+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[3]
+    $\displaystyle\int \frac{dx}{\sen^2x\cos^2x}=\int\frac{\sen^2x+\cos^2x}{\sen^2x\cos^2x}\dx
+    =\int(\sec^2x+\cosec^2x)\dx=\tan x-\ctg x+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Problema de valor inicial}
+  \begin{ejemplo}[4]
+    Hallar $f$ si $f''(x)=6x$, $f'(0)=1$, $f(0)=2$.\\
+    \begin{itemize}
+      \item $f'(x)=\int 6x\dx=3x^2+C_1$; como $f'(0)=1$, $C_1=1$.
+      \item $f(x)=\int(3x^2+1)\dx=x^3+x+C_2$; como $f(0)=2$, $C_2=2$.
+    \end{itemize}
+    \[ \boxed{f(x)=x^3+x+2} \]
+  \end{ejemplo}
+  \begin{observacion}
+    Una ecuación con $f''$ requiere \emph{dos} integraciones y por tanto \emph{dos} condiciones
+    para determinar la solución única.
+  \end{observacion}
+\end{frame}
+
+\section{Integración por sustitución}
+
+\begin{frame}{Idea: la regla de la cadena al revés}
+  Por la regla de la cadena: $\dfrac{d}{dx}F\big(g(x)\big)=F'\big(g(x)\big)\,g'(x)$. Luego
+  \begin{teorema}[Sustitución]
+    \small
+    Si $F'=f$ y $g$ es derivable, entonces
+    \[ \int f\big(g(x)\big)\,g'(x)\dx = F\big(g(x)\big)+C. \]
+    En la práctica: hacemos $u=g(x)$, $du=g'(x)\dx$ y obtenemos
+    \[ \int f\big(g(x)\big)\,g'(x)\dx=\int f(u)\du = F(u)+C. \]
+  \end{teorema}
+  \begin{block}{Receta}
+    \small
+    \begin{enumerate}
+      \item Identificar una función ``interior'' $u=g(x)$ cuya derivada aparezca (salvo constante) como factor.
+      \item Reescribir \emph{toda} la integral en términos de $u$ y $du$.
+      \item Integrar en $u$ y regresar a la variable $x$.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Ejemplos de sustitución (I)}
+  \begin{ejemplo}[1]
+    $\displaystyle\int 2x\,(x^2+1)^{10}\dx$. \quad Sea $u=x^2+1$, $du=2x\dx$:
+    \[ \int u^{10}\du=\frac{u^{11}}{11}+C=\frac{(x^2+1)^{11}}{11}+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[2: ajuste de constante]
+    $\displaystyle\int x^2\cos(x^3)\dx$. \quad $u=x^3$, $du=3x^2\dx\Rightarrow x^2\dx=\tfrac13du$:
+    \[ \frac13\int\cos u\du=\frac13\sen(x^3)+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplos de sustitución (II)}
+  \begin{ejemplo}[3: la forma $f'/f$]
+    $\displaystyle\int\tan x\dx=\int\frac{\sen x}{\cos x}\dx$. \quad $u=\cos x$, $du=-\sen x\dx$:
+    \[ -\int\frac{du}{u}=-\ln|\cos x|+C=\ln|\sec x|+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[4]
+    $\displaystyle\int\frac{e^{\sqrt x}}{\sqrt x}\dx$. \quad $u=\sqrt x$, $du=\dfrac{dx}{2\sqrt x}$:
+    \quad $2\displaystyle\int e^u\du=2e^{\sqrt x}+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplos de sustitución (III)}
+  \begin{ejemplo}[5: despejar $x$]
+    $\displaystyle\int x\sqrt{x+1}\dx$. \quad $u=x+1\Rightarrow x=u-1$, $dx=du$:
+    \[ \int(u-1)u^{1/2}\du=\int\left(u^{3/2}-u^{1/2}\right)du
+       =\frac25(x+1)^{5/2}-\frac23(x+1)^{3/2}+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[6: completar cuadrados]
+    $\displaystyle\int\frac{dx}{x^2+4x+13}=\int\frac{dx}{(x+2)^2+9}$. \quad $u=x+2$:
+    \quad $\displaystyle\int\frac{du}{u^2+3^2}=\frac13\arctan\frac{x+2}{3}+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ejemplos de sustitución (IV): $\int\sec x\dx$}
+  \begin{ejemplo}[7: un truco clásico]
+    Multiplicamos y dividimos por $\sec x+\tan x$:
+    \[
+      \int\sec x\dx=\int\frac{\sec x(\sec x+\tan x)}{\sec x+\tan x}\dx
+      =\int\frac{\sec^2x+\sec x\tan x}{\sec x+\tan x}\dx.
+    \]
+    Con $u=\sec x+\tan x$, $du=(\sec x\tan x+\sec^2x)\dx$:
+    \[ \int\sec x\dx=\ln|\sec x+\tan x|+C. \]
+  \end{ejemplo}
+  Análogamente: $\displaystyle\int\cosec x\dx=\ln|\cosec x-\ctg x|+C$.
+  \begin{observacion}
+    \textbf{Siempre verifique derivando.}
+    $\dfrac{d}{dx}\ln|\sec x+\tan x|=\dfrac{\sec x\tan x+\sec^2x}{\sec x+\tan x}=\sec x.\ \checkmark$
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Visualizando una sustitución}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-2.2, xmax=2.2, ymin=-1.2, ymax=1.4, width=7cm, height=5.5cm, domain=-2:2, samples=200]
+          \addplot[curva] {2*x*cos(deg(x^2))};
+          \addplot[curva2] {sin(deg(x^2))};
+          \node[uniAzul] at (axis cs:-1.4,-1.0) {\small $f(x)=2x\cos(x^2)$};
+          \node[uniGranate] at (axis cs:1.2,1.25) {\small $F(x)=\sen(x^2)$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      $\displaystyle\int 2x\cos(x^2)\dx$ con $u=x^2$ da $F(x)=\sen(x^2)+C$.
+      \vspace{2mm}
+
+      Lea la gráfica:
+      \begin{itemize}
+        \item Donde $f>0$, $F$ crece.
+        \item Donde $f<0$, $F$ decrece.
+        \item Los ceros de $f$ son extremos (o puntos críticos) de $F$.
+      \end{itemize}
+      \begin{idea}
+        $f$ es la \emph{pendiente} de $F$ en cada punto.
+      \end{idea}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Errores frecuentes}
+  \begin{enumerate}
+    \item Olvidar la constante $C$ \quad (pierde todas las demás primitivas).
+    \item Dejar variables mezcladas: $\int x\,e^{x^2}\dx \neq \int x\,e^{u}\du$.
+    \item Sustituir sin que aparezca $g'(x)$:
+      $\int e^{x^2}\dx$ \alert{no} se resuelve con $u=x^2$ (no tiene primitiva elemental).
+    \item Usar $\int x^n\dx$ con $n=-1$.
+    \item ``Simplificar'' con constantes que dependen de $x$:
+      $\int \cos(x^2)\dx \neq \dfrac{\sen(x^2)}{2x}+C$.
+      Derive para comprobar: \alert{no} funciona.
+  \end{enumerate}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos (I)}
+  \begin{ejercicio}[: integrales inmediatas]
+    Calcule:
+    \begin{multicols}{2}
+\begin{enumerate}
+          \item $\displaystyle\int\left(3x^5-\frac{2}{x^3}+\sqrt[3]{x^2}\right)dx$
+          \item $\displaystyle\int\frac{(1+\sqrt{x})^2}{x}\dx$
+          \item $\displaystyle\int\frac{\cos 2x}{\cos x-\sen x}\dx$
+          \item $\displaystyle\int\ctg^2x\dx$
+          \item $\displaystyle\int\frac{2^x+3^x}{6^x}\dx$
+          \item $\displaystyle\int\frac{x^2}{1+x^2}\dx$
+\end{enumerate}
+\end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: valor inicial]
+    \begin{enumerate}
+      \setcounter{enumi}{6}
+      \item Halle $f$ si $f'(x)=\dfrac{1}{x}+\sec^2x$, $x\in(0,\pi/2)$, y $f(\pi/4)=1$.
+      \item La pendiente de una curva en $(x,y)$ es $3\sqrt{x}$ y la curva pasa por $(4,10)$. Halle su ecuación.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Ejercicios propuestos (II)}
+  \begin{ejercicio}[: sustitución]
+    \begin{multicols}{2}
+\begin{enumerate}
+          \item $\displaystyle\int\frac{x}{\sqrt{1-x^2}}\dx$
+          \item $\displaystyle\int\frac{\ln x}{x}\dx$
+          \item $\displaystyle\int\frac{\sen x}{1+\cos^2x}\dx$
+          \item $\displaystyle\int\frac{dx}{x\ln x\,\ln(\ln x)}$
+          \item $\displaystyle\int\frac{e^x}{\sqrt{1-e^{2x}}}\dx$
+          \item $\displaystyle\int x^3\sqrt{x^2+1}\dx$
+          \item $\displaystyle\int\frac{dx}{\sqrt{x}(1+x)}$
+          \item $\displaystyle\int\frac{dx}{\sqrt{6x-x^2}}$
+          \item $\displaystyle\int\frac{dx}{e^x+e^{-x}}$
+          \item $\displaystyle\int\frac{\sec^2x}{\sqrt{1-\tan^2x}}\dx$
+\end{enumerate}
+\end{multicols}
+  \end{ejercicio}
+  \textbf{Desafío.} Muestre que $\displaystyle\int\frac{dx}{\sqrt{x^2+a^2}}=\ln\left|x+\sqrt{x^2+a^2}\right|+C$ derivando el lado derecho.
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $F$ es primitiva de $f$ en $I$ si $F'=f$ en $I$.
+    \item En un intervalo, dos primitivas difieren en una constante:
+      $\displaystyle\int f(x)\dx=F(x)+C$.
+    \item La integral indefinida es lineal; \emph{no} hay regla del producto.
+    \item \resaltar{Sustitución}: es la regla de la cadena leída al revés:
+      \[ \int f(g(x))\,g'(x)\dx=\int f(u)\du,\quad u=g(x). \]
+    \item Siempre se puede comprobar el resultado \resaltar{derivando}.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} integración por partes y primitivas de funciones trigonométricas.
+\end{frame}
+
+\end{document}
