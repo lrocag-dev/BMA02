@@ -18,14 +18,34 @@
     \item Derivar funciones de la forma $f(x)^{g(x)}$ y la potencia real $x^r$.
     \item Aplicar a modelos en química y física (pH, decibeles, vida media).
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 1 del sílabo:} Evalúa interpretaciones y propiedades del cálculo integral y su utilidad en problemas de la vida real.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:10 & Repaso: $\ln$ y $\exp$\\
       0:10 -- 0:50 & La exponencial $a^x$: definición, propiedades, cálculo\\
       0:50 -- 1:25 & El logaritmo $\log_ax$. Derivación logarítmica, potencias reales\\
       1:25 -- 1:45 & Límites notables y aplicaciones\\
-      1:45 -- 2:00 & Ejercicios y resumen
+      1:45 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea la definición $a^x=e^{x\ln a}$ y $\log_ax=\frac{\ln x}{\ln a}$ para $a>0$, $a\ne1$.
+      \item Derive $2^x$ y $\log_3x$ a partir de las definiciones.
+      \item Pregunta guía: ¿por qué se excluye $a=1$ y los $a\le0$?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Calcule $\frac{d}{dx}5^x$.
+      \item ¿Cuánto vale $\log_28$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -297,6 +317,18 @@
   \end{ejemplo}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Decaimiento e interés compuesto}
+  \small
+  \begin{activa}[ABP / modelamiento]
+    Una sustancia decae según $N(t)=N_0\left(\tfrac12\right)^{t/T}$. \textbf{(a)} Escríbala como $N_0e^{-kt}$ y halle $k$ en función de $T$. \textbf{(b)} Para $T=5730$ años (C-14), ¿qué fracción queda tras 2000 años? \textbf{(c)} Compare con el tiempo de duplicación de un capital al 5\% anual de interés compuesto.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Modelo en base $e$, resultados numéricos y comparación de los dos fenómenos.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -317,6 +349,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cuándo me conviene la base $e$ frente a otra base? Justifique con este problema.
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA la fracción de C-14 restante a los 2000 años. Compruebe el resultado con su valor de $k$ y detecte si confundió $T$ con $1/k$.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item $a^x:=e^{x\ln a}$ ($a>0$), válida para todo exponente real; cumple las leyes de exponentes.
@@ -327,6 +379,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} Segundo Teorema Fundamental del Cálculo, cambio de variable y partes en la integral definida.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 3: Dirigida 2]
+    \textbf{Cobertura:} semana 2. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

@@ -18,7 +18,9 @@
       \resaltar{cociente}, \resaltar{raíz} y \resaltar{Raabe}.
     \item Diseñar una estrategia para decidir la convergencia de una serie.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 4 del sílabo:} Demuestra análisis y síntesis ejecutando cálculos en problemas aplicados a su carrera.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:25 & Series geométrica y telescópica\\
       0:25 -- 0:50 & Términos no negativos. Criterio de la integral. Serie $p$\\
@@ -26,6 +28,24 @@
       1:15 -- 1:45 & Cociente, raíz y Raabe\\
       1:45 -- 2:00 & Estrategia, ejercicios y resumen
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea las series geométrica, telescópica y $p$, y los criterios de convergencia.
+      \item Decida la convergencia de $\sum\frac1{n^2}$ y $\sum\frac1n$.
+      \item Pregunta guía: ¿cuándo falla el criterio del cociente?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item ¿Converge $\sum\frac1{n^{1.5}}$?
+      \item ¿Qué da el criterio del cociente para $\sum\frac{n!}{n^n}$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -246,6 +266,18 @@
   \end{center}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Clasificador de series}
+  \small
+  \begin{activa}[Trabajo colaborativo (reto y defensa)]
+    Cada grupo recibe cuatro series, por ejemplo $\sum\frac{n!}{n^n}$, $\sum\frac1{n\ln n}$, $\sum\frac{\ln n}{n^2}$ y $\sum\left(\frac n{n+1}\right)^{n^2}$. \textbf{Elige} el criterio más conveniente, lo aplica y \textbf{defiende} su elección ante otro grupo, que busca fallas.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Tabla: serie, criterio, justificación y resultado, con la objeción recibida.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -271,6 +303,26 @@
   $\sum_{n=1}^{10}\frac1{n^2}\approx1.5498$ para acotar $\frac{\pi^2}{6}$.
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Reconozco rápido qué criterio usar? ¿Qué patrones me ayudan?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el carácter de $\sum\frac1{n\ln n}$. Verifique el criterio de la integral.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item Geométrica: $\sum ar^n=\frac a{1-r}$ si $|r|<1$. \ Telescópica: $S_n=b_1-b_{n+1}$.
@@ -280,6 +332,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} series alternadas, convergencia absoluta, series de potencias y series de Taylor.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 12: Dirigida 7]
+    \textbf{Cobertura:} semana 11. \textbf{Naturaleza:} práctica dirigida en equipo, con retroalimentación inmediata.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

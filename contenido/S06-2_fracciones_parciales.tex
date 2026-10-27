@@ -17,14 +17,34 @@
     \item Integrar las fracciones simples: logaritmos, potencias, arcotangentes y fórmulas de reducción.
     \item Aplicar el método a un modelo de cinética química.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 3 del sílabo:} Desarrolla el pensamiento deductivo, inductivo, crítico y creativo mediante cambios de variable en los métodos de integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:15 & Funciones racionales, división, teorema de descomposición\\
       0:15 -- 0:45 & Factores lineales (distintos y repetidos)\\
       0:45 -- 1:20 & Factores cuadráticos irreducibles (distintos y repetidos)\\
       1:20 -- 1:40 & Integrales definidas y aplicación en química\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el teorema de descomposición en fracciones parciales.
+      \item Descomponga $\frac{1}{(x-1)(x+2)}$.
+      \item Pregunta guía: ¿qué hacer si el grado del numerador es mayor o igual al del denominador?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Descomponga $\frac{x}{(x+1)(x+3)}$.
+      \item ¿Cómo se trata un factor $(x-1)^2$?
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -206,6 +226,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Cinética de segundo orden}
+  \small
+  \begin{activa}[ABP / modelamiento]
+    En una reacción $A+B\to C$ con $[A]_0=2$ y $[B]_0=3$ mol/L, la cantidad formada $x(t)$ cumple $\frac{dx}{dt}=k(2-x)(3-x)$ con $k=0.1$. \textbf{(a)} Separe variables e integre con fracciones parciales. \textbf{(b)} Halle $t(x)$ y el tiempo para $x=1$. \textbf{(c)} Discuta por qué $x$ no puede superar 2.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Planteamiento, descomposición, $t(x)$ e interpretación.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -234,6 +266,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cómo verifico mi descomposición antes de integrar? ¿Qué atajo me ahorra errores?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA la descomposición de $\frac{1}{(2-x)(3-x)}$. Verifíquela reduciendo a común denominador.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{enumerate}
     \item Si $\operatorname{gr}P\ge\operatorname{gr}Q$: dividir.
@@ -246,6 +298,19 @@
     Toda función racional tiene primitiva elemental: combinación de racionales, logaritmos y arcotangentes.
   \end{idea}
   \textbf{Próxima sesión:} binomios diferenciales y sustitución universal $t=\tan(x/2)$.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 6: Calificada 2]
+    \textbf{Cobertura:} semanas 3 y 4. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}

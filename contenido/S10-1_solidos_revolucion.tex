@@ -17,13 +17,33 @@
     \item Rotar regiones alrededor de ejes horizontales y verticales arbitrarios.
     \item Elegir el método más conveniente para cada problema.
   \end{enumerate}
-  \begin{block}{Plan (2 horas)}
+  \vspace{1mm}
+  {\small\textbf{Competencia 2 del sílabo:} Describe procesos naturales y físicos con modelos matemáticos que usan la integración.}
+  \begin{block}{Plan (2 horas; incluye verificación previa de 5 min)}
     \begin{tabular}{ll}
       0:00 -- 0:40 & Discos y arandelas. Ejes paralelos a los coordenados\\
       0:40 -- 1:20 & Capas cilíndricas: deducción y ejemplos\\
       1:20 -- 1:40 & ¿Discos o capas? Comparación. El toro\\
-      1:40 -- 2:00 & Ejercicios y resumen
+      1:40 -- 2:00 & Actividad colaborativa, resumen y cierre metacognitivo
     \end{tabular}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Aula invertida: preparación y verificación}
+  \small
+  \begin{previa}[antes de la sesión]
+    \begin{enumerate}
+      \item Lea el método de discos y el de capas cilíndricas.
+      \item Plantee el volumen al girar $y=x^2$, $0\le x\le2$, en torno al eje $x$.
+      \item Pregunta guía: ¿cuándo conviene capas y cuándo discos?
+    \end{enumerate}
+  \end{previa}
+  \begin{block}{Verificación al inicio (5 min, en pares)}
+    \begin{enumerate}
+      \item Escriba el volumen por discos.
+      \item Escriba el volumen por capas alrededor del eje $y$.
+    \end{enumerate}
+    Los pares discuten y votan; el docente aclara solo lo que genera dudas y ajusta el ritmo de la sesión.
   \end{block}
 \end{frame}
 
@@ -282,6 +302,18 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}{Actividad colaborativa: Diseño de un jarrón}
+  \small
+  \begin{activa}[ABP con GeoGebra 3D]
+    Un diseñador propone el perfil $r(x)=2+\sen(x/2)$ cm, $0\le x\le10$. \textbf{(a)} Calcule el volumen con discos. \textbf{(b)} Ajuste la altura $h$ para obtener un volumen cercano a 300 mL. \textbf{(c)} Resuelva la región bajo $y=x^2$, $0\le x\le2$, girada en torno al eje $y$ con discos \textbf{y} capas y compare.
+  \end{activa}
+  \begin{itemize}
+    \item \textbf{Organización:} equipos de 3 a 4 con roles rotativos (coordinador, redactor, verificador, portavoz); 12--15 minutos.
+    \item \textbf{Producto:} Planteo, volumen, altura ajustada y comparación de métodos.
+    \item \textbf{Retroalimentación:} el docente recorre los equipos, hace preguntas y no da la solución hasta la puesta en común.
+  \end{itemize}
+\end{frame}
+
 \section{Ejercicios}
 
 \begin{frame}{Ejercicios propuestos}
@@ -301,6 +333,26 @@
   \end{ejercicio}
 \end{frame}
 
+\begin{frame}{Metacognición y uso responsable de la IA}
+  \small
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{metacog}[cierre, 3 min]
+        \begin{enumerate}
+          \metacomun
+          \item ¿Cómo decido entre discos y capas? ¿Qué problema me lo mostró con claridad?
+        \end{enumerate}
+      \end{metacog}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{iabox}
+        Pida a una IA el volumen del jarrón. Compruebe la integral con integración numérica y el esquema 3D.\\[2pt]
+        \textit{Regla:} primero intente usted; luego use la herramienta para contrastar, nunca para sustituir su razonamiento. Anote el cambio en su bitácora.
+      \end{iabox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Resumen}
   \begin{itemize}
     \item \resaltar{Discos}: $V=\pi\int_a^b f(x)^2\dx$; \ \resaltar{arandelas}: $V=\pi\int_a^b(R^2-r^2)\dx$.
@@ -311,6 +363,19 @@
   \end{itemize}
   \vspace{3mm}
   \textbf{Próxima sesión:} centro geométrico, masa, centro de masa y teorema de Pappus--Guldin.
+\end{frame}
+
+
+\begin{frame}{Evaluación y trabajo posterior}
+  \small
+  \begin{evalbox}[Práctica del miércoles de la semana 10: Calificada 3]
+    \textbf{Cobertura:} semanas 5, 6 y 7. \textbf{Naturaleza:} práctica calificada individual escrita.
+  \end{evalbox}
+  \begin{itemize}
+    \item \criterios
+    \item \declaracionia
+    \item \textbf{Portafolio:} guarde el producto de la actividad, la bitácora de metacognición y los ejercicios propuestos de esta sesión; son evidencia de progreso y base de la retroalimentación.
+  \end{itemize}
 \end{frame}
 
 \end{document}
