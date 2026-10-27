@@ -1,0 +1,332 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Partes y trigonométricas]{Integración por partes}
+\subtitle{Primitivas de las funciones trigonométricas\\[2pt]\small Semana 1 -- Sesión 2}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Deducir la fórmula de \resaltar{integración por partes} a partir de la regla del producto.
+    \item Elegir adecuadamente $u$ y $dv$ (regla ILATE) y reconocer integrales cíclicas.
+    \item Obtener \resaltar{fórmulas de reducción}.
+    \item Calcular primitivas de productos de potencias de funciones trigonométricas.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:10 & Repaso: sustitución\\
+      0:10 -- 0:55 & Integración por partes: fórmula, interpretación, ejemplos\\
+      0:55 -- 1:40 & Integrales trigonométricas $\int\sen^m\cos^n$, $\int\tan^m\sec^n$, productos\\
+      1:40 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{Integración por partes}
+
+\begin{frame}{La fórmula}
+  Regla del producto: $\big(u v\big)'=u'v+uv'$. Integrando:
+  \[ uv=\int u'v\dx+\int uv'\dx. \]
+  \begin{teorema}[Integración por partes]
+    Si $u$ y $v$ son derivables con derivadas continuas,
+    \[ \int u\dv=uv-\int v\du \qquad\Big(\text{es decir, } \int u(x)v'(x)\dx=u(x)v(x)-\int v(x)u'(x)\dx\Big). \]
+  \end{teorema}
+  \begin{idea}
+    Cambiamos una integral difícil $\int u\dv$ por otra, $\int v\du$, que \emph{esperamos} sea más sencilla.
+    Para ello: \textbf{$u$} debe simplificarse al derivar y \textbf{$dv$} debe ser fácil de integrar.
+  \end{idea}
+  \begin{block}{Regla práctica ILATE para escoger $u$ (en este orden)}
+    \textbf{I}nversas trigonométricas \ $\to$\ \textbf{L}ogarítmicas \ $\to$\ \textbf{A}lgebraicas
+    \ $\to$\ \textbf{T}rigonométricas \ $\to$\ \textbf{E}xponenciales.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Interpretación geométrica}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.1]
+        \fill[uniAzul!25] (0.8,0) -- (0.8,0.9) .. controls (1.5,1.2) and (2.3,2.0) .. (3,2.6) -- (3,0) -- cycle;
+        \fill[uniGranate!25] (0,0.9) -- (0.8,0.9) .. controls (1.5,1.2) and (2.3,2.0) .. (3,2.6) -- (0,2.6) -- cycle;
+        \draw[->] (-0.2,0) -- (3.6,0) node[right] {$u$};
+        \draw[->] (0,-0.2) -- (0,3.1) node[above] {$v$};
+        \draw[very thick,uniVerde] (0.8,0.9) .. controls (1.5,1.2) and (2.3,2.0) .. (3,2.6);
+        \draw[dashed] (0.8,0) node[below] {$u_1$} -- (0.8,0.9) -- (0,0.9) node[left] {$v_1$};
+        \draw[dashed] (3,0) node[below] {$u_2$} -- (3,2.6) -- (0,2.6) node[left] {$v_2$};
+        \node at (2.2,0.6) {$\displaystyle\int v\du$};
+        \node at (1.0,1.9) {$\displaystyle\int u\dv$};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Si la curva $(u,v)$ va de $(u_1,v_1)$ a $(u_2,v_2)$:
+      \[
+        \underbrace{\int u\dv}_{\text{granate}}+\underbrace{\int v\du}_{\text{azul}}
+        = u_2v_2-u_1v_1.
+      \]
+      Es decir,
+      \[ \int u\dv=\Big[uv\Big]-\int v\du. \]
+      \small El rectángulo grande menos el pequeño se reparte entre las dos regiones.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos básicos}
+  \begin{ejemplo}[1: $\int x e^x\dx$]
+    $u=x$, $dv=e^x\dx$ $\Rightarrow$ $du=dx$, $v=e^x$:
+    \quad $\displaystyle\int xe^x\dx=xe^x-\int e^x\dx=(x-1)e^x+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[2: $\int\ln x\dx$ \ (¡$dv=dx$!)]
+    $u=\ln x$, $dv=dx$ $\Rightarrow$ $du=\frac{dx}{x}$, $v=x$:
+    \quad $\displaystyle\int\ln x\dx=x\ln x-\int x\cdot\frac1x\dx=x\ln x-x+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[3: $\int\arctan x\dx$]
+    $u=\arctan x$, $dv=dx$:
+    \quad $\displaystyle x\arctan x-\int\frac{x}{1+x^2}\dx=x\arctan x-\tfrac12\ln(1+x^2)+C.$
+  \end{ejemplo}
+  \begin{observacion}
+    Una mala elección empeora el problema: con $u=e^x$, $dv=x\dx$ en el Ej.\,1 se obtiene
+    $\tfrac{x^2}{2}e^x-\int\tfrac{x^2}{2}e^x\dx$, ¡más complicada!
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Partes repetidas y método tabular}
+  \begin{ejemplo}[4: $\int x^2\sen x\dx$]
+    Dos aplicaciones sucesivas. Se organiza en una tabla: derivamos $u$ hasta $0$ e integramos $dv$,
+    alternando signos.
+    \begin{center}
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{c|c|c}
+        signo & $u$ y derivadas & $dv$ e integrales\\ \hline
+        $+$ & $x^2$ & $\sen x$\\
+        $-$ & $2x$ & $-\cos x$\\
+        $+$ & $2$ & $-\sen x$\\
+            & $0$ & $\cos x$
+      \end{tabular}
+    \end{center}
+    \[ \int x^2\sen x\dx=-x^2\cos x+2x\sen x+2\cos x+C. \]
+  \end{ejemplo}
+  \begin{observacion}
+    El método tabular funciona cuando $u$ es un polinomio (se anula tras derivar suficientes veces).
+  \end{observacion}
+\end{frame}
+
+\begin{frame}{Integrales cíclicas}
+  \begin{ejemplo}[5: $I=\int e^x\cos x\dx$]
+    $u=\cos x$, $dv=e^x\dx$: \quad $I=e^x\cos x+\int e^x\sen x\dx$.\\[1mm]
+    Otra vez, $u=\sen x$, $dv=e^x\dx$: \quad $\int e^x\sen x\dx=e^x\sen x-I$.\\[1mm]
+    Luego $I=e^x\cos x+e^x\sen x-I$, \ y despejando:
+    \[ \boxed{\int e^x\cos x\dx=\frac{e^x(\sen x+\cos x)}{2}+C.} \]
+  \end{ejemplo}
+  \begin{ejemplo}[6: $\int\sec^3x\dx$]
+    $u=\sec x$, $dv=\sec^2x\dx$: $\ I=\sec x\tan x-\int\sec x\tan^2x\dx=\sec x\tan x-\int\sec x(\sec^2x-1)\dx$.
+    \[ I=\sec x\tan x-I+\ln|\sec x+\tan x| \ \Rightarrow\ I=\tfrac12\big(\sec x\tan x+\ln|\sec x+\tan x|\big)+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Fórmulas de reducción}
+  \begin{ejemplo}[7: $I_n=\int\sen^n x\dx$, $n\ge2$]
+    $u=\sen^{n-1}x$, $dv=\sen x\dx$:
+    \[ I_n=-\sen^{n-1}x\cos x+(n-1)\int\sen^{n-2}x\cos^2x\dx
+          =-\sen^{n-1}x\cos x+(n-1)(I_{n-2}-I_n). \]
+    \[ \boxed{I_n=-\frac{\sen^{n-1}x\cos x}{n}+\frac{n-1}{n}I_{n-2}} \]
+  \end{ejemplo}
+  \begin{ejemplo}[8]
+    $\displaystyle\int\sen^4x\dx=-\frac{\sen^3x\cos x}{4}+\frac34\left(-\frac{\sen x\cos x}{2}+\frac{x}{2}\right)+C.$
+  \end{ejemplo}
+  \begin{observacion}
+    De forma análoga: \ $\displaystyle\int x^ne^x\dx=x^ne^x-n\int x^{n-1}e^x\dx$,
+    \quad $\displaystyle\int(\ln x)^n\dx=x(\ln x)^n-n\int(\ln x)^{n-1}\dx$.
+  \end{observacion}
+\end{frame}
+
+\section{Primitivas de funciones trigonométricas}
+
+\begin{frame}{Identidades que usaremos}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Pitagóricas}
+        \[ \sen^2x+\cos^2x=1,\quad 1+\tan^2x=\sec^2x, \]
+        \[ 1+\ctg^2x=\cosec^2x. \]
+      \end{block}
+      \begin{block}{Ángulo mitad}
+        \[ \sen^2x=\frac{1-\cos2x}{2},\qquad \cos^2x=\frac{1+\cos2x}{2}. \]
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Producto a suma}
+        \small
+        \begin{align*}
+          \sen A\cos B&=\tfrac12[\sen(A-B)+\sen(A+B)]\\
+          \sen A\sen B&=\tfrac12[\cos(A-B)-\cos(A+B)]\\
+          \cos A\cos B&=\tfrac12[\cos(A-B)+\cos(A+B)]
+        \end{align*}
+      \end{block}
+      \begin{tikzpicture}
+        \begin{axis}[bma, width=6.5cm, height=3.6cm, xmin=0, xmax=6.6, ymin=-0.2, ymax=1.2,
+            xtick={0,3.1416,6.2832}, xticklabels={$0$,$\pi$,$2\pi$}, ytick={0.5,1}, domain=0:6.4]
+          \addplot[curva] {sin(deg(x))^2};
+          \addplot[curva2,dashed] {0.5};
+          \node[uniAzul] at (axis cs:4.7,1.05) {\scriptsize $\sen^2x$};
+          \node[uniGranate] at (axis cs:3.14,0.38) {\scriptsize promedio $=\tfrac12$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Caso $\int\sen^m x\cos^n x\dx$}
+  \begin{block}{Estrategia}
+    \begin{itemize}
+      \item \textbf{Alguna potencia impar} (p.ej.\ $m$ impar): separar un factor $\sen x$, convertir el
+        resto con $\sen^2x=1-\cos^2x$ y sustituir $u=\cos x$. (Análogo si $n$ es impar con $u=\sen x$).
+      \item \textbf{Ambas pares}: usar las fórmulas del ángulo mitad para reducir el grado.
+    \end{itemize}
+  \end{block}
+  \begin{ejemplo}[9: potencia impar]
+    $\displaystyle\int\sen^3x\cos^2x\dx=\int(1-\cos^2x)\cos^2x\,\sen x\dx\overset{u=\cos x}{=}-\int(u^2-u^4)\du$
+    \[ =-\frac{\cos^3x}{3}+\frac{\cos^5x}{5}+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[10: ambas pares]
+    $\displaystyle\int\cos^2x\dx=\int\frac{1+\cos2x}{2}\dx=\frac x2+\frac{\sen2x}{4}+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Ambas potencias pares: un ejemplo más}
+  \begin{ejemplo}[11: $\int\sen^2x\cos^2x\dx$]
+    Como $\sen x\cos x=\tfrac12\sen2x$:
+    \[ \int\sen^2x\cos^2x\dx=\frac14\int\sen^22x\dx=\frac14\int\frac{1-\cos4x}{2}\dx
+       =\frac{x}{8}-\frac{\sen4x}{32}+C. \]
+  \end{ejemplo}
+  \begin{ejemplo}[12: $\int\cos^4x\dx$]
+    \[ \cos^4x=\left(\frac{1+\cos2x}{2}\right)^2=\frac14\left(1+2\cos2x+\frac{1+\cos4x}{2}\right) \]
+    \[ \int\cos^4x\dx=\frac{3x}{8}+\frac{\sen2x}{4}+\frac{\sen4x}{32}+C. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Caso $\int\tan^m x\sec^n x\dx$}
+  \begin{block}{Estrategia}
+    \begin{itemize}
+      \item \textbf{$n$ par}: separar $\sec^2x$, expresar el resto en $\tan x$ y usar $u=\tan x$.
+      \item \textbf{$m$ impar}: separar $\sec x\tan x$, expresar el resto en $\sec x$ y usar $u=\sec x$.
+      \item Otros casos: identidades y/o partes (como $\int\sec^3x$).
+    \end{itemize}
+  \end{block}
+  \begin{ejemplo}[13: $n$ par]
+    $\displaystyle\int\tan^2x\sec^4x\dx=\int\tan^2x(1+\tan^2x)\sec^2x\dx\overset{u=\tan x}{=}
+    \frac{\tan^3x}{3}+\frac{\tan^5x}{5}+C.$
+  \end{ejemplo}
+  \begin{ejemplo}[14: $m$ impar]
+    $\displaystyle\int\tan^3x\sec x\dx=\int(\sec^2x-1)\sec x\tan x\dx\overset{u=\sec x}{=}
+    \frac{\sec^3x}{3}-\sec x+C.$
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Productos $\sen(mx)\cos(nx)$ y ortogonalidad}
+  \begin{ejemplo}[15]
+    $\displaystyle\int\sen5x\cos3x\dx=\frac12\int(\sen2x+\sen8x)\dx=-\frac{\cos2x}{4}-\frac{\cos8x}{16}+C.$
+  \end{ejemplo}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{observacion}[aplicación: series de Fourier]
+        Si $m\neq n$ son enteros positivos:
+        \[ \int_{-\pi}^{\pi}\sen mx\,\sen nx\dx=0. \]
+        La ``área con signo'' del producto se cancela. ¡Base del análisis de Fourier (física, química
+        cuántica, procesamiento de señales)!
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[bma, width=6.5cm, height=4.5cm, xmin=-3.3, xmax=3.3, ymin=-1.1, ymax=1.1,
+            xtick={-3.1416,3.1416}, xticklabels={$-\pi$,$\pi$}, ytick={-1,1}, domain=-3.1416:3.1416, samples=200]
+          \addplot[name path=f, curva, fill=none] {sin(deg(x))*sin(deg(2*x))};
+          \path[name path=ax] (axis cs:-3.1416,0) -- (axis cs:3.1416,0);
+          \addplot[uniAzul!25] fill between[of=f and ax];
+        \end{axis}
+      \end{tikzpicture}
+
+      \centering\small $y=\sen x\,\sen 2x$
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Resumen de estrategias}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{p{4.6cm}|p{9.4cm}}
+    \textbf{Integrando} & \textbf{Estrategia}\\ \hline
+    $P(x)e^{ax}$, $P(x)\sen ax$, $P(x)\cos ax$ & Partes con $u=P(x)$ (método tabular)\\
+    $P(x)\ln x$, $P(x)\arctan x$ & Partes con $u=\ln x$ o $u=\arctan x$\\
+    $e^{ax}\sen bx$, $e^{ax}\cos bx$ & Partes dos veces (integral cíclica)\\
+    $\sen^mx\cos^nx$ & Impar: separar un factor; pares: ángulo mitad\\
+    $\tan^mx\sec^nx$ & $n$ par: $u=\tan x$; $m$ impar: $u=\sec x$\\
+    $\sen mx\cos nx$, etc. & Fórmulas producto--suma
+  \end{tabular}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos (I): integración por partes}
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\int x^2e^{-x}\dx$
+      \item $\displaystyle\int x\ln x\dx$
+      \item $\displaystyle\int\arcsen x\dx$
+      \item $\displaystyle\int x\sec^2x\dx$
+      \item $\displaystyle\int e^{2x}\sen3x\dx$
+      \item $\displaystyle\int\cos(\ln x)\dx$
+      \item $\displaystyle\int x^3e^{x^2}\dx$ \ \small(sustituya primero)
+      \item $\displaystyle\int\frac{\ln(\ln x)}{x}\dx$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: reducción]
+    \begin{enumerate}
+      \setcounter{enumi}{8}
+      \item Pruebe que $\displaystyle\int\cos^nx\dx=\frac{\cos^{n-1}x\sen x}{n}+\frac{n-1}{n}\int\cos^{n-2}x\dx$.
+      \item Pruebe que $\displaystyle\int\sec^nx\dx=\frac{\sec^{n-2}x\tan x}{n-1}+\frac{n-2}{n-1}\int\sec^{n-2}x\dx$, $n\ge2$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Ejercicios propuestos (II): trigonométricas}
+  \begin{ejercicio}
+    \begin{multicols}{2}
+    \begin{enumerate}
+      \item $\displaystyle\int\sen^5x\dx$
+      \item $\displaystyle\int\sen^2x\cos^3x\dx$
+      \item $\displaystyle\int\sen^4x\cos^2x\dx$
+      \item $\displaystyle\int\frac{\cos^3x}{\sqrt{\sen x}}\dx$
+      \item $\displaystyle\int\tan^5x\sec^3x\dx$
+      \item $\displaystyle\int\tan^4x\dx$
+      \item $\displaystyle\int\ctg^3x\cosec^4x\dx$
+      \item $\displaystyle\int\cos x\cos2x\cos3x\dx$
+    \end{enumerate}
+    \end{multicols}
+  \end{ejercicio}
+  \begin{ejercicio}[: aplicación]
+    \begin{enumerate}
+      \setcounter{enumi}{8}
+      \item Pruebe que si $m,n\in\Z^+$, $\displaystyle\int_{-\pi}^{\pi}\cos mx\cos nx\dx=\begin{cases}0,&m\ne n\\ \pi,&m=n\end{cases}$
+        (use las primitivas y evalúe en los extremos).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item \resaltar{Partes}: $\displaystyle\int u\dv=uv-\int v\du$ (regla del producto al revés).
+    \item Elegir $u$ según ILATE; $dv$ debe ser integrable de inmediato.
+    \item Partes puede repetirse (tabular), producir una ecuación (cíclicas) o una recurrencia (reducción).
+    \item \resaltar{Trigonométricas}: potencias impares $\to$ separar un factor y sustituir; potencias
+      pares $\to$ ángulo mitad; productos de senos y cosenos $\to$ fórmulas producto--suma.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} la integral definida -- particiones y sumas de Riemann.
+\end{frame}
+
+\end{document}

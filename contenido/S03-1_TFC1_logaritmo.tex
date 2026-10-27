@@ -1,0 +1,354 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage{bma02}
+
+\title[Primer TFC. Logaritmo y exponencial]{El Primer Teorema Fundamental del Cálculo}
+\subtitle{La función logaritmo y la función exponencial\\[2pt]\small Semana 3 -- Sesión 1}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Objetivos de la sesión}
+  \begin{enumerate}
+    \item Estudiar la \resaltar{función integral} $F(x)=\int_a^xf(t)\dt$.
+    \item Enunciar y demostrar el \resaltar{Primer Teorema Fundamental del Cálculo} (TFC1).
+    \item Derivar funciones definidas por integrales con límites variables.
+    \item Definir rigurosamente $\ln x=\int_1^x\frac{dt}{t}$ y deducir sus propiedades; definir $e^x$ como su inversa.
+  \end{enumerate}
+  \begin{block}{Plan (2 horas)}
+    \begin{tabular}{ll}
+      0:00 -- 0:15 & La función de acumulación\\
+      0:15 -- 0:50 & TFC1: enunciado, prueba, ejemplos, regla de Leibniz\\
+      0:50 -- 1:25 & La función logaritmo natural\\
+      1:25 -- 1:45 & La función exponencial natural\\
+      1:45 -- 2:00 & Ejercicios y resumen
+    \end{tabular}
+  \end{block}
+\end{frame}
+
+\section{La función integral}
+
+\begin{frame}{La función de acumulación}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Sea $f$ integrable en $[a,b]$. Para $x\in[a,b]$ definimos
+      \[ F(x)=\int_a^xf(t)\dt. \]
+      $F(x)$ = área (con signo) acumulada desde $a$ hasta $x$.
+      \begin{itemize}
+        \item $F(a)=0$.
+        \item Si $f>0$, $F$ crece; si $f<0$, $F$ decrece.
+        \item $F$ es continua (incluso si $f$ no lo es): $|F(x)-F(y)|\le M|x-y|$ si $|f|\le M$.
+      \end{itemize}
+      \begin{observacion}
+        $t$ es una variable ``muda''; $x$ es la variable de $F$.
+      \end{observacion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, xmin=0, xmax=4.2, ymin=0, ymax=2.6, width=6.8cm, height=5cm,
+            xtick={0.5,2.6}, xticklabels={$a$,$x$}, ytick=\empty, domain=0.3:4]
+          \addplot[fill=uniAzul!30, draw=none, domain=0.5:2.6] {1.2+0.6*sin(deg(1.5*x))+0.15*x} \closedcycle;
+          \addplot[curva] {1.2+0.6*sin(deg(1.5*x))+0.15*x} node[pos=0.95,above] {$f$};
+          \node at (axis cs:1.5,0.6) {$F(x)$};
+          \draw[->,uniGranate,thick] (axis cs:2.6,0.3) -- (axis cs:3.2,0.3) node[right] {\small $x$ avanza};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplo: leyendo $F$ a partir de la gráfica de $f$}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[bma, name=g1, xlabel={$t$}, xmin=0, xmax=6.6, ymin=-1.3, ymax=1.3, width=7cm, height=4.5cm,
+        xtick={1.5708,3.1416,4.7124,6.2832}, xticklabels={$\frac\pi2$,$\pi$,$\frac{3\pi}2$,$2\pi$}, ytick={-1,1},
+        title={\small $f(t)=\cos t$}, domain=0:6.3]
+      \addplot[name path=f, curva] {cos(deg(x))};
+      \path[name path=ax] (axis cs:0,0) -- (axis cs:6.3,0);
+      \addplot fill between[of=f and ax, split, every segment no 0/.style={fill=uniAzul!30},
+        every segment no 1/.style={fill=uniGranate!30}, every segment no 2/.style={fill=uniAzul!30}];
+    \end{axis}
+    \begin{axis}[bma, at={(g1.east)}, anchor=west, xshift=1cm, xmin=0, xmax=6.6, ymin=-1.3, ymax=1.3, width=7cm, height=4.5cm,
+        xtick={1.5708,3.1416,4.7124,6.2832}, xticklabels={$\frac\pi2$,$\pi$,$\frac{3\pi}2$,$2\pi$}, ytick={-1,1},
+        title={\small $F(x)=\int_0^x\cos t\dt$}, domain=0:6.3]
+      \addplot[curva2] {sin(deg(x))};
+    \end{axis}
+  \end{tikzpicture}
+  \begin{itemize}
+    \item En $[0,\frac\pi2]$ se acumula área positiva: $F$ crece hasta su máximo en $\frac\pi2$.
+    \item En $[\frac\pi2,\frac{3\pi}2]$ el área es negativa: $F$ decrece. Mínimo en $\frac{3\pi}{2}$.
+    \item ¡Resulta $F(x)=\sen x$ y $F'=f$! Esto no es casualidad\dots
+  \end{itemize}
+\end{frame}
+
+\section{Primer Teorema Fundamental}
+
+\begin{frame}{Primer Teorema Fundamental del Cálculo}
+  \begin{teorema}[TFC1]
+    Sea $f$ integrable en $[a,b]$ y $F(x)=\int_a^xf(t)\dt$. Si $f$ es continua en $x_0\in(a,b)$, entonces
+    $F$ es derivable en $x_0$ y
+    \[ F'(x_0)=f(x_0). \]
+    En particular, si $f$ es continua en $[a,b]$:\quad
+    $\displaystyle\frac{d}{dx}\int_a^xf(t)\dt=f(x)$.
+  \end{teorema}
+  \begin{idea}
+    \begin{itemize}
+      \item Toda función continua tiene primitiva: $F(x)=\int_a^xf(t)\dt$.
+      \item Derivar ``deshace'' integrar: son operaciones inversas.
+    \end{itemize}
+  \end{idea}
+\end{frame}
+
+\begin{frame}{Demostración}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      Para $h>0$ pequeño, por aditividad:
+      \[ \frac{F(x+h)-F(x)}{h}=\frac1h\int_x^{x+h}f(t)\dt. \]
+      Si $f$ es continua, por el TVM para integrales existe $c_h\in[x,x+h]$ con
+      \[ \frac1h\int_x^{x+h}f(t)\dt=f(c_h). \]
+      Cuando $h\to0$, $c_h\to x$ y por continuidad $f(c_h)\to f(x)$. Así
+      \[ F'(x)=\lim_{h\to0}\frac{F(x+h)-F(x)}{h}=f(x).\qquad\blacksquare \]
+      \small (El caso $h<0$ es análogo.)
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, xmin=0, xmax=4, ymin=0, ymax=2.6, width=6cm, height=5cm,
+            xtick={2,2.6}, xticklabels={$x$,$x\!+\!h$}, ytick=\empty, domain=0.2:3.8]
+          \addplot[fill=uniAzul!15, draw=none, domain=0.2:2] {1.2+0.6*sin(deg(1.5*x))+0.15*x} \closedcycle;
+          \addplot[fill=uniGranate!40, draw=none, domain=2:2.6] {1.2+0.6*sin(deg(1.5*x))+0.15*x} \closedcycle;
+          \addplot[curva] {1.2+0.6*sin(deg(1.5*x))+0.15*x};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small La franja granate tiene área $\approx f(x)\cdot h$.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ejemplos}
+  \begin{ejemplo}[1]
+    $\displaystyle\frac{d}{dx}\int_0^x\sen(t^2)\dt=\sen(x^2)$ \quad (aunque $\sen(t^2)$ no tiene primitiva elemental).
+  \end{ejemplo}
+  \begin{ejemplo}[2: límite superior variable]
+    Si $G(x)=\int_a^{g(x)}f(t)\dt=F(g(x))$, por la regla de la cadena $G'(x)=f(g(x))\,g'(x)$.
+    \[ \frac{d}{dx}\int_1^{x^3}\frac{dt}{1+t^4}=\frac{3x^2}{1+x^{12}}. \]
+  \end{ejemplo}
+\end{frame}
+
+\begin{frame}{Regla de Leibniz}
+  \begin{teorema}[Regla de Leibniz]
+    Si $f$ es continua y $g,h$ derivables:\quad
+    $\displaystyle\frac{d}{dx}\int_{g(x)}^{h(x)}f(t)\dt=f(h(x))\,h'(x)-f(g(x))\,g'(x).$
+  \end{teorema}
+  \begin{ejemplo}[3]
+    $\displaystyle\frac{d}{dx}\int_{\sen x}^{x^2}e^{t^2}\dt=2x\,e^{x^4}-\cos x\,e^{\sen^2x}.$
+  \end{ejemplo}
+  \textbf{Prueba.} Sea $F(x)=\int_a^xf(t)\dt$. Por aditividad,
+  $\int_{g(x)}^{h(x)}f=F(h(x))-F(g(x))$; derive con la regla de la cadena.
+\end{frame}
+
+\begin{frame}{Aplicaciones: límites y extremos}
+  \begin{ejemplo}[4: límite con L'Hôpital]
+    \[ \lim_{x\to0}\frac{\int_0^x\sen(t^2)\dt}{x^3}\overset{0/0}{=}\lim_{x\to0}\frac{\sen(x^2)}{3x^2}=\frac13. \]
+  \end{ejemplo}
+  \begin{ejemplo}[5: extremos]
+    Halle los extremos de $\displaystyle F(x)=\int_0^x\frac{t^2-4}{1+t^2}\dt$.\\
+    $F'(x)=\dfrac{x^2-4}{1+x^2}=0\iff x=\pm2$. \
+    $F'<0$ en $(-2,2)$ y $F'>0$ fuera: \ máximo local en $x=-2$, mínimo local en $x=2$.
+  \end{ejemplo}
+  \begin{ejemplo}[6: ecuación integral]
+    Halle $f$ continua tal que $\displaystyle\int_0^xf(t)\dt=x^2\cos x$. \
+    Derivando: $f(x)=2x\cos x-x^2\sen x$.
+  \end{ejemplo}
+\end{frame}
+
+\section{La función logaritmo natural}
+
+\begin{frame}{Definición del logaritmo natural}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      La función $1/t$ es continua en $(0,\infty)$, pero ninguna potencia $t^n$ tiene derivada $t^{-1}$.
+      Definimos su primitiva mediante una integral:
+      \begin{definicion}
+        \[ \ln x=\int_1^x\frac{dt}{t},\qquad x>0. \]
+      \end{definicion}
+      \begin{itemize}
+        \item $\ln1=0$; \ $\ln x>0$ si $x>1$; \ $\ln x<0$ si $0<x<1$.
+        \item Por el TFC1: $\dfrac{d}{dx}\ln x=\dfrac1x>0$: \ $\ln$ es \resaltar{creciente}.
+        \item $(\ln x)''=-\dfrac1{x^2}<0$: \ $\ln$ es \resaltar{cóncava}.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xlabel={$t$}, xmin=0, xmax=4.3, ymin=0, ymax=2.6, width=6.6cm, height=5.3cm,
+            xtick={1,3}, xticklabels={$1$,$x$}, ytick={1}, domain=0.4:4.2]
+          \addplot[fill=uniAzul!30, draw=none, domain=1:3] {1/x} \closedcycle;
+          \addplot[curva] {1/x} node[pos=0.1,right] {$y=\frac1t$};
+          \node at (axis cs:1.9,0.25) {\small $\ln x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Propiedades algebraicas}
+  \begin{teorema}
+    Para $a,b>0$ y $r\in\Q$:
+    \quad (i) $\ln(ab)=\ln a+\ln b$, \quad (ii) $\ln\dfrac ab=\ln a-\ln b$, \quad (iii) $\ln(a^r)=r\ln a$.
+  \end{teorema}
+  \textbf{Prueba de (i).} Fijamos $a$ y sea $g(x)=\ln(ax)$. Entonces
+  \[ g'(x)=\frac{1}{ax}\cdot a=\frac1x=(\ln x)'. \]
+  Luego $\ln(ax)=\ln x+C$. Con $x=1$: $C=\ln a$. \quad Así $\ln(ab)=\ln a+\ln b$. $\blacksquare$
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{Prueba de (iii).} $\dfrac{d}{dx}\ln(x^r)=\dfrac{rx^{r-1}}{x^r}=\dfrac rx=\dfrac{d}{dx}\big(r\ln x\big)$,
+      y ambas valen $0$ en $x=1$.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{observacion}[interpretación]
+        El área bajo $1/t$ de $1$ a $2$ es igual al área de $2$ a $4$, de $4$ a $8$, \dots
+      \end{observacion}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Gráfica y límites del logaritmo}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      De (iii): $\ln(2^n)=n\ln2\to\infty$. Como $\ln$ es creciente:
+      \[ \lim_{x\to\infty}\ln x=+\infty,\qquad \lim_{x\to0^+}\ln x=\lim_{u\to\infty}\ln\frac1u=-\infty. \]
+      Como $\ln$ es continua y creciente, es una \resaltar{biyección} $(0,\infty)\to\R$.
+      \begin{definicion}[el número $e$]
+        $e$ es el único número tal que $\ln e=1$, es decir $\displaystyle\int_1^e\frac{dt}{t}=1$.
+        \quad $e\approx2.71828$.
+      \end{definicion}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-0.3, xmax=6, ymin=-3, ymax=2.2, width=7cm, height=5.6cm,
+            xtick={1,2.71828}, xticklabels={$1$,$e$}, ytick={1}, domain=0.04:6]
+          \addplot[curva, samples=200] {ln(x)} node[pos=0.9,above] {$y=\ln x$};
+          \draw[dashed] (axis cs:2.71828,0) -- (axis cs:2.71828,1) -- (axis cs:0,1);
+          \addplot[uniGranate, thick, domain=0.2:3] {x-1} node[pos=0.9,left] {\scriptsize $y=x-1$};
+        \end{axis}
+      \end{tikzpicture}
+
+      \small Concavidad: $\ln x\le x-1$ (tangente en $x=1$).
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Derivación e integración con logaritmos}
+  \begin{proposicion}
+    \[ \frac{d}{dx}\ln|x|=\frac1x\ (x\neq0),\qquad \int\frac{dx}{x}=\ln|x|+C,\qquad \int\frac{g'(x)}{g(x)}\dx=\ln|g(x)|+C. \]
+  \end{proposicion}
+  \begin{ejemplo}[derivación logarítmica]
+    $y=\dfrac{x^3\sqrt{x^2+1}}{(3x+2)^5}$. \ Tomando $\ln$: \
+    $\ln y=3\ln x+\tfrac12\ln(x^2+1)-5\ln(3x+2)$, luego
+    \[ y'=y\left(\frac3x+\frac{x}{x^2+1}-\frac{15}{3x+2}\right). \]
+  \end{ejemplo}
+  \begin{ejemplo}[estimación de $\ln2$]
+    Comparando $1/t$ con constantes en $[1,2]$: \ $\tfrac12\le\ln2\le1$.
+    Con dos subintervalos (sumas de Darboux): $\tfrac{7}{12}\le\ln 2\le\tfrac{5}{6}$. \ ($\ln2\approx0.6931$.)
+  \end{ejemplo}
+\end{frame}
+
+\section{La función exponencial natural}
+
+\begin{frame}{La exponencial como inversa del logaritmo}
+  \begin{columns}
+    \begin{column}{0.52\textwidth}
+      \begin{definicion}
+        $\exp:\R\to(0,\infty)$ es la inversa de $\ln$:
+        \[ \exp(x)=y\iff\ln y=x. \]
+      \end{definicion}
+      Para $r\in\Q$, $\ln(e^r)=r\ln e=r$, así $\exp(r)=e^r$. Esto motiva definir, para todo $x\in\R$:
+      \[ e^x:=\exp(x). \]
+      \begin{itemize}
+        \item $e^{\ln x}=x$ ($x>0$), \quad $\ln(e^x)=x$ ($x\in\R$).
+        \item $e^{x+y}=e^xe^y$, \ $e^{x-y}=e^x/e^y$.
+        \item $\lim\limits_{x\to\infty}e^x=\infty$, \ $\lim\limits_{x\to-\infty}e^x=0$.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[bma, xmin=-3, xmax=4, ymin=-3, ymax=4, width=6.4cm, height=6.4cm,
+            xtick={1}, ytick={1}, axis equal image]
+          \addplot[curva2, domain=-3:1.38] {exp(x)} node[pos=0.95,left] {$e^x$};
+          \addplot[curva, domain=0.05:4, samples=200] {ln(x)} node[pos=0.9,below] {$\ln x$};
+          \addplot[gray, dashed, domain=-3:4] {x} node[pos=0.95,right] {\scriptsize $y=x$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Derivada de la exponencial}
+  \begin{teorema}
+    $\displaystyle\frac{d}{dx}e^x=e^x$,\qquad $\displaystyle\int e^x\dx=e^x+C$.
+  \end{teorema}
+  \textbf{Prueba.} Si $y=e^x$, entonces $\ln y=x$. Derivando implícitamente (la inversa de una función
+  derivable con derivada no nula es derivable):
+  \[ \frac{y'}{y}=1\ \Rightarrow\ y'=y=e^x.\qquad\blacksquare \]
+  \begin{ejemplo}
+    \small
+    \begin{itemize}
+      \item $\dfrac{d}{dx}e^{\sen x}=\cos x\,e^{\sen x}$.
+      \item $\displaystyle\int_0^1xe^{-x^2}\dx=\left[-\tfrac12e^{-x^2}\right]_0^1=\tfrac12\left(1-e^{-1}\right)$ \ (se justificará la evaluación en la Semana 4).
+      \item $\displaystyle\lim_{x\to0}\frac{\ln(1+x)}{x}=\left.\frac{d}{dx}\ln(1+x)\right|_{x=0}=1\ \Rightarrow\ \lim_{n\to\infty}\left(1+\frac1n\right)^n=e$.
+    \end{itemize}
+  \end{ejemplo}
+\end{frame}
+
+\section{Ejercicios}
+
+\begin{frame}{Ejercicios propuestos (I)}
+  \begin{ejercicio}[: TFC1]
+    \begin{enumerate}
+      \item Calcule $F'(x)$: \ (a) $\displaystyle F(x)=\int_x^{2}\sqrt{1+t^3}\dt$, \ (b) $\displaystyle F(x)=\int_{x^2}^{x^3}\frac{dt}{\ln t}$,
+        \ (c) $\displaystyle F(x)=\int_0^{\int_0^x\sen t\dt}\frac{dt}{1+t^2}$.
+      \item Calcule $\displaystyle\lim_{x\to0}\frac{1}{x}\int_0^x(1+\sen t)^{1/t}\dt$ \ y \
+        $\displaystyle\lim_{x\to\infty}\frac{\left(\int_0^xe^{t^2}\dt\right)^2}{\int_0^xe^{2t^2}\dt}$.
+      \item Halle los intervalos de concavidad de $\displaystyle F(x)=\int_0^x\frac{t}{1+t+t^2}\dt$.
+      \item Halle una función continua $f$ y una constante $a$ tales que $\displaystyle6+\int_a^x\frac{f(t)}{t^2}\dt=2\sqrt x$ para $x>0$.
+      \item Sea $f$ continua y $\displaystyle g(x)=\int_0^x(x-t)f(t)\dt$. Pruebe que $g''(x)=f(x)$.
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Ejercicios propuestos (II)}
+  \begin{ejercicio}[: logaritmo y exponencial]
+    \begin{enumerate}
+      \setcounter{enumi}{5}
+      \item Usando solo la definición $\ln x=\int_1^x dt/t$, pruebe que $\ln\frac1x=-\ln x$.
+      \item Pruebe que $\dfrac{x-1}{x}\le\ln x\le x-1$ para $x>0$ (compare áreas).
+      \item Pruebe que $\ln2>\frac12$ y $\ln3>1$; concluya que $2<e<3$.
+      \item Calcule: $\displaystyle\int\frac{e^{2x}}{1+e^{2x}}\dx$, \ $\displaystyle\int\frac{dx}{x(1+\ln^2x)}$,
+        \ $\displaystyle\int\frac{\ln^3x}{x}\dx$.
+      \item Pruebe que $1+x\le e^x$ para todo $x\in\R$ y que $\displaystyle\lim_{x\to\infty}\frac{\ln x}{x}=0$.
+      \item Pruebe que $\displaystyle\lim_{n\to\infty}\left(\frac1{n+1}+\frac1{n+2}+\dots+\frac1{2n}\right)=\ln2$.
+        \ \small(Sugerencia: suma de Riemann).
+    \end{enumerate}
+  \end{ejercicio}
+\end{frame}
+
+\begin{frame}{Resumen}
+  \begin{itemize}
+    \item $F(x)=\int_a^xf(t)\dt$ es continua y acumula el área con signo.
+    \item \resaltar{TFC1}: si $f$ es continua, $F'(x)=f(x)$. Toda función continua tiene primitiva.
+    \item Regla de Leibniz: $\frac{d}{dx}\int_{g(x)}^{h(x)}f=f(h)h'-f(g)g'$.
+    \item $\ln x=\int_1^x\frac{dt}{t}$: creciente, cóncava, $\ln(ab)=\ln a+\ln b$, biyección $(0,\infty)\to\R$.
+    \item $e^x$ es la inversa de $\ln$; \ $(e^x)'=e^x$.
+  \end{itemize}
+  \vspace{3mm}
+  \textbf{Próxima sesión:} logaritmos y exponenciales en bases positivas distintas de $1$.
+\end{frame}
+
+\end{document}
